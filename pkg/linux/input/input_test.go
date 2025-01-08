@@ -56,7 +56,7 @@ func TestReadDevices(t *testing.T) {
 	as := require.New(t)
 	r := io.NopCloser(bytes.NewReader([]byte(devices)))
 
-	devices, err := input.ReadDevices(r, false)
+	devices, err := input.ReadDevices(r)
 	as.NoError(err)
 
 	expected := []*input.Device{
