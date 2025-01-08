@@ -2,16 +2,12 @@ package input
 
 import (
 	"bufio"
-	"errors"
 	"fmt"
 	"io"
-	"log/slog"
 	"os"
 	"regexp"
 	"strconv"
 	"strings"
-
-	"github.com/numtide/nixos-facter/pkg/udev"
 )
 
 //go:generate enumer -type=Bus -json -text -trimprefix Bus -output=./input_bus.go
@@ -74,7 +70,6 @@ type Device struct {
 	Sysfs        string
 	Phys         string
 	Capabilities map[string]string
-	Udev         *udev.Udev
 }
 
 func (d *Device) Path() string {
@@ -101,7 +96,7 @@ func (d *Device) EventHandler() string {
 	return ""
 }
 
-func ReadDevices(r io.ReadCloser, udevAnnotate bool) ([]*Device, error) {
+func ReadDevices(r io.ReadCloser) ([]*Device, error) {
 	var err error
 
 	if r == nil {
@@ -123,17 +118,6 @@ func ReadDevices(r io.ReadCloser, udevAnnotate bool) ([]*Device, error) {
 		line := scanner.Text()
 
 		if line == "" {
-			// try to append udev data
-			if udevAnnotate {
-				device.Udev, err = udev.Read("/sys" + device.Sysfs)
-
-				if errors.Is(err, udev.ErrNotFound) {
-					slog.Warn("udev data not found", "name", device.Name, "sysfs", device.Sysfs)
-				} else if err != nil {
-					return nil, fmt.Errorf("failed to annotate with udev data: %w", err)
-				}
-			}
-
 			devices = append(devices, device)
 			device = nil
 

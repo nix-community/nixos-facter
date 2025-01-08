@@ -51,27 +51,8 @@ import (
 	"fmt"
 	"strconv"
 	"unsafe"
-)
 
-//go:generate enumer -type=Bus -json -text -transform=snake -trimprefix Bus -output=./udev_bus.go
-type Bus int //nolint:recvcheck
-
-const (
-	BusAta Bus = iota // ATA (IDE) devices
-	BusBluetooth
-	BusI8042
-	BusI2c      // Inter-Integrated Circuit
-	BusIeee1394 // Firewire
-	BusPci
-	BusPciExpress
-	BusPcmcia   // Personal Computer Memory Card International Association
-	BusPlatform // Devices on a system's motherboard
-	BusScsi
-	BusSerial
-	BusSerio // Serial interface controller devices
-	BusSpi   // Serial Peripheral Interface connected devices
-	BusUsb
-	BusVirtio
+	"github.com/numtide/nixos-facter/pkg/linux/input"
 )
 
 //go:generate enumer -type=Type -json -text -trimprefix Type -output=./udev_type.go
@@ -210,7 +191,7 @@ func NewUdevPci(env map[string]string) (*Pci, error) {
 }
 
 type Udev struct {
-	Bus         Bus
+	Bus         input.Bus
 	Type        Type
 	Model       string
 	ModelID     uint16
@@ -270,11 +251,11 @@ func NewUdev(env map[string]string) (*Udev, error) {
 	var err error
 
 	switch result.Bus {
-	case BusUsb:
+	case input.BusUsb:
 		if result.Usb, err = NewUdevUsb(env); err != nil {
 			return nil, fmt.Errorf("failed to parse usb: %w", err)
 		}
-	case BusPci:
+	case input.BusPci:
 		if result.Pci, err = NewUdevPci(env); err != nil {
 			return nil, fmt.Errorf("failed to parse pci: %w", err)
 		}
