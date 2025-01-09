@@ -5,9 +5,8 @@ import (
 	"fmt"
 	"log/slog"
 
-	"github.com/numtide/nixos-facter/pkg/udev"
-
 	"github.com/numtide/nixos-facter/pkg/linux/input"
+	"github.com/numtide/nixos-facter/pkg/udev"
 )
 
 // captureTouchpads scans the input devices and identifies touchpads, returning a slice of HardwareDevice structs or an
@@ -22,7 +21,6 @@ func captureTouchpads(deviceIdx uint) ([]HardwareDevice, error) {
 	var result []HardwareDevice //nolint:prealloc
 
 	for _, inputDevice := range inputDevices {
-
 		path := "/sys" + inputDevice.Sysfs
 
 		udevData, err := udev.Read(path)
@@ -81,6 +79,17 @@ func captureTouchpads(deviceIdx uint) ([]HardwareDevice, error) {
 				Value: uint16(SubClassMousePs2),
 			}
 
+		case input.BusRmi:
+			// RMI is a protocol which runs over other physical buses, typically i2c, but it can also be over others
+			// such as USB or SPI.
+			// I'm not sure how to map this into hwinfo's bus classification, so for now we will use other for both the
+			// bus and mouse subclass.
+			hd.BusType = NewBusID(BusOther)
+			hd.SubClass = &ID{
+				Name:  SubClassMouseOther.String(),
+				Value: uint16(SubClassMouseOther),
+			}
+
 		case input.BusPci,
 			input.BusIsapnp,
 			input.BusHil,
@@ -97,7 +106,6 @@ func captureTouchpads(deviceIdx uint) ([]HardwareDevice, error) {
 			input.BusGsc,
 			input.BusAtari,
 			input.BusSpi,
-			input.BusRmi,
 			input.BusCec,
 			input.BusIntelIshtp,
 			input.BusAmdSfh:
