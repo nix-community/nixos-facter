@@ -31,6 +31,11 @@ func captureTouchpads(deviceIdx uint) ([]HardwareDevice, error) {
 			return nil, fmt.Errorf("failed to fetch udev data for device %q with udev data: %w", path, err)
 		}
 
+		if udevData.Input == nil {
+			slog.Debug("udev data missing input", "name", inputDevice.Name, "sysfs", inputDevice.Sysfs)
+			continue
+		}
+
 		if !udevData.Input.IsTouchpad {
 			// currently, we are only interested in touchpads, as hwinfo does not capture them
 			// eventually, we may take over more of the input processing that hwinfo performs
