@@ -49,7 +49,25 @@ This software is provided free under [GNU GPL v3].
 
 ---
 
-This project is supported by [Numtide](https://numtide.com/).
+This project is supported by [Clan] and [Numtide](https://numtide.com/).
+
+## Clan
+
+[Clan] is a peer-to-peer management framework based on [NixOS] that has:
+
+-   a uniform interface
+-   automated secret management
+-   automated service setup
+-   automated backups
+-   peer-to-peer Mesh VPN
+
+Get in touch and learn more at:
+
+-   [clan.lol](https://clan.lol)
+-   [Matrix channel](https://matrix.to/#/#clan:clan.lol) for live discussions.
+-   IRC bridge on [hackint#clan](https://chat.hackint.org/#/connect?join=clan) for real-time chat support.
+
+## Numtide
 
 ![Numtide Logo](https://codahosted.io/docs/6FCIMTRM0p/blobs/bl-sgSunaXYWX/077f3f9d7d76d6a228a937afa0658292584dedb5b852a8ca370b6c61dabb7872b7f617e603f1793928dc5410c74b3e77af21a89e435fa71a681a868d21fd1f599dd10a647dd855e14043979f1df7956f67c3260c0442e24b34662307204b83ea34de929d)
 
@@ -67,6 +85,7 @@ or if you need help with any of our supported tools, including this one.
 
 We'd love to hear from you.
 
+[Clan]: https://clan.lol
 [NixOS configurations]: https://nixos.org/manual/nixos/stable/#sec-configuration-syntax
 [NixOS Hardware]: https://github.com/NixOS/nixos-hardware
 [NixOS Facter Modules]: https://github.com/numtide/nixos-facter-modules
@@ -77,3 +96,4 @@ We'd love to hear from you.
 [nixpkgs]: https://github.com/nixos/nixpkgs
 [docs]: https://numtide.github.io/nixos-facter
 [GNU GPL v3]: ./LICENSE
+[NixOS]: https://nixos.org
