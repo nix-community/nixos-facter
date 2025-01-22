@@ -94,6 +94,6 @@ We'd love to hear from you.
 [Numtide Binary Cache]: https://numtide.cachix.org
 [nixos-facter]: https://github.com/numtide/nixos-facter
 [nixpkgs]: https://github.com/nixos/nixpkgs
-[docs]: https://numtide.github.io/nixos-facter
+[docs]: https://nix-community.github.io/nixos-facter
 [GNU GPL v3]: ./LICENSE
 [NixOS]: https://nixos.org
