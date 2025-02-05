@@ -44,11 +44,8 @@ in
 
     nativeBuildInputs = with pkgs; [
       gcc
+      makeWrapper
       pkg-config
-    ];
-
-    runtimeInputs = with pkgs; [
-      util-linux
     ];
 
     ldflags = [
@@ -58,6 +55,15 @@ in
       "-X github.com/numtide/nixos-facter/pkg/build.Version=v${version}"
       "-X github.com/numtide/nixos-facter/pkg/build.System=${pkgs.stdenv.hostPlatform.system}"
     ];
+
+    postInstall = let
+      binPath = lib.makeBinPath (with pkgs; [
+        systemdMinimal
+      ]);
+    in ''
+      wrapProgram "$out/bin/nixos-facter" \
+          --prefix PATH : "${binPath}"
+    '';
 
     passthru.tests = (import ./tests) args;
 
