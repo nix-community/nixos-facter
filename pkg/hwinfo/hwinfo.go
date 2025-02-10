@@ -31,7 +31,7 @@ func excludeDevice(item *HardwareDevice) bool {
 }
 
 // Scan returns a list of SMBIOS entries and detected hardware devices based on the provided probe features.
-func Scan(probes []ProbeFeature) ([]Smbios, []HardwareDevice, error) {
+func Scan(probes []ProbeFeature, ephemeral bool) ([]Smbios, []HardwareDevice, error) {
 	// initialise the struct to hold scan data
 	data := (*C.hd_data_t)(C.calloc(1, C.size_t(unsafe.Sizeof(C.hd_data_t{}))))
 
@@ -62,7 +62,7 @@ func Scan(probes []ProbeFeature) ([]Smbios, []HardwareDevice, error) {
 	var hardwareItems []HardwareDevice
 	var deviceIdx uint
 	for hd := data.hd; hd != nil; hd = hd.next {
-		item, err := NewHardwareDevice(hd)
+		item, err := NewHardwareDevice(hd, ephemeral)
 		if err != nil {
 			return nil, nil, err
 		}

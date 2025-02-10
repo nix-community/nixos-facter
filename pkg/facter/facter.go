@@ -73,7 +73,7 @@ func (s *Scanner) Scan() (*Report, error) {
 
 	slog.Info("scanning hardware", "features", s.Features)
 
-	smbios, devices, err = hwinfo.Scan(s.Features)
+	smbios, devices, err = hwinfo.Scan(s.Features, s.Ephemeral)
 	if err != nil {
 		return nil, fmt.Errorf("failed to scan hardware: %w", err)
 	}

@@ -11,6 +11,7 @@ import (
 	"errors"
 	"fmt"
 	"slices"
+	"strings"
 )
 
 // ProbeFeature is a type that specifies various hardware probing features.
@@ -546,7 +547,7 @@ type HardwareDevice struct {
 	Label string `json:"label,omitempty"`
 }
 
-func NewHardwareDevice(hd *C.hd_t) (*HardwareDevice, error) {
+func NewHardwareDevice(hd *C.hd_t, ephemeral bool) (*HardwareDevice, error) {
 	if hd == nil {
 		return nil, errors.New("hd is nil")
 	}
@@ -630,6 +631,13 @@ func NewHardwareDevice(hd *C.hd_t) (*HardwareDevice, error) {
 		DriverInfo:        driverInfo,
 		ModuleAlias:       C.GoString(hd.modalias),
 		Label:             C.GoString(hd.label),
+	}
+
+	if !ephemeral {
+		// /dev/disk/by-diskseq is not stable, so we remove them
+		result.UnixDeviceNames = slices.DeleteFunc(result.UnixDeviceNames, func(name string) bool {
+			return strings.HasPrefix(name, "/dev/disk/by-diskseq/")
+		})
 	}
 
 	// only set the slot information if the bus type has been set
