@@ -71,9 +71,7 @@
         "flake-utils": [
           "flake-utils"
         ],
-        "gomod2nix": [
-          "gomod2nix"
-        ],
+        "gomod2nix": "gomod2nix",
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -101,9 +99,11 @@
     "gomod2nix": {
       "inputs": {
         "flake-utils": [
+          "godoc",
           "flake-utils"
         ],
         "nixpkgs": [
+          "godoc",
           "nixpkgs"
         ]
       },
@@ -169,7 +169,6 @@
         "disko": "disko",
         "flake-utils": "flake-utils",
         "godoc": "godoc",
-        "gomod2nix": "gomod2nix",
         "hwinfo": "hwinfo",
         "nixpkgs": "nixpkgs",
         "systems": "systems",

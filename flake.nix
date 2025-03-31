@@ -8,11 +8,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.systems.follows = "systems";
     };
-    gomod2nix = {
-      url = "github:nix-community/gomod2nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-    };
     systems.url = "github:nix-systems/default";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
@@ -35,7 +30,6 @@
     godoc.inputs.blueprint.follows = "blueprint";
     godoc.inputs.treefmt-nix.follows = "treefmt-nix";
     godoc.inputs.flake-utils.follows = "flake-utils";
-    godoc.inputs.gomod2nix.follows = "gomod2nix";
   };
 
   # Keep the magic invocations to minimum.

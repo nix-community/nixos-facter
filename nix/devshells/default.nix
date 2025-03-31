@@ -4,11 +4,10 @@
   ...
 }:
 perSystem.self.nixos-facter.overrideAttrs (old: {
-  GOROOT = "${old.go}/share/go";
+  GOROOT = "${old.passthru.go}/share/go";
   nativeBuildInputs =
     old.nativeBuildInputs
     ++ [
-      perSystem.gomod2nix.default
       pkgs.enumer
       pkgs.delve
       pkgs.pprof
