@@ -58,6 +58,7 @@ func Detect() (Type, error) {
 	outStr := strings.Trim(string(out), "\n")
 
 	// note: systemd-detect-virt exits with status 1 when "none" is detected
+	//nolint:staticcheck
 	if !(outStr == "none" || err == nil) {
 		slog.Error("failed to detect virtualisation type", "output", out)
 

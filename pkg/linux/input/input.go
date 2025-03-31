@@ -104,7 +104,7 @@ func ReadDevices(r io.ReadCloser) ([]*Device, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to open %s: %w", devicesPath, err)
 		}
-		defer r.Close()
+		defer r.Close() //nolint:errcheck
 	}
 
 	var (

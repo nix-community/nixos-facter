@@ -55,17 +55,17 @@ This project is supported by [Clan] and [Numtide](https://numtide.com/).
 
 [Clan] is a peer-to-peer management framework based on [NixOS] that has:
 
--   a uniform interface
--   automated secret management
--   automated service setup
--   automated backups
--   peer-to-peer Mesh VPN
+- a uniform interface
+- automated secret management
+- automated service setup
+- automated backups
+- peer-to-peer Mesh VPN
 
 Get in touch and learn more at:
 
--   [clan.lol](https://clan.lol)
--   [Matrix channel](https://matrix.to/#/#clan:clan.lol) for live discussions.
--   IRC bridge on [hackint#clan](https://chat.hackint.org/#/connect?join=clan) for real-time chat support.
+- [clan.lol](https://clan.lol)
+- [Matrix channel](https://matrix.to/#/#clan:clan.lol) for live discussions.
+- IRC bridge on [hackint#clan](https://chat.hackint.org/#/connect?join=clan) for real-time chat support.
 
 ## Numtide
 
@@ -74,11 +74,11 @@ Get in touch and learn more at:
 We’re a team of independent freelancers that love open source.
 We help our customers make their project lifecycles more efficient by:
 
--   Providing and supporting useful tools such as this one.
--   Building and deploying infrastructure, and offering dedicated DevOps support.
--   Building their in-house Nix skills, and integrating Nix with their workflows.
--   Developing additional features and tools.
--   Carrying out custom research and development.
+- Providing and supporting useful tools such as this one.
+- Building and deploying infrastructure, and offering dedicated DevOps support.
+- Building their in-house Nix skills, and integrating Nix with their workflows.
+- Developing additional features and tools.
+- Carrying out custom research and development.
 
 [Contact us](https://numtide.com/contact) if you have a project in mind,
 or if you need help with any of our supported tools, including this one.
