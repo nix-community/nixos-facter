@@ -20,7 +20,7 @@ func ReadUint64Array(arr unsafe.Pointer, length int) []uint64 {
 	result := make([]uint64, length)
 	for i := range result {
 		next := start + uintptr(i*C.sizeof_uint64_t)
-		result[i] = *((*uint64)(unsafe.Pointer(next)))
+		result[i] = *((*uint64)(unsafe.Pointer(next))) //nolint:govet
 	}
 	return result
 }
@@ -30,7 +30,7 @@ func ReadUintArray(arr unsafe.Pointer, length int) []uint {
 	result := make([]uint, length)
 	for i := range result {
 		next := start + uintptr(i*C.sizeof_uint)
-		result[i] = *((*uint)(unsafe.Pointer(next)))
+		result[i] = *((*uint)(unsafe.Pointer(next))) //nolint:govet
 	}
 	return result
 }
@@ -41,7 +41,7 @@ func ReadIntArray(arr unsafe.Pointer, length int) []int {
 	result := make([]int, length)
 	for i := range result {
 		next := start + uintptr(i*C.sizeof_uint)
-		result[i] = *((*int)(unsafe.Pointer(next)))
+		result[i] = *((*int)(unsafe.Pointer(next))) //nolint:govet
 	}
 	return result
 }
@@ -51,7 +51,7 @@ func ReadByteArray(arr unsafe.Pointer, length int) []byte {
 	result := make([]byte, length)
 	for i := range result {
 		next := start + uintptr(i*C.sizeof_uint)
-		result[i] = *((*byte)(unsafe.Pointer(next)))
+		result[i] = *((*byte)(unsafe.Pointer(next))) //nolint:govet
 	}
 	return result
 }
