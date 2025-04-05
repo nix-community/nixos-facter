@@ -30,7 +30,7 @@ in
     vendorHash = "sha256-A7ZuY8Gc/a0Y8O6UG2WHWxptHstJOxi4n9F8TY6zqiw=";
 
     buildInputs = [
-      systemdMinimal.dev
+      systemdMinimal
       hwinfo
     ];
 
