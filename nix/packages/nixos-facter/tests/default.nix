@@ -39,7 +39,7 @@ in
       extraTestScript = ''
         import json
 
-        report = json.loads(machine.succeed("nixos-facter --ephemeral"))
+        report = json.loads(machine.succeed("nixos-facter --ephemeral 2>&1"))
 
         with subtest("Capture system"):
             assert report['system'] == '${system}'
