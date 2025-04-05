@@ -11,12 +11,14 @@ import (
 
 	"github.com/numtide/nixos-facter/pkg/facter"
 	"github.com/numtide/nixos-facter/pkg/hwinfo"
+	"github.com/numtide/nixos-facter/pkg/build"
 )
 
 var (
 	outputPath       string
 	logLevel         string
 	hardwareFeatures []string
+	version					bool
 
 	scanner = facter.Scanner{}
 )
@@ -29,6 +31,10 @@ func init() {
 	flag.BoolVar(
 		&scanner.Ephemeral, "ephemeral", false,
 		"capture all ephemeral properties e.g. swap, filesystems and so on",
+	)
+	flag.BoolVar(
+		&version, "version", false,
+		"print version and exit",
 	)
 	flag.StringVar(&logLevel, "log-level", "info", "log level")
 
@@ -56,7 +62,7 @@ func init() {
 	defaultValues := strings.Join(defaultFeatures, ",")
 
 	const usage = `nixos-facter [flags]
-Hardware report generator
+Hardware report generator %s (%s)
 
 Usage:
   nixos-facter [flags]
@@ -66,6 +72,7 @@ Flags:
   -h, --help           help for nixos-facter
   -o, --output string  path to write the report
   --swap               capture swap entries
+  --version            version for nixos-facter
   --log-level string   log level, one of <error|warn|info|debug> (default "info")
   --hardware strings   Hardware items to probe.
                        Default: %s
@@ -74,11 +81,16 @@ Flags:
 `
 
 	// Custom usage function
-	flag.Usage = func() { fmt.Fprintf(os.Stderr, usage, defaultValues, possibleValues) }
+	flag.Usage = func() { fmt.Fprintf(os.Stderr, usage, build.Version, build.System, defaultValues, possibleValues) }
 }
 
 func Execute() {
 	flag.Parse()
+
+	if version {
+		fmt.Printf("%s\n", build.Version)
+		return
+	}
 
 	// Check if the effective user id is 0 e.g. root
 	if os.Geteuid() != 0 {
