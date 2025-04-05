@@ -1,6 +1,6 @@
 {
   lib,
-  version ? "0.3.1",
+  versionSuffix ? null,
   systemdMinimal,
   hwinfo,
   gcc,
@@ -8,12 +8,13 @@
   pkg-config,
   stdenv,
   buildGo124Module,
+  versionCheckHook,
 }: let
   fs = lib.fileset;
 in
   buildGo124Module (final: {
     pname = "nixos-facter";
-    inherit version;
+    version  = "0.3.2";
 
     src = fs.toSource {
       root = ../../..;
@@ -37,16 +38,18 @@ in
       gcc
       makeWrapper
       pkg-config
+      versionCheckHook
     ];
 
     ldflags = [
       "-s"
       "-w"
       "-X github.com/numtide/nixos-facter/pkg/build.Name=${final.pname}"
-      "-X github.com/numtide/nixos-facter/pkg/build.Version=v${final.version}"
+      "-X github.com/numtide/nixos-facter/pkg/build.Version=v${final.version}${toString versionSuffix}"
       "-X github.com/numtide/nixos-facter/pkg/build.System=${stdenv.hostPlatform.system}"
     ];
 
+    doInstallCheck = true;
     postInstall = let
       binPath = lib.makeBinPath [
         systemdMinimal

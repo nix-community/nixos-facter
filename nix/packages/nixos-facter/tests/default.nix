@@ -24,6 +24,8 @@ in
       installPhase = ''
         touch $out
       '';
+      doInstallCheck = false;
+      doCheck = false;
     });
 
     basic = diskoLib.testLib.makeDiskoTest {
