@@ -64,21 +64,21 @@ func (s *Scanner) Scan() (*Report, error) {
 
 	report.System = build.System
 
-	slog.Info("building report", "system", report.System, "version", report.Version)
+	slog.Debug("building report", "system", report.System, "version", report.Version)
 
 	var (
 		smbios  []hwinfo.Smbios
 		devices []hwinfo.HardwareDevice
 	)
 
-	slog.Info("scanning hardware", "features", s.Features)
+	slog.Debug("scanning hardware", "features", s.Features)
 
 	smbios, devices, err = hwinfo.Scan(s.Features, s.Ephemeral)
 	if err != nil {
 		return nil, fmt.Errorf("failed to scan hardware: %w", err)
 	}
 
-	slog.Info("reading IOMMU groups")
+	slog.Debug("reading IOMMU groups")
 
 	// read iommu groups
 	iommuGroups, err := hwinfo.IOMMUGroups()
@@ -86,7 +86,7 @@ func (s *Scanner) Scan() (*Report, error) {
 		return nil, fmt.Errorf("failed to read iommu groups: %w", err)
 	}
 
-	slog.Info("processing devices", "count", len(devices))
+	slog.Debug("processing devices", "count", len(devices))
 
 	for idx := range devices {
 		// lookup iommu group before adding to the report
@@ -103,7 +103,7 @@ func (s *Scanner) Scan() (*Report, error) {
 		}
 	}
 
-	slog.Info("processing smbios entries", "count", len(smbios))
+	slog.Debug("processing smbios entries", "count", len(smbios))
 
 	for idx := range smbios {
 		if err = report.Smbios.add(smbios[idx]); err != nil {
@@ -111,21 +111,21 @@ func (s *Scanner) Scan() (*Report, error) {
 		}
 	}
 
-	slog.Info("detecting virtualisation")
+	slog.Debug("detecting virtualisation")
 
 	if report.Virtualisation, err = virt.Detect(); err != nil {
 		return nil, fmt.Errorf("failed to detect virtualisation: %w", err)
 	}
 
 	if s.Ephemeral || s.Swap {
-		slog.Info("processing swap devices")
+		slog.Debug("processing swap devices")
 
 		if report.Swap, err = ephem.SwapEntries(); err != nil {
 			return nil, fmt.Errorf("failed to detect swap devices: %w", err)
 		}
 	}
 
-	slog.Info("report complete")
+	slog.Debug("report complete")
 
 	return &report, nil
 }
