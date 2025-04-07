@@ -28,7 +28,7 @@ type ResourceFc struct {
 	PortIDOk     bool         `json:"port_id_ok"`
 	Wwpn         uint64       `json:"wwpn"`
 	FcpLun       uint64       `json:"fcp_lun"`
-	PortID       uint         `json:"port_id"`
+	PortID       uint32       `json:"port_id"`
 	ControllerID byte         `json:"controller_id"`
 }
 
@@ -53,7 +53,7 @@ func NewResourceFc(res *C.hd_res_t, resType ResourceType) (*ResourceFc, error) {
 		PortIDOk:     bool(C.hd_res_fc_get_port_id_ok(fc)),
 		Wwpn:         uint64(fc.wwpn),
 		FcpLun:       uint64(fc.fcp_lun),
-		PortID:       uint(fc.port_id),
+		PortID:       uint32(fc.port_id),
 		ControllerID: byte(*fc.controller_id),
 	}, nil
 }

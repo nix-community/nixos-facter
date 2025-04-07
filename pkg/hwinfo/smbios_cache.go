@@ -11,9 +11,9 @@ type SmbiosCache struct {
 	Type          SmbiosType `json:"-"`
 	Handle        int        `json:"handle"`
 	Socket        string     `json:"socket"`       // socket designation
-	SizeMax       uint       `json:"size_max"`     // max cache size in kbytes
-	SizeCurrent   uint       `json:"size_current"` // current size in kbytes
-	Speed         uint       `json:"speed"`        // cache speed in nanoseconds
+	SizeMax       uint32     `json:"size_max"`     // max cache size in kbytes
+	SizeCurrent   uint32     `json:"size_current"` // current size in kbytes
+	Speed         uint32     `json:"speed"`        // cache speed in nanoseconds
 	Mode          *ID        `json:"mode"`         // operational mode
 	Enabled       bool       `json:"enabled"`
 	Location      *ID        `json:"location"` // cache location
@@ -35,9 +35,9 @@ func NewSmbiosCache(info C.smbios_cache_t) (*SmbiosCache, error) {
 		Type:          SmbiosTypeCache,
 		Handle:        int(info.handle),
 		Socket:        C.GoString(info.socket),
-		SizeMax:       uint(info.max_size),
-		SizeCurrent:   uint(info.current_size),
-		Speed:         uint(info.speed),
+		SizeMax:       uint32(info.max_size),
+		SizeCurrent:   uint32(info.current_size),
+		Speed:         uint32(info.speed),
 		Mode:          NewID(info.mode),
 		Enabled:       uint(info.state) == 1,
 		Location:      NewID(info.location),

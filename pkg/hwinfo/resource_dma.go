@@ -21,7 +21,7 @@ import (
 
 type ResourceDma struct {
 	Type    ResourceType `json:"type"`
-	Base    uint         `json:"base"`
+	Base    string       `json:"base"`
 	Enabled bool         `json:"enabled"`
 }
 
@@ -42,7 +42,7 @@ func NewResourceDma(res *C.hd_res_t, resType ResourceType) (*ResourceDma, error)
 
 	return &ResourceDma{
 		Type:    resType,
-		Base:    uint(dma.base),
+		Base:    fmt.Sprintf("0x%x", uint(dma.base)),
 		Enabled: bool(C.hd_res_dma_get_enabled(dma)),
 	}, nil
 }

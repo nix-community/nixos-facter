@@ -9,16 +9,16 @@ import (
 	"os"
 	"strings"
 
+	"github.com/numtide/nixos-facter/pkg/build"
 	"github.com/numtide/nixos-facter/pkg/facter"
 	"github.com/numtide/nixos-facter/pkg/hwinfo"
-	"github.com/numtide/nixos-facter/pkg/build"
 )
 
 var (
 	outputPath       string
 	logLevel         string
 	hardwareFeatures []string
-	version					bool
+	version          bool
 
 	scanner = facter.Scanner{}
 )

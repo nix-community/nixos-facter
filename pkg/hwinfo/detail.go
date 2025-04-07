@@ -90,15 +90,15 @@ func NewDetail(detail *C.hd_detail_t) (Detail, error) {
 }
 
 type MemoryRange struct {
-	Start uint   `json:"start"`
-	Size  uint   `json:"size"`
+	Start string `json:"start"`
+	Size  string `json:"size"`
 	Data  string `json:"-"` // hex encoded
 }
 
 func NewMemoryRange(mem C.memory_range_t) MemoryRange {
 	return MemoryRange{
-		Start: uint(mem.start),
-		Size:  uint(mem.size),
+		Start: fmt.Sprintf("0x%x", uint(mem.start)),
+		Size:  fmt.Sprintf("0x%x", uint(mem.size)),
 		Data:  hex.EncodeToString(C.GoBytes(unsafe.Pointer(&mem.data), C.int(mem.size))), //nolint:gocritic
 	}
 }

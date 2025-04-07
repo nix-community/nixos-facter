@@ -60,7 +60,7 @@ func Scan(probes []ProbeFeature, ephemeral bool) ([]Smbios, []HardwareDevice, er
 	}
 
 	var hardwareItems []HardwareDevice
-	var deviceIdx uint
+	var deviceIdx uint16
 	for hd := data.hd; hd != nil; hd = hd.next {
 		item, err := NewHardwareDevice(hd, ephemeral)
 		if err != nil {

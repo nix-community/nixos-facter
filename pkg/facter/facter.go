@@ -17,7 +17,7 @@ import (
 type Report struct {
 	// Version is a monotonically increasing number,
 	// used to indicate breaking changes or new features in the report output.
-	Version uint `json:"version"`
+	Version uint16 `json:"version"`
 
 	// System indicates the system architecture e.g. x86_64-linux.
 	System string `json:"system"`
