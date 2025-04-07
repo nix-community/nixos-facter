@@ -16,7 +16,7 @@ import (
 
 type ResourceCache struct {
 	Type ResourceType `json:"type"`
-	Size uint         `json:"size"`
+	Size string       `json:"size"`
 }
 
 func (r ResourceCache) ResourceType() ResourceType {
@@ -36,6 +36,6 @@ func NewResourceCache(res *C.hd_res_t, resType ResourceType) (*ResourceCache, er
 
 	return &ResourceCache{
 		Type: resType,
-		Size: uint(cache.size),
+		Size: fmt.Sprintf("0x%x", uint(cache.size)),
 	}, nil
 }

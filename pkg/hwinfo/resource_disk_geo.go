@@ -26,10 +26,10 @@ const (
 
 type ResourceDiskGeo struct {
 	Type      ResourceType `json:"type"`
-	Cylinders uint         `json:"cylinders"`
-	Heads     uint         `json:"heads"`
-	Sectors   uint         `json:"sectors"`
-	Size      uint64       `json:"size"`
+	Cylinders uint32       `json:"cylinders"`
+	Heads     uint8        `json:"heads"`
+	Sectors   uint32       `json:"sectors"`
+	Size      string       `json:"size"`
 	GeoType   GeoType      `json:"geo_type"`
 }
 
@@ -50,10 +50,10 @@ func NewResourceDiskGeo(res *C.hd_res_t, resType ResourceType) (*ResourceDiskGeo
 
 	return &ResourceDiskGeo{
 		Type:      resType,
-		Cylinders: uint(disk.cyls),
-		Heads:     uint(disk.heads),
-		Sectors:   uint(disk.sectors),
-		Size:      uint64(disk.size),
+		Cylinders: uint32(disk.cyls),
+		Heads:     uint8(disk.heads),
+		Sectors:   uint32(disk.sectors),
+		Size:      fmt.Sprintf("0x%x", uint64(disk.size)),
 		GeoType:   GeoType(disk.geotype),
 	}, nil
 }
