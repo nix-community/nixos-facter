@@ -5,6 +5,7 @@ package hwinfo
 #include <hd.h>
 */
 import "C"
+import "fmt"
 
 // SmbiosMemoryArray captures physical memory array information (consists of several memory devices).
 type SmbiosMemoryArray struct {
@@ -13,9 +14,9 @@ type SmbiosMemoryArray struct {
 	Location    *ID        `json:"location"`     // memory device location
 	Usage       *ID        `json:"usage"`        // memory usage
 	ECC         *ID        `json:"ecc"`          // ECC types
-	MaxSize     uint       `json:"max_size"`     // max memory size in KB
+	MaxSize     string     `json:"max_size"`     // max memory size in KB
 	ErrorHandle int        `json:"error_handle"` // points to error info record; 0xfffe: not supported, 0xffff: no error
-	Slots       uint       `json:"slots"`        // slots or sockets for this device
+	Slots       uint16     `json:"slots"`        // slots or sockets for this device
 }
 
 func (s SmbiosMemoryArray) SmbiosType() SmbiosType {
@@ -29,8 +30,8 @@ func NewSmbiosMemArray(info C.smbios_memarray_t) (*SmbiosMemoryArray, error) {
 		Location:    NewID(info.location),
 		Usage:       NewID(info.use),
 		ECC:         NewID(info.ecc),
-		MaxSize:     uint(info.max_size),
+		MaxSize:     fmt.Sprintf("0x%x", uint(info.max_size)),
 		ErrorHandle: int(info.error_handle),
-		Slots:       uint(info.slots),
+		Slots:       uint16(info.slots),
 	}, nil
 }

@@ -20,9 +20,9 @@ import (
 
 type ResourceMonitor struct {
 	Type              ResourceType `json:"type"`
-	Width             uint         `json:"width"`
-	Height            uint         `json:"height"`
-	VerticalFrequency uint         `json:"vertical_frequency"`
+	Width             uint32       `json:"width"`
+	Height            uint32       `json:"height"`
+	VerticalFrequency uint16       `json:"vertical_frequency"`
 	Interlaced        bool         `json:"interlaced"`
 }
 
@@ -43,9 +43,9 @@ func NewResourceMonitor(res *C.hd_res_t, resType ResourceType) (*ResourceMonitor
 
 	return &ResourceMonitor{
 		Type:              resType,
-		Width:             uint(monitor.width),
-		Height:            uint(monitor.height),
-		VerticalFrequency: uint(monitor.vfreq),
+		Width:             uint32(monitor.width),
+		Height:            uint32(monitor.height),
+		VerticalFrequency: uint16(monitor.vfreq),
 		Interlaced:        bool(C.hd_res_monitor_get_interlaced(monitor)),
 	}, nil
 }

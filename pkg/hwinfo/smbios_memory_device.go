@@ -20,14 +20,14 @@ type SmbiosMemoryDevice struct {
 	PartNumber        string     `json:"part_number"`
 	ArrayHandle       int        `json:"array_handle"` // memory array this device belongs to
 	ErrorHandle       int        `json:"error_handle"` // points to error info record; 0xfffe: not supported, 0xffff: no error
-	Width             uint       `json:"width"`        // data width in bits
-	ECCBits           uint       `json:"ecc_bits"`     // ecc bits
+	Width             uint16     `json:"width"`        // data width in bits
+	ECCBits           uint8      `json:"ecc_bits"`     // ecc bits
 	Size              uint       `json:"size"`         // kB
 	FormFactor        *ID        `json:"form_factor"`
-	Set               uint       `json:"set"` // 0: does not belong to a set; 1-0xfe: set number; 0xff: unknown
+	Set               uint8      `json:"set"` // 0: does not belong to a set; 1-0xfe: set number; 0xff: unknown
 	MemoryType        *ID        `json:"memory_type"`
 	MemoryTypeDetails []string   `json:"memory_type_details"`
-	Speed             uint       `json:"speed"` // MHz
+	Speed             uint32     `json:"speed"` // MHz
 }
 
 func (s SmbiosMemoryDevice) SmbiosType() SmbiosType {
@@ -46,13 +46,13 @@ func NewSmbiosMemDevice(info C.smbios_memdevice_t) (*SmbiosMemoryDevice, error) 
 		PartNumber:        C.GoString(info.part),
 		ArrayHandle:       int(info.array_handle),
 		ErrorHandle:       int(info.error_handle),
-		Width:             uint(info.width),
-		ECCBits:           uint(info.eccbits),
+		Width:             uint16(info.width),
+		ECCBits:           uint8(info.eccbits),
 		Size:              uint(info.size),
 		FormFactor:        NewID(info.form),
-		Set:               uint(info.set),
+		Set:               uint8(info.set),
 		MemoryType:        NewID(info.mem_type),
 		MemoryTypeDetails: ReadStringList(info.type_detail.str),
-		Speed:             uint(info.speed),
+		Speed:             uint32(info.speed),
 	}, nil
 }

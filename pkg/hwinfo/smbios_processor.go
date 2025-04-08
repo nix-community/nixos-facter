@@ -23,8 +23,8 @@ type SmbiosProcessor struct {
 	ProcessorID     uint64     `json:"-"` // omit from json
 	ProcessorStatus *ID        `json:"processor_status"`
 	Voltage         uint       `json:"-"`
-	ClockExt        uint       `json:"clock_ext"`       // MHz
-	ClockMax        uint       `json:"clock_max"`       // MHz
+	ClockExt        uint32     `json:"clock_ext"`       // MHz
+	ClockMax        uint32     `json:"clock_max"`       // MHz
 	ClockCurrent    uint       `json:"-"`               // MHz
 	CacheHandleL1   int        `json:"cache_handle_l1"` // handle of L1 cache
 	CacheHandleL2   int        `json:"cache_handle_l2"` // handle of L2 cache
@@ -52,8 +52,8 @@ func NewSmbiosProcessor(info C.smbios_processor_t) (*SmbiosProcessor, error) {
 		ProcessorID:     uint64(info.cpu_id),
 		ProcessorStatus: NewID(info.cpu_status),
 		Voltage:         uint(info.voltage),
-		ClockExt:        uint(info.ext_clock),
-		ClockMax:        uint(info.max_speed),
+		ClockExt:        uint32(info.ext_clock),
+		ClockMax:        uint32(info.max_speed),
 		ClockCurrent:    uint(info.current_speed),
 		CacheHandleL1:   int(info.l1_cache),
 		CacheHandleL2:   int(info.l2_cache),

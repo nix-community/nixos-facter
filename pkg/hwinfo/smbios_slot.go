@@ -15,7 +15,7 @@ type SmbiosSlot struct {
 	BusWidth    *ID        `json:"bus_width"`
 	Usage       *ID        `json:"usage"`
 	Length      *ID        `json:"length"`
-	ID          uint       `json:"id"`
+	ID          uint16     `json:"id"`
 	Features    []string   `json:"features,omitempty"`
 }
 
@@ -32,7 +32,7 @@ func NewSmbiosSlot(info C.smbios_slot_t) (*SmbiosSlot, error) {
 		BusWidth:    NewID(info.bus_width),
 		Usage:       NewID(info.usage),
 		Length:      NewID(info.length),
-		ID:          uint(info.id),
+		ID:          uint16(info.id),
 		Features:    ReadStringList(info.feature.str),
 	}, nil
 }

@@ -16,11 +16,11 @@ import (
 
 type ResourceFrameBuffer struct {
 	Type         ResourceType `json:"type"`
-	Width        uint         `json:"width"`
-	Height       uint         `json:"height"`
-	BytesPerLine uint         `json:"bytes_per_line"`
-	ColorBits    uint         `json:"color_bits"`
-	Mode         uint         `json:"mode"`
+	Width        uint32       `json:"width"`
+	Height       uint32       `json:"height"`
+	BytesPerLine uint16       `json:"bytes_per_line"`
+	ColorBits    uint16       `json:"color_bits"`
+	Mode         uint16       `json:"mode"`
 }
 
 func (r ResourceFrameBuffer) ResourceType() ResourceType {
@@ -40,10 +40,10 @@ func NewResourceFrameBuffer(res *C.hd_res_t, resType ResourceType) (*ResourceFra
 
 	return &ResourceFrameBuffer{
 		Type:         resType,
-		Width:        uint(fb.width),
-		Height:       uint(fb.height),
-		BytesPerLine: uint(fb.bytes_p_line),
-		ColorBits:    uint(fb.colorbits),
-		Mode:         uint(fb.mode),
+		Width:        uint32(fb.width),
+		Height:       uint32(fb.height),
+		BytesPerLine: uint16(fb.bytes_p_line),
+		ColorBits:    uint16(fb.colorbits),
+		Mode:         uint16(fb.mode),
 	}, nil
 }

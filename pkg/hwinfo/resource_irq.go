@@ -20,8 +20,8 @@ import (
 
 type ResourceIrq struct {
 	Type      ResourceType `json:"type"`
-	Base      uint         `json:"base"`
-	Triggered uint         `json:"triggered"`
+	Base      uint16       `json:"base"`
+	Triggered uint16       `json:"triggered"`
 	Enabled   bool         `json:"enabled"`
 }
 
@@ -42,8 +42,8 @@ func NewResourceIrq(res *C.hd_res_t, resType ResourceType) (*ResourceIrq, error)
 
 	return &ResourceIrq{
 		Type:      resType,
-		Base:      uint(irq.base),
-		Triggered: uint(irq.triggered),
+		Base:      uint16(irq.base),
+		Triggered: uint16(irq.triggered),
 		Enabled:   bool(C.hd_res_irq_get_enabled(irq)),
 	}, nil
 }

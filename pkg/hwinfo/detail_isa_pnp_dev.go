@@ -64,8 +64,8 @@ func NewIsaPnpCard(card *C.isapnp_card_t) (*IsaPnpCard, error) {
 type DetailIsaPnpDevice struct {
 	Type   DetailType  `json:"-"`
 	Card   *IsaPnpCard `json:"card"`
-	Device int         `json:"device"`
-	Flags  uint        `json:"flags"`
+	Device uint32      `json:"device"`
+	Flags  uint32      `json:"flags"`
 }
 
 func (d DetailIsaPnpDevice) DetailType() DetailType {
@@ -83,7 +83,7 @@ func NewDetailIsaPnpDevice(pnp C.hd_detail_isapnp_t) (*DetailIsaPnpDevice, error
 	return &DetailIsaPnpDevice{
 		Type:   DetailTypeIsaPnp,
 		Card:   card,
-		Device: int(data.dev),
-		Flags:  uint(data.flags),
+		Device: uint32(data.dev),
+		Flags:  uint32(data.flags),
 	}, nil
 }

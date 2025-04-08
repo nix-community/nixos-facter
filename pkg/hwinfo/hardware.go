@@ -310,11 +310,11 @@ type DeviceNumber struct {
 	// Type indicates if the device is a character or a block device.
 	Type int `json:"type"`
 	// Major identifies the driver for a device.
-	Major uint `json:"major"`
+	Major uint16 `json:"major"`
 	// Minor is used by the device driver to distinguish between different devices it controls, or different instances
 	// of the same device.
-	Minor uint `json:"minor"`
-	Range uint `json:"range"`
+	Minor uint16 `json:"minor"`
+	Range uint32 `json:"range"`
 }
 
 // IsEmpty checks if the DeviceNumber has all zero values for its fields.
@@ -327,9 +327,9 @@ func (d DeviceNumber) IsEmpty() bool {
 func NewDeviceNumber(num C.hd_dev_num_t) *DeviceNumber {
 	result := DeviceNumber{
 		Type:  int(num._type),
-		Major: uint(num.major),
-		Minor: uint(num.minor),
-		Range: uint(num._range),
+		Major: uint16(num.major),
+		Minor: uint16(num.minor),
+		Range: uint32(num._range),
 	}
 	if result.IsEmpty() {
 		return nil
@@ -403,10 +403,10 @@ const (
 // HardwareDevice represents a hardware component detected in the system.
 type HardwareDevice struct {
 	// Index is a unique index provided by hwinfo, starting at 1
-	Index uint `json:"index"`
+	Index uint16 `json:"index"`
 
 	// AttachedTo is the index of the hardware device this is attached to
-	AttachedTo uint `json:"attached_to"`
+	AttachedTo uint16 `json:"attached_to"`
 
 	// Class represents the type of the hardware component.
 	Class HardwareClass `json:"-"`
@@ -514,7 +514,7 @@ type HardwareDevice struct {
 
 	// HotplugSlot indicates the slot this device is connected to, if any (e.g. PCMCIA socket).
 	// Counts are 1-based (0: no info available).
-	HotplugSlot uint `json:"hotplug_slot,omitempty"`
+	HotplugSlot uint16 `json:"hotplug_slot,omitempty"`
 
 	// Driver is the currently active driver, if any.
 	Driver string `json:"driver,omitempty"`
@@ -593,8 +593,8 @@ func NewHardwareDevice(hd *C.hd_t, ephemeral bool) (*HardwareDevice, error) {
 	}
 
 	result := &HardwareDevice{
-		Index:             uint(hd.idx),
-		AttachedTo:        uint(hd.attached_to),
+		Index:             uint16(hd.idx),
+		AttachedTo:        uint16(hd.attached_to),
 		BusType:           NewID(hd.bus),
 		BaseClass:         NewID(hd.base_class),
 		SubClass:          NewID(hd.sub_class),
@@ -650,7 +650,7 @@ func NewHardwareDevice(hd *C.hd_t, ephemeral bool) (*HardwareDevice, error) {
 	hotplug := Hotplug(hd.hotplug)
 	if hotplug != HotplugNone {
 		result.Hotplug = &hotplug
-		result.HotplugSlot = uint(hd.hotplug_slot)
+		result.HotplugSlot = uint16(hd.hotplug_slot)
 	}
 
 	// sort some fields to ensure stable report output

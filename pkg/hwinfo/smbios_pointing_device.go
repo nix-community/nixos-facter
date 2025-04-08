@@ -12,7 +12,7 @@ type SmbiosPointingDevice struct {
 	Handle    int        `json:"handle"`
 	MouseType *ID        `json:"mouse_type"`
 	Interface *ID        `json:"interface"`
-	Buttons   uint       `json:"buttons"`
+	Buttons   uint16     `json:"buttons"`
 }
 
 func (s SmbiosPointingDevice) SmbiosType() SmbiosType {
@@ -25,6 +25,6 @@ func NewSmbiosMouse(info C.smbios_mouse_t) (*SmbiosPointingDevice, error) {
 		Handle:    int(info.handle),
 		MouseType: NewID(info.mtype),
 		Interface: NewID(info._interface),
-		Buttons:   uint(info.buttons),
+		Buttons:   uint16(info.buttons),
 	}, nil
 }

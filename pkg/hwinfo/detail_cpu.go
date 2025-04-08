@@ -10,7 +10,11 @@ bool cpu_info_fpu_exception(cpu_info_t *info) { return info->fpu_exception; }
 bool cpu_info_write_protect(cpu_info_t *info) { return info->write_protect; }
 */
 import "C"
-import "regexp"
+
+import (
+	"fmt"
+	"regexp"
+)
 
 //go:generate enumer -type=CPUArch -json -transform=snake -trimprefix CPUArch -output=./detail_enum_cpu_arch.go
 type CPUArch uint //nolint:recvcheck
@@ -36,8 +40,8 @@ const (
 )
 
 type AddressSizes struct {
-	Physical uint `json:"physical,omitempty"`
-	Virtual  uint `json:"virtual,omitempty"`
+	Physical string `json:"physical,omitempty"`
+	Virtual  string `json:"virtual,omitempty"`
 }
 
 type DetailCPU struct {
@@ -48,9 +52,9 @@ type DetailCPU struct {
 	VendorName string `json:"vendor_name,omitempty"`
 	ModelName  string `json:"model_name,omitempty"`
 
-	Family   uint `json:"family"`
-	Model    uint `json:"model"`
-	Stepping uint `json:"stepping"`
+	Family   uint16 `json:"family"`
+	Model    uint16 `json:"model"`
+	Stepping uint32 `json:"stepping"`
 
 	Platform string `json:"platform,omitempty"`
 
@@ -59,21 +63,21 @@ type DetailCPU struct {
 	PowerManagement []string `json:"power_management,omitempty"`
 
 	Bogo  float64 `json:"bogo"`
-	Cache uint    `json:"cache,omitempty"`
-	Units uint    `json:"units,omitempty"`
+	Cache uint32  `json:"cache,omitempty"`
+	Units uint32  `json:"units,omitempty"`
 	Clock uint    `json:"-"`
 
 	// x86 only fields
-	PhysicalID     uint         `json:"physical_id"`
-	Siblings       uint         `json:"siblings,omitempty"`
-	Cores          uint         `json:"cores,omitempty"`
-	CoreID         uint         `json:"-"`
+	PhysicalID     uint16       `json:"physical_id"`
+	Siblings       uint16       `json:"siblings,omitempty"`
+	Cores          uint16       `json:"cores,omitempty"`
+	CoreID         uint16       `json:"-"`
 	Fpu            bool         `json:"fpu"`
 	FpuException   bool         `json:"fpu_exception"`
-	CpuidLevel     uint         `json:"cpuid_level,omitempty"`
+	CpuidLevel     uint8        `json:"cpuid_level,omitempty"`
 	WriteProtect   bool         `json:"write_protect"`
-	TlbSize        uint         `json:"tlb_size,omitempty"`
-	ClflushSize    uint         `json:"clflush_size,omitempty"`
+	TlbSize        uint16       `json:"tlb_size,omitempty"`
+	ClflushSize    uint16       `json:"clflush_size,omitempty"`
 	CacheAlignment int          `json:"cache_alignment,omitempty"`
 	AddressSizes   AddressSizes `json:"address_sizes,omitempty"`
 	Apicid         uint         `json:"-"`
@@ -97,9 +101,9 @@ func NewDetailCPU(cpu C.hd_detail_cpu_t) (*DetailCPU, error) {
 		VendorName:   C.GoString(data.vend_name),
 		ModelName:    stripCPUFreq(C.GoString(data.model_name)),
 
-		Family:   uint(data.family),
-		Model:    uint(data.model),
-		Stepping: uint(data.stepping),
+		Family:   uint16(data.family),
+		Model:    uint16(data.model),
+		Stepping: uint32(data.stepping),
 
 		Platform: C.GoString(data.platform),
 
@@ -109,25 +113,25 @@ func NewDetailCPU(cpu C.hd_detail_cpu_t) (*DetailCPU, error) {
 
 		Clock: uint(data.clock),
 		Bogo:  float64(data.bogo),
-		Cache: uint(data.cache),
-		Units: uint(data.units),
+		Cache: uint32(data.cache),
+		Units: uint32(data.units),
 
-		PhysicalID:     uint(data.physical_id),
-		Siblings:       uint(data.siblings),
-		Cores:          uint(data.cores),
-		CoreID:         uint(data.core_id),
+		PhysicalID:     uint16(data.physical_id),
+		Siblings:       uint16(data.siblings),
+		Cores:          uint16(data.cores),
+		CoreID:         uint16(data.core_id),
 		Apicid:         uint(data.apicid),
 		ApicidInitial:  uint(data.apicid_initial),
 		Fpu:            bool(C.cpu_info_fpu(data)),
 		FpuException:   bool(C.cpu_info_fpu_exception(data)),
-		CpuidLevel:     uint(data.cpuid_level),
+		CpuidLevel:     uint8(data.cpuid_level),
 		WriteProtect:   bool(C.cpu_info_write_protect(data)),
-		TlbSize:        uint(data.tlb_size),
-		ClflushSize:    uint(data.clflush_size),
+		TlbSize:        uint16(data.tlb_size),
+		ClflushSize:    uint16(data.clflush_size),
 		CacheAlignment: int(data.cache_alignment),
 		AddressSizes: AddressSizes{
-			Physical: uint(data.address_size_physical),
-			Virtual:  uint(data.address_size_virtual),
+			Physical: fmt.Sprintf("0x%x", uint(data.address_size_physical)),
+			Virtual:  fmt.Sprintf("0x%x", uint(data.address_size_virtual)),
 		},
 	}, nil
 }

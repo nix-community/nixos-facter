@@ -34,7 +34,7 @@ type DriverInfoX11 struct {
 		C24 byte `json:"c24"`
 		C32 byte `json:"c32"`
 	} `json:",omitempty"`
-	DacSpeed   uint     `json:"dac_speed"`            // max. ramdac clock
+	DacSpeed   uint32   `json:"dac_speed"`            // max. ramdac clock
 	Extensions []string `json:"extensions,omitempty"` // additional X extensions to load ('Module' section)
 	Options    []string `json:"options,omitempty"`    // special server options
 	Raw        []string `json:"raw,omitempty"`        // extra info to add to XF86Config
@@ -53,7 +53,7 @@ func NewDriverInfoX11(info C.driver_info_x11_t) DriverInfoX11 {
 		Server:      C.GoString(info.server),
 		XF86Version: C.GoString(info.xf86_ver),
 		Supports3D:  bool(C.driver_info_x11_supports_3d(info)),
-		DacSpeed:    uint(info.dacspeed),
+		DacSpeed:    uint32(info.dacspeed),
 		Extensions:  ReadStringList(info.extensions),
 		Options:     ReadStringList(info.options),
 		Raw:         ReadStringList(info.raw),

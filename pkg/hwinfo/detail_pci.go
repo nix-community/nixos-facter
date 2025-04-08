@@ -39,17 +39,17 @@ type DetailPci struct {
 	Type DetailType `json:"-"`
 
 	Flags    []PciFlag `json:"flags,omitempty"` //
-	Function uint      `json:"function"`
+	Function uint32    `json:"function"`
 
 	// todo map pci constants from pci.h?
-	Command      uint `json:"command"`       // PCI_COMMAND
-	HeaderType   uint `json:"header_type"`   // PCI_HEADER_TYPE
-	SecondaryBus uint `json:"secondary_bus"` // > 0 for PCI & CB bridges
+	Command      uint32 `json:"command"`       // PCI_COMMAND
+	HeaderType   uint32 `json:"header_type"`   // PCI_HEADER_TYPE
+	SecondaryBus uint32 `json:"secondary_bus"` // > 0 for PCI & CB bridges
 
-	Irq uint `json:"irq"` // used irq if any
+	Irq uint16 `json:"irq"` // used irq if any
 	// Programming Interface Byte: a read-only register that specifies a register-level programming interface for the
 	// device.
-	ProgIf uint `json:"prog_if"`
+	ProgIf uint16 `json:"prog_if"`
 
 	// already included in the parent model, so we omit from JSON output
 	Bus  uint `json:"-"`
@@ -97,21 +97,21 @@ func NewDetailPci(pci C.hd_detail_pci_t) (*DetailPci, error) {
 		DataExtLength:  uint(data.data_ext_len),
 		Log:            C.GoString(data.log),
 		Flags:          ParsePciFlags(uint(data.flags)),
-		Command:        uint(data.cmd),
-		HeaderType:     uint(data.hdr_type),
-		SecondaryBus:   uint(data.secondary_bus),
+		Command:        uint32(data.cmd),
+		HeaderType:     uint32(data.hdr_type),
+		SecondaryBus:   uint32(data.secondary_bus),
 		Bus:            uint(data.bus),
 		Slot:           uint(data.slot),
-		Function:       uint(data._func),
+		Function:       uint32(data._func),
 		BaseClass:      uint(data.base_class),
 		SubClass:       uint(data.sub_class),
-		ProgIf:         uint(data.prog_if),
+		ProgIf:         uint16(data.prog_if),
 		Device:         uint(data.dev),
 		Vendor:         uint(data.vend),
 		SubDevice:      uint(data.sub_dev),
 		SubVendor:      uint(data.sub_vend),
 		Revision:       uint(data.rev),
-		Irq:            uint(data.irq),
+		Irq:            uint16(data.irq),
 		BaseAddress:    [7]uint64(ReadUint64Array(unsafe.Pointer(&data.base_addr), 7)),
 		BaseLength:     [7]uint64(ReadUint64Array(unsafe.Pointer(&data.base_len), 7)),
 		AddressFlags:   [7]uint(ReadUintArray(unsafe.Pointer(&data.addr_flags), 7)),
