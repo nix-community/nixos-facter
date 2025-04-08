@@ -4,21 +4,22 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"github.com/numtide/nixos-facter/pkg/udev"
 	"log"
 	"log/slog"
 	"os"
 	"strings"
 
+	"github.com/numtide/nixos-facter/pkg/build"
 	"github.com/numtide/nixos-facter/pkg/facter"
 	"github.com/numtide/nixos-facter/pkg/hwinfo"
-	"github.com/numtide/nixos-facter/pkg/build"
 )
 
 var (
 	outputPath       string
 	logLevel         string
 	hardwareFeatures []string
-	version					bool
+	version          bool
 
 	scanner = facter.Scanner{}
 )
@@ -85,6 +86,13 @@ Flags:
 }
 
 func Execute() {
+	// check udev version
+	if udevVersion, err := udev.Version(); err != nil {
+		log.Fatalf("failed to get systemd version: %v", err)
+	} else if udevVersion < 252 {
+		log.Fatalf("udev version %d is too old, please upgrade to at least 252", udevVersion)
+	}
+
 	flag.Parse()
 
 	if version {
