@@ -21,7 +21,7 @@ type Smbios struct {
 	Cache []hwinfo.Smbios `json:"cache,omitempty"`
 
 	// Chassis holds information related to the system's chassis, including manufacturer, version, and lock presence.
-	Chassis *hwinfo.SmbiosChassis `json:"chassis,omitempty"`
+	Chassis []hwinfo.Smbios `json:"chassis,omitempty"`
 
 	// Config captures system configuration options.
 	Config *hwinfo.SmbiosConfig `json:"config,omitempty"`
@@ -97,14 +97,6 @@ func (s *Smbios) add(item hwinfo.Smbios) error {
 		}
 	case hwinfo.SmbiosTypeCache:
 		s.Cache = append(s.Cache, item)
-	case hwinfo.SmbiosTypeChassis:
-		if s.Chassis != nil {
-			return errors.New("chassis field is already set")
-		} else if chassis, ok := item.(*hwinfo.SmbiosChassis); !ok {
-			return fmt.Errorf("expected hwinfo.SmbiosChassis, found %T", item)
-		} else {
-			s.Chassis = chassis
-		}
 	case hwinfo.SmbiosTypeConfig:
 		if s.Config != nil {
 			return errors.New("config field is already set")
@@ -113,6 +105,8 @@ func (s *Smbios) add(item hwinfo.Smbios) error {
 		} else {
 			s.Config = config
 		}
+	case hwinfo.SmbiosTypeChassis:
+		s.Chassis = append(s.Chassis, item)
 	case hwinfo.SmbiosTypeGroupAssociations:
 		s.GroupAssociations = append(s.GroupAssociations, item)
 	case hwinfo.SmbiosTypeHardwareSecurity:

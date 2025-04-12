@@ -4,11 +4,12 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/numtide/nixos-facter/pkg/udev"
 	"log"
 	"log/slog"
 	"os"
 	"strings"
+
+	"github.com/numtide/nixos-facter/pkg/udev"
 
 	"github.com/numtide/nixos-facter/pkg/build"
 	"github.com/numtide/nixos-facter/pkg/facter"
