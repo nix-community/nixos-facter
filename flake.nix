@@ -9,7 +9,7 @@
       inputs.systems.follows = "systems";
     };
     systems.url = "github:nix-systems/default";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "systems";
     treefmt-nix = {
