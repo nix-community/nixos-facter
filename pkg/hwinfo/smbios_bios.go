@@ -19,7 +19,7 @@ type SmbiosBios struct {
 	Date         string     `json:"date"`
 	Features     []string   `json:"features"`
 	StartAddress string     `json:"start_address"`
-	RomSize      uint       `json:"rom_size"`
+	RomSize      uint32     `json:"rom_size"`
 }
 
 func (s SmbiosBios) SmbiosType() SmbiosType {
@@ -35,6 +35,6 @@ func NewSmbiosBiosInfo(info C.smbios_biosinfo_t) (*SmbiosBios, error) {
 		Date:         C.GoString(info.date),
 		Features:     ReadStringList(info.feature.str),
 		StartAddress: fmt.Sprintf("0x%x", uint(info.start)),
-		RomSize:      uint(info.rom_size),
+		RomSize:      uint32(info.rom_size),
 	}, nil
 }

@@ -16,9 +16,9 @@ import (
 
 type ResourceBaud struct {
 	Type      ResourceType `json:"type"`
-	Speed     uint         `json:"speed"`
-	Bits      uint         `json:"bits"`
-	StopBits  uint         `json:"stop_bits"`
+	Speed     uint32       `json:"speed"`
+	Bits      uint32       `json:"bits"`
+	StopBits  uint32       `json:"stop_bits"`
 	Parity    byte         `json:"parity"`
 	Handshake byte         `json:"handshake"`
 }
@@ -40,9 +40,9 @@ func NewResourceBaud(res *C.hd_res_t, resType ResourceType) (*ResourceBaud, erro
 
 	return &ResourceBaud{
 		Type:      resType,
-		Speed:     uint(baud.speed),
-		Bits:      uint(baud.bits),
-		StopBits:  uint(baud.stopbits),
+		Speed:     uint32(baud.speed),
+		Bits:      uint32(baud.bits),
+		StopBits:  uint32(baud.stopbits),
 		Parity:    byte(baud.parity),
 		Handshake: byte(baud.handshake),
 	}, nil

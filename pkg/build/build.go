@@ -10,5 +10,5 @@ var (
 	// It is set via Nix to match the Nixpkgs system.
 	System = ""
 	// ReportVersion is used to indicate significant changes in the report output and is embedded JSON report produced.
-	ReportVersion uint = 1
+	ReportVersion uint16 = 1
 )

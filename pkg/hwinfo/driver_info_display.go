@@ -12,11 +12,11 @@ type DriverInfoDisplay struct {
 	DBEntry0 []string `json:"db_entry_0,omitempty"`
 	DBEntry1 []string `json:"db_entry_1,omitempty"`
 
-	Width                 uint        `json:"width"`
-	Height                uint        `json:"height"`
+	Width                 uint32      `json:"width"`
+	Height                uint32      `json:"height"`
 	VerticalSync          SyncRange   `json:"vertical_sync"`
 	HorizontalSync        SyncRange   `json:"horizontal_sync"`
-	Bandwidth             uint        `json:"bandwidth"`
+	Bandwidth             uint32      `json:"bandwidth"`
 	HorizontalSyncTimings SyncTimings `json:"horizontal_sync_timings"`
 	VerticalSyncTimings   SyncTimings `json:"vertical_sync_timings"`
 	HorizontalFlag        byte        `json:"horizontal_flag"`
@@ -32,27 +32,27 @@ func NewDriverInfoDisplay(info C.driver_info_display_t) DriverInfoDisplay {
 		Type:     DriverInfoTypeDisplay,
 		DBEntry0: ReadStringList(info.hddb0),
 		DBEntry1: ReadStringList(info.hddb1),
-		Width:    uint(info.width),
-		Height:   uint(info.height),
+		Width:    uint32(info.width),
+		Height:   uint32(info.height),
 		VerticalSync: SyncRange{
-			Min: uint(info.min_vsync),
-			Max: uint(info.max_vsync),
+			Min: uint16(info.min_vsync),
+			Max: uint16(info.max_vsync),
 		},
 		HorizontalSync: SyncRange{
-			Min: uint(info.min_hsync),
-			Max: uint(info.max_hsync),
+			Min: uint16(info.min_hsync),
+			Max: uint16(info.max_hsync),
 		},
 		HorizontalSyncTimings: SyncTimings{
-			Disp:      uint(info.hdisp),
-			SyncStart: uint(info.hsyncstart),
-			SyncEnd:   uint(info.hsyncend),
-			Total:     uint(info.htotal),
+			Disp:      uint16(info.hdisp),
+			SyncStart: uint16(info.hsyncstart),
+			SyncEnd:   uint16(info.hsyncend),
+			Total:     uint32(info.htotal),
 		},
 		VerticalSyncTimings: SyncTimings{
-			Disp:      uint(info.vdisp),
-			SyncStart: uint(info.vsyncstart),
-			SyncEnd:   uint(info.vsyncend),
-			Total:     uint(info.vtotal),
+			Disp:      uint16(info.vdisp),
+			SyncStart: uint16(info.vsyncstart),
+			SyncEnd:   uint16(info.vsyncend),
+			Total:     uint32(info.vtotal),
 		},
 		HorizontalFlag: byte(info.hflag),
 		VerticalFlag:   byte(info.vflag),
