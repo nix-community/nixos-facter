@@ -49,7 +49,9 @@ import "C"
 import (
 	"errors"
 	"fmt"
+	"os/exec"
 	"strconv"
+	"strings"
 	"unsafe"
 
 	"github.com/numtide/nixos-facter/pkg/linux/input"
@@ -305,4 +307,22 @@ func Read(sysPath string) (*Udev, error) {
 	}
 
 	return NewUdev(env)
+}
+
+// Version retrieves the systemd major version by executing the "udevadm --version" command and parsing its output.
+// It returns the parsed version as an uint64, or an error if the command execution or parsing fails.
+func Version() (uint64, error) {
+	cmd := exec.Command("udevadm", "--version")
+
+	output, err := cmd.Output()
+	if err != nil {
+		return 0, fmt.Errorf("failed to run udevadm --version: %w", err)
+	}
+
+	lines := strings.Split(string(output), "\n")
+	if len(lines) == 0 {
+		return 0, fmt.Errorf("unexpected empty output from udevadm --version: %s", output)
+	}
+
+	return strconv.ParseUint(lines[0], 10, 16)
 }
