@@ -28,8 +28,8 @@ if [[ $unpushed_commits != "" ]]; then
   echo -e "\nThere are unpushed changes, exiting:\n$unpushed_commits" >&2
   exit 1
 fi
-sed -i "s/version = \".*\"/version = \"$version\"/" ./nix/packages/nixos-facter/default.nix
-git add ./nix/packages/nixos-facter/default.nix
+sed -i "s/version = \".*\"/version = \"$version\"/" ./nix/packages/nixos-facter/package.nix
+git add ./nix/packages/nixos-facter/package.nix
 git commit -m "release: v${version}"
 nix flake check -vL
 git tag "v${version}"
