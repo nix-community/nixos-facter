@@ -9,10 +9,10 @@ import (
 	"os"
 	"strings"
 
-	"github.com/numtide/nixos-facter/pkg/udev"
 	"github.com/numtide/nixos-facter/pkg/build"
 	"github.com/numtide/nixos-facter/pkg/facter"
 	"github.com/numtide/nixos-facter/pkg/hwinfo"
+	"github.com/numtide/nixos-facter/pkg/udev"
 )
 
 var (
