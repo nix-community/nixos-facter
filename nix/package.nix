@@ -1,1 +1,1 @@
-{perSystem, ...}: perSystem.self.nixos-facter
+{ perSystem, ... }: perSystem.self.nixos-facter

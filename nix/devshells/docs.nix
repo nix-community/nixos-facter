@@ -4,10 +4,11 @@
   ...
 }:
 pkgs.mkShellNoCC {
-  packages = with pkgs;
-  # Pop an empty shell on systems that aren't supported by godoc
-    lib.optionals (perSystem.godoc ? default)
-    ([
+  packages =
+    with pkgs;
+    # Pop an empty shell on systems that aren't supported by godoc
+    lib.optionals (perSystem.godoc ? default) (
+      [
         perSystem.godoc.default
         (pkgs.writeScriptBin "gen-reference" ''
           out="./docs/content/reference/go_doc"
@@ -23,5 +24,6 @@ pkgs.mkShellNoCC {
       ++ (with pkgs.python3Packages; [
         mike
         mkdocs-material
-      ]));
+      ])
+    );
 }
