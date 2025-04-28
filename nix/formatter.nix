@@ -3,13 +3,14 @@
   flake,
   inputs,
   ...
-}: let
+}:
+let
   mod = inputs.treefmt-nix.lib.evalModule pkgs {
     projectRootFile = ".git/config";
 
     programs =
       {
-        alejandra.enable = true;
+        nixfmt.enable = true;
         deadnix.enable = true;
         gofumpt.enable = true;
         prettier.enable = true;
@@ -35,7 +36,7 @@
           priority = 2;
         };
 
-        alejandra = {
+        nixfmt = {
           priority = 3;
         };
 
@@ -44,14 +45,22 @@
             "--tab-width"
             "4"
           ];
-          includes = ["*.{css,html,js,json,jsx,md,mdx,scss,ts,yaml}"];
+          includes = [ "*.{css,html,js,json,jsx,md,mdx,scss,ts,yaml}" ];
         };
       };
     };
   };
-in
-  mod.config.build.wrapper
-  // {
-    # check formatting as part of `nix flake check`
+
+  wrapper = mod.config.build.wrapper // {
     passthru.tests.check = mod.config.build.check flake;
-  }
+  };
+
+  unsupported = pkgs.writeShellApplication {
+    name = "unsupported-platform";
+    text = ''
+      echo "nix fmt is not supported on ${pkgs.hostPlatform.system}";
+    '';
+  };
+in
+# nixfmt-rfc-style is based on Haskell, which is broke on RiscV currently
+if pkgs.hostPlatform.isRiscV then unsupported else wrapper
