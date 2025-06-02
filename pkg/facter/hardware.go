@@ -243,16 +243,29 @@ func (h *Hardware) add(device hwinfo.HardwareDevice) error {
 
 		// We insert by physical id, as we only want one entry per core.
 		requiredSize := int(cpu.PhysicalID) + 1 //nolint:gosec
+
 		if len(h.CPU) < requiredSize {
 			newItems := make([]*hwinfo.DetailCPU, requiredSize-len(h.CPU))
 			h.CPU = append(h.CPU, newItems...)
 		}
 
+		// add our new entry
 		h.CPU[cpu.PhysicalID] = cpu
 
-		// Sort in ascending order to ensure a stable output
+		// Sort in ascending order to ensure a stable output.
+		// It's possible that the CPU list contains nil pointers as we are not guaranteed to read the CPU's in order of
+		// physical id.
 		slices.SortFunc(h.CPU, func(a, b *hwinfo.DetailCPU) int {
-			return int(a.PhysicalID - b.PhysicalID) //nolint:gosec
+			switch {
+			case a == nil && b == nil:
+				return 0
+			case a == nil && b != nil:
+				return -1
+			case a != nil && b == nil:
+				return 1
+			default:
+				return int(a.PhysicalID - b.PhysicalID) //nolint:gosec
+			}
 		})
 
 	case hwinfo.HardwareClassDisk:
