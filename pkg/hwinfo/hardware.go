@@ -472,10 +472,10 @@ type HardwareDevice struct {
 	// UnixDeviceName is a path to a device file used to access this hardware.
 	// Normally something below /dev.
 	// For network interfaces, this is the interface name.
-	UnixDeviceName string `json:"unix_device_name,omitempty"`
+	UnixDeviceName string `json:"-"`
 
 	// UnixDeviceNumber represents the device type and number according to sysfs.
-	UnixDeviceNumber *DeviceNumber `json:"unix_device_number,omitempty"`
+	UnixDeviceNumber *DeviceNumber `json:"-"`
 
 	// UnixDeviceNames is a list of device names which can be used to access this hardware.
 	// Normally something below /dev.
@@ -489,7 +489,7 @@ type HardwareDevice struct {
 	UnixDeviceName2 string `json:"unix_device_name2,omitempty"`
 
 	// UnixDeviceNumber2 is an alternative device type and number according to sysfs.
-	UnixDeviceNumber2 *DeviceNumber `json:"unix_device_number2,omitempty"`
+	UnixDeviceNumber2 *DeviceNumber `json:"-"`
 
 	// RomID represents a BIOS/PROM id.
 	// Where appropriate, this is a special BIOS/PROM id (e.g. "0x80" for the first harddisk on Intel-PCs).
