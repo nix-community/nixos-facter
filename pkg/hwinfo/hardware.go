@@ -19,7 +19,6 @@ import (
 //go:generate enumer -type=ProbeFeature -json -transform=snake -trimprefix ProbeFeature -output=./hardware_enum_probe_feature.go
 type ProbeFeature uint //nolint:recvcheck
 
-//nolint:revive,stylecheck
 const (
 	ProbeFeatureMemory ProbeFeature = iota + 1
 	ProbeFeaturePci
@@ -123,7 +122,6 @@ const (
 //go:generate enumer -type=HardwareClass -json -transform=snake -trimprefix HardwareClass -output=./hardware_enum_hardware_class.go
 type HardwareClass uint //nolint:recvcheck
 
-//nolint:revive,stylecheck
 const (
 	HardwareClassNone HardwareClass = iota
 	HardwareClassSystem
@@ -334,6 +332,7 @@ func NewDeviceNumber(num C.hd_dev_num_t) *DeviceNumber {
 	if result.IsEmpty() {
 		return nil
 	}
+
 	return &result
 }
 
@@ -586,6 +585,7 @@ func NewHardwareDevice(hd *C.hd_t, ephemeral bool) (*HardwareDevice, error) {
 	}
 
 	var hwClassList []HardwareClass
+
 	for i := HardwareClassSystem; i < HardwareClassAll; i++ {
 		if C.hd_is_hw_class(hd, C.hd_hw_item_t(i)) == 1 {
 			hwClassList = append(hwClassList, i)

@@ -252,6 +252,7 @@ func NewUdev(env map[string]string) (*Udev, error) {
 
 	var err error
 
+	//nolint:exhaustive
 	switch result.Bus {
 	case input.BusUsb:
 		if result.Usb, err = NewUdevUsb(env); err != nil {
@@ -324,5 +325,10 @@ func Version() (uint64, error) {
 		return 0, fmt.Errorf("unexpected empty output from udevadm --version: %s", output)
 	}
 
-	return strconv.ParseUint(lines[0], 10, 16)
+	version, err := strconv.ParseUint(lines[0], 10, 16)
+	if err != nil {
+		return 0, fmt.Errorf("failed to parse systemd version from udevadm --version: %w", err)
+	}
+
+	return version, nil
 }

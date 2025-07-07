@@ -115,6 +115,7 @@ func NewSmbios(smbios *C.hd_smbios_t) (Smbios, error) {
 		result Smbios
 	)
 
+	//nolint:exhaustive
 	switch SmbiosType(C.hd_smbios_get_type(smbios)) {
 	case SmbiosTypeBios:
 		result, err = NewSmbiosBiosInfo(C.hd_smbios_get_biosinfo(smbios))
@@ -160,9 +161,10 @@ func NewSmbios(smbios *C.hd_smbios_t) (Smbios, error) {
 		result, err = NewSmbiosSlot(C.hd_smbios_get_slot(smbios))
 	case SmbiosTypeSystem:
 		result, err = NewSmbiosSysInfo(C.hd_smbios_get_sysinfo(smbios))
-	default:
-		// We could return Any for this, but it's just noise in the report.
+
+		// We could return Any by default, but it's just noise in the report.
 		// As we support new types, users can run it again.
+	default:
 	}
 
 	return result, err

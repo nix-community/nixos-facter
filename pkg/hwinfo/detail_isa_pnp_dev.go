@@ -26,6 +26,7 @@ func NewIsaPnpResource(res *C.isapnp_res_t) *IsaPnpResource {
 	if res == nil {
 		return nil
 	}
+
 	return &IsaPnpResource{
 		Length: int(res.len),
 		Type:   int(res._type),

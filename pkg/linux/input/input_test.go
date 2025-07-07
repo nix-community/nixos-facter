@@ -53,6 +53,7 @@ B: MSC=10
 )
 
 func TestReadDevices(t *testing.T) {
+	t.Parallel()
 	as := require.New(t)
 	r := io.NopCloser(bytes.NewReader([]byte(devices)))
 
@@ -115,5 +116,5 @@ func TestReadDevices(t *testing.T) {
 		},
 	}
 
-	as.EqualValues(expected, devices)
+	as.Equal(expected, devices)
 }
