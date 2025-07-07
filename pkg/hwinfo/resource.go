@@ -106,14 +106,23 @@ func NewResources(hd *C.hd_t) ([]Resource, error) {
 	var result []Resource
 	for res := hd.res; res != nil; res = C.hd_res_next(res) {
 		resource, err := NewResource(res)
+
 		if err != nil {
 			return nil, err
 		}
-		if resource == nil || resource.ResourceType() == ResourceTypeMem {
-			// phys_mem is stable, `mem` is not so, we filter it out.
+		if resource == nil {
 			continue
 		}
-		result = append(result, resource)
+
+		switch resource.ResourceType() {
+		// these resources are not stable, so we filter them out
+		case ResourceTypeMem, ResourceTypeIrq:
+			continue
+
+		default:
+			result = append(result, resource)
+		}
+
 	}
 
 	slices.SortFunc(result, func(a, b Resource) int {
