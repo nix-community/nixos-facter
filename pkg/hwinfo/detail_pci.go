@@ -46,7 +46,7 @@ type DetailPci struct {
 	HeaderType   uint32 `json:"header_type"`   // PCI_HEADER_TYPE
 	SecondaryBus uint32 `json:"secondary_bus"` // > 0 for PCI & CB bridges
 
-	Irq uint16 `json:"irq"` // used irq if any
+	Irq uint16 `json:"-"` // used irq if any
 	// Programming Interface Byte: a read-only register that specifies a register-level programming interface for the
 	// device.
 	ProgIf uint16 `json:"prog_if"`
