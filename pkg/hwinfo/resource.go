@@ -109,7 +109,8 @@ func NewResources(hd *C.hd_t) ([]Resource, error) {
 		if err != nil {
 			return nil, err
 		}
-		if resource == nil {
+		if resource == nil || resource.ResourceType() == ResourceTypeMem {
+			// phys_mem is stable, `mem` is not so, we filter it out.
 			continue
 		}
 		result = append(result, resource)
