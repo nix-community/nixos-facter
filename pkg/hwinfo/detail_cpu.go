@@ -62,10 +62,10 @@ type DetailCPU struct {
 	Bugs            []string `json:"bugs,omitempty"`
 	PowerManagement []string `json:"power_management,omitempty"`
 
-	Bogo  float64 `json:"bogo"`
-	Cache uint32  `json:"cache,omitempty"`
-	Units uint32  `json:"units,omitempty"`
-	Clock uint    `json:"-"`
+	Bogo  uint32 `json:"bogo"`
+	Cache uint32 `json:"cache,omitempty"`
+	Units uint32 `json:"units,omitempty"`
+	Clock uint   `json:"-"`
 
 	// x86 only fields
 	PhysicalID     uint16       `json:"physical_id"`
@@ -112,7 +112,9 @@ func NewDetailCPU(cpu C.hd_detail_cpu_t) (*DetailCPU, error) {
 		PowerManagement: ReadStringList(data.power_management),
 
 		Clock: uint(data.clock),
-		Bogo:  float64(data.bogo),
+
+		// Bogo is reported as a float, but that value isn't stable so we truncate to an int.
+		Bogo:  uint32(data.bogo),
 		Cache: uint32(data.cache),
 		Units: uint32(data.units),
 
