@@ -183,9 +183,10 @@ type Hardware struct {
 }
 
 func compareDevice(a hwinfo.HardwareDevice, b hwinfo.HardwareDevice) int {
-	return int(a.Index - b.Index) //nolint:gosec
+	return int(a.Index - b.Index)
 }
 
+//nolint:gocyclo,maintidx
 func (h *Hardware) add(device hwinfo.HardwareDevice) error {
 	slog.Debug(
 		"hardware.add",
@@ -242,7 +243,7 @@ func (h *Hardware) add(device hwinfo.HardwareDevice) error {
 		}
 
 		// We insert by physical id, as we only want one entry per core.
-		requiredSize := int(cpu.PhysicalID) + 1 //nolint:gosec
+		requiredSize := int(cpu.PhysicalID) + 1
 
 		if len(h.CPU) < requiredSize {
 			newItems := make([]*hwinfo.DetailCPU, requiredSize-len(h.CPU))
@@ -264,7 +265,7 @@ func (h *Hardware) add(device hwinfo.HardwareDevice) error {
 			case a != nil && b == nil:
 				return 1
 			default:
-				return int(a.PhysicalID - b.PhysicalID) //nolint:gosec
+				return int(a.PhysicalID - b.PhysicalID)
 			}
 		})
 

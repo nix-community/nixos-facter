@@ -63,7 +63,7 @@ func NewDriverInfo(info *C.driver_info_t) (DriverInfo, error) {
 		result, err = NewDriverInfoIsdn(C.driver_info_get_isdn(info)), nil
 	case DriverInfoTypeX11:
 		result, err = NewDriverInfoX11(C.driver_info_get_x11(info)), nil
-	default:
+	case DriverInfoTypeAny:
 		err = errors.New("unknown driver info type")
 	}
 

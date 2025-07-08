@@ -44,7 +44,6 @@ func (i ID) MarshalJSON() ([]byte, error) {
 	)
 
 	switch i.Type {
-
 	case IDTagSpecial:
 		b, err = json.Marshal(i.Name)
 
@@ -91,6 +90,7 @@ func NewID(id C.hd_id_t) *ID {
 	if result.IsEmpty() {
 		return nil
 	}
+
 	return &result
 }
 

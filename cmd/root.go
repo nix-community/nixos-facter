@@ -24,6 +24,7 @@ var (
 	scanner = facter.Scanner{}
 )
 
+//nolint:gochecknoinits
 func init() {
 	// Define flags
 	flag.StringVar(&outputPath, "output", "", "path to write the report")

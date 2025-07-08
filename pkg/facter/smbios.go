@@ -75,6 +75,7 @@ type Smbios struct {
 	System *hwinfo.SmbiosSystem `json:"system,omitempty"`
 }
 
+//nolint:gocyclo
 func (s *Smbios) add(item hwinfo.Smbios) error {
 	slog.Debug("smbios.add", "type", item.SmbiosType())
 

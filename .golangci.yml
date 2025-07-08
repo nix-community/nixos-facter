@@ -1,22 +1,26 @@
+version: "2"
+
 linters:
-    enable-all: true
+    default: all
     disable:
+        - cyclop
+        - err113
         - depguard
         - exhaustruct
-        - exportloopref
         - funlen
         - godox
+        - godot
         - mnd
         - varnamelen
         - forbidigo
-        - gocognit
-        - gocyclo
-        - cyclop
-        - err113
-        - maintidx
-        - tagliatelle # prefer snake_case in json fields
+        - tagliatelle
+        - nlreturn
         - gochecknoglobals
-        - gochecknoinits
-        # would be nice to have but too many tests depend on environment variables, which is not allowed for t.Parallel()
-        - paralleltest
-        - nlreturn # find this annoying more than useful
+
+    settings:
+        cyclop:
+            max-complexity: 15
+        revive:
+            rules:
+                - name: "exported"
+                  disabled: true

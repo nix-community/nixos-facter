@@ -24,6 +24,7 @@ foo bar baz
 )
 
 func TestReadSwapFile(t *testing.T) {
+	t.Parallel()
 	as := require.New(t)
 
 	_, err := ephem.ReadSwapFile(strings.NewReader(""))

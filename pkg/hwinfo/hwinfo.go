@@ -27,6 +27,7 @@ func excludeDevice(item *HardwareDevice) bool {
 			}
 		}
 	}
+
 	return false
 }
 
@@ -46,9 +47,11 @@ func Scan(probes []ProbeFeature, ephemeral bool) ([]Smbios, []HardwareDevice, er
 
 	// scan
 	C.hd_scan(data)
+
 	defer C.hd_free_hd_data(data)
 
 	var smbiosItems []Smbios
+
 	for sm := data.smbios; sm != nil; sm = C.hd_smbios_next(sm) {
 		item, err := NewSmbios(sm)
 		if err != nil {
@@ -56,11 +59,15 @@ func Scan(probes []ProbeFeature, ephemeral bool) ([]Smbios, []HardwareDevice, er
 		} else if item == nil {
 			continue
 		}
+
 		smbiosItems = append(smbiosItems, item)
 	}
 
-	var hardwareItems []HardwareDevice
-	var deviceIdx uint16
+	var (
+		deviceIdx     uint16
+		hardwareItems []HardwareDevice
+	)
+
 	for hd := data.hd; hd != nil; hd = hd.next {
 		item, err := NewHardwareDevice(hd, ephemeral)
 		if err != nil {

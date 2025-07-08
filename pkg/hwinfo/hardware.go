@@ -19,7 +19,6 @@ import (
 //go:generate enumer -type=ProbeFeature -json -transform=snake -trimprefix ProbeFeature -output=./hardware_enum_probe_feature.go
 type ProbeFeature uint //nolint:recvcheck
 
-//nolint:revive,stylecheck
 const (
 	ProbeFeatureMemory ProbeFeature = iota + 1
 	ProbeFeaturePci
@@ -123,7 +122,6 @@ const (
 //go:generate enumer -type=HardwareClass -json -transform=snake -trimprefix HardwareClass -output=./hardware_enum_hardware_class.go
 type HardwareClass uint //nolint:recvcheck
 
-//nolint:revive,stylecheck
 const (
 	HardwareClassNone HardwareClass = iota
 	HardwareClassSystem
@@ -334,6 +332,7 @@ func NewDeviceNumber(num C.hd_dev_num_t) *DeviceNumber {
 	if result.IsEmpty() {
 		return nil
 	}
+
 	return &result
 }
 
@@ -473,10 +472,10 @@ type HardwareDevice struct {
 	// UnixDeviceName is a path to a device file used to access this hardware.
 	// Normally something below /dev.
 	// For network interfaces, this is the interface name.
-	UnixDeviceName string `json:"unix_device_name,omitempty"`
+	UnixDeviceName string `json:"-"`
 
 	// UnixDeviceNumber represents the device type and number according to sysfs.
-	UnixDeviceNumber *DeviceNumber `json:"unix_device_number,omitempty"`
+	UnixDeviceNumber *DeviceNumber `json:"-"`
 
 	// UnixDeviceNames is a list of device names which can be used to access this hardware.
 	// Normally something below /dev.
@@ -490,7 +489,7 @@ type HardwareDevice struct {
 	UnixDeviceName2 string `json:"unix_device_name2,omitempty"`
 
 	// UnixDeviceNumber2 is an alternative device type and number according to sysfs.
-	UnixDeviceNumber2 *DeviceNumber `json:"unix_device_number2,omitempty"`
+	UnixDeviceNumber2 *DeviceNumber `json:"-"`
 
 	// RomID represents a BIOS/PROM id.
 	// Where appropriate, this is a special BIOS/PROM id (e.g. "0x80" for the first harddisk on Intel-PCs).
@@ -586,6 +585,7 @@ func NewHardwareDevice(hd *C.hd_t, ephemeral bool) (*HardwareDevice, error) {
 	}
 
 	var hwClassList []HardwareClass
+
 	for i := HardwareClassSystem; i < HardwareClassAll; i++ {
 		if C.hd_is_hw_class(hd, C.hd_hw_item_t(i)) == 1 {
 			hwClassList = append(hwClassList, i)

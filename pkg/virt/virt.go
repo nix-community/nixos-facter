@@ -16,7 +16,6 @@ import (
 //go:generate enumer -type=Type -json -text -transform=snake -trimprefix Type -output=./virt_enum_type.go
 type Type int //nolint:recvcheck
 
-//nolint:revive,stylecheck
 const (
 	TypeNone Type = iota
 	TypeKvm

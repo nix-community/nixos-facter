@@ -33,6 +33,7 @@ func NewResourcePhysicalMemory(res *C.hd_res_t, resType ResourceType) (*Resource
 	}
 
 	physMem := C.hd_res_get_phys_mem(res)
+
 	return &ResourcePhysicalMemory{
 		Type:  resType,
 		Range: uint64(physMem._range),

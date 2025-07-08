@@ -95,7 +95,7 @@ func NewResource(res *C.hd_res_t) (Resource, error) {
 		// this is the link status of a network interface and can change when we plug/unplug a cable
 	case ResourceTypeWlan:
 		result, err = NewResourceWlan(res, resourceType)
-	default:
+	case ResourceTypeAny:
 		err = fmt.Errorf("unexpected resource type: %v", resourceType)
 	}
 
@@ -104,24 +104,37 @@ func NewResource(res *C.hd_res_t) (Resource, error) {
 
 func NewResources(hd *C.hd_t) ([]Resource, error) {
 	var result []Resource
+
 	for res := hd.res; res != nil; res = C.hd_res_next(res) {
 		resource, err := NewResource(res)
 		if err != nil {
 			return nil, err
 		}
+
 		if resource == nil {
 			continue
 		}
-		result = append(result, resource)
+
+		//nolint:exhaustive
+		switch resource.ResourceType() {
+		// these resources are not stable, so we filter them out
+		case ResourceTypeMem, ResourceTypeIrq:
+			continue
+
+		default:
+			result = append(result, resource)
+		}
 	}
 
 	slices.SortFunc(result, func(a, b Resource) int {
 		// We don't really care about a proper ordering for resources, just a stable sort that is reasonably quick.
 		var err error
+
 		jsonA, err := json.Marshal(a)
 		if err != nil {
 			log.Panicf("failed to marshal resource: %s", err)
 		}
+
 		jsonB, err := json.Marshal(b)
 		if err != nil {
 			log.Panicf("failed to marshal resource: %s", err)
