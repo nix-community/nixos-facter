@@ -6,7 +6,7 @@ site_description: >-
 
 # Repository
 repo_name: numtide/nixos-facter
-repo_url: https://github.com/numtide/nixos-facter
+repo_url: https://github.com/nix-community/nixos-facter
 
 # Copyright
 copyright: >-

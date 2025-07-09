@@ -88,11 +88,11 @@ We'd love to hear from you.
 [Clan]: https://clan.lol
 [NixOS configurations]: https://nixos.org/manual/nixos/stable/#sec-configuration-syntax
 [NixOS Hardware]: https://github.com/NixOS/nixos-hardware
-[NixOS Facter Modules]: https://github.com/numtide/nixos-facter-modules
-[NixOS modules]: https://github.com/numtide/nixos-facter-modules
+[NixOS Facter Modules]: https://github.com/nix-community/nixos-facter-modules
+[NixOS modules]: https://github.com/nix-community/nixos-facter-modules
 [nixos-generate-config]: https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/installer/tools/nixos-generate-config.pl
 [Numtide Binary Cache]: https://numtide.cachix.org
-[nixos-facter]: https://github.com/numtide/nixos-facter
+[nixos-facter]: https://github.com/nix-community/nixos-facter
 [nixpkgs]: https://github.com/nixos/nixpkgs
 [docs]: https://nix-community.github.io/nixos-facter
 [GNU GPL v3]: ./LICENSE

@@ -64,7 +64,7 @@ buildGo124Module (final: {
 
   meta = with lib; {
     description = "nixos-facter: declarative nixos-generate-config";
-    homepage = "https://github.com/numtide/nixos-facter";
+    homepage = "https://github.com/nix-community/nixos-facter";
     license = licenses.mit;
     mainProgram = "nixos-facter";
   };
