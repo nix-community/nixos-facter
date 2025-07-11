@@ -15,7 +15,7 @@ To generate a report, you will need to have [Nix] installed on the target machin
       --option experimental-features "nix-command flakes" \
       --option extra-substituters https://numtide.cachix.org \
       --option extra-trusted-public-keys numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE= \
-      github:numtide/nixos-facter -- -o facter.json
+      github:nix-community/nixos-facter -- -o facter.json
     ```
 
 This will scan your system and produce a JSON-based report in a file named `facter.json`:
