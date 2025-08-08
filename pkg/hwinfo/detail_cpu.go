@@ -13,6 +13,7 @@ import "C"
 
 import (
 	"fmt"
+	"os"
 	"regexp"
 )
 
@@ -62,10 +63,11 @@ type DetailCPU struct {
 	Bugs            []string `json:"bugs,omitempty"`
 	PowerManagement []string `json:"power_management,omitempty"`
 
-	Bogo  uint32 `json:"bogo"`
-	Cache uint32 `json:"cache,omitempty"`
-	Units uint32 `json:"units,omitempty"`
-	Clock uint   `json:"-"`
+	Bogo     uint32 `json:"bogo"`
+	Cache    uint32 `json:"cache,omitempty"`
+	Units    uint32 `json:"units,omitempty"`
+	Clock    uint   `json:"-"`
+	PageSize uint32 `json:"page_size"`
 
 	// x86 only fields
 	PhysicalID     uint16       `json:"physical_id"`
@@ -114,9 +116,10 @@ func NewDetailCPU(cpu C.hd_detail_cpu_t) (*DetailCPU, error) {
 		Clock: uint(data.clock),
 
 		// Bogo is reported as a float, but that value isn't stable so we truncate to an int.
-		Bogo:  uint32(data.bogo),
-		Cache: uint32(data.cache),
-		Units: uint32(data.units),
+		Bogo:     uint32(data.bogo),
+		Cache:    uint32(data.cache),
+		Units:    uint32(data.units),
+		PageSize: uint32(os.Getpagesize()),
 
 		PhysicalID:     uint16(data.physical_id),
 		Siblings:       uint16(data.siblings),
