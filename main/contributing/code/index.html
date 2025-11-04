@@ -862,7 +862,7 @@ to ensure it works when run as a Nix package.</p>
 <a id="__codelineno-1-16" name="__codelineno-1-16"></a>        prettier<span class="o">.</span><span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
 <a id="__codelineno-1-17" name="__codelineno-1-17"></a>        statix<span class="o">.</span><span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
 <a id="__codelineno-1-18" name="__codelineno-1-18"></a>      <span class="p">}</span>
-<a id="__codelineno-1-19" name="__codelineno-1-19"></a>      <span class="o">//</span> pkgs<span class="o">.</span>lib<span class="o">.</span>optionalAttrs <span class="p">(</span>pkgs<span class="o">.</span>system <span class="o">!=</span> <span class="s2">&quot;riscv64-linux&quot;</span><span class="p">)</span> <span class="p">{</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a>      <span class="o">//</span> pkgs<span class="o">.</span>lib<span class="o">.</span>optionalAttrs <span class="p">(</span>pkgs<span class="o">.</span>stdenv<span class="o">.</span>system <span class="o">!=</span> <span class="s2">&quot;riscv64-linux&quot;</span><span class="p">)</span> <span class="p">{</span>
 <a id="__codelineno-1-20" name="__codelineno-1-20"></a>        shellcheck<span class="o">.</span><span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
 <a id="__codelineno-1-21" name="__codelineno-1-21"></a>      <span class="p">};</span>
 <a id="__codelineno-1-22" name="__codelineno-1-22"></a>
@@ -904,12 +904,12 @@ to ensure it works when run as a Nix package.</p>
 <a id="__codelineno-1-58" name="__codelineno-1-58"></a>  <span class="ss">unsupported</span> <span class="o">=</span> pkgs<span class="o">.</span>writeShellApplication <span class="p">{</span>
 <a id="__codelineno-1-59" name="__codelineno-1-59"></a>    <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;unsupported-platform&quot;</span><span class="p">;</span>
 <a id="__codelineno-1-60" name="__codelineno-1-60"></a>    <span class="ss">text</span> <span class="o">=</span> <span class="s s-Multiline">&#39;&#39;</span>
-<a id="__codelineno-1-61" name="__codelineno-1-61"></a><span class="s s-Multiline">      echo &quot;nix fmt is not supported on </span><span class="si">${</span>pkgs<span class="o">.</span>hostPlatform<span class="o">.</span>system<span class="si">}</span><span class="s s-Multiline">&quot;;</span>
+<a id="__codelineno-1-61" name="__codelineno-1-61"></a><span class="s s-Multiline">      echo &quot;nix fmt is not supported on </span><span class="si">${</span>pkgs<span class="o">.</span>stdenv<span class="o">.</span>hostPlatform<span class="o">.</span>system<span class="si">}</span><span class="s s-Multiline">&quot;;</span>
 <a id="__codelineno-1-62" name="__codelineno-1-62"></a><span class="s s-Multiline">    &#39;&#39;</span><span class="p">;</span>
 <a id="__codelineno-1-63" name="__codelineno-1-63"></a>  <span class="p">};</span>
 <a id="__codelineno-1-64" name="__codelineno-1-64"></a><span class="k">in</span>
 <a id="__codelineno-1-65" name="__codelineno-1-65"></a><span class="c1"># nixfmt-rfc-style is based on Haskell, which is broke on RiscV currently</span>
-<a id="__codelineno-1-66" name="__codelineno-1-66"></a><span class="k">if</span> pkgs<span class="o">.</span>hostPlatform<span class="o">.</span>isRiscV <span class="k">then</span> unsupported <span class="k">else</span> wrapper
+<a id="__codelineno-1-66" name="__codelineno-1-66"></a><span class="k">if</span> pkgs<span class="o">.</span>stdenv<span class="o">.</span>hostPlatform<span class="o">.</span>isRiscV <span class="k">then</span> unsupported <span class="k">else</span> wrapper
 </code></pre></div></td></tr></table></div>
 <h2 id="checks">Checks</h2>
 <p>Running <code>nix flake check</code> will build all the devshells and Nix packages, as well as check the formatting with <a href="https://treefmt.com">treefmt</a>
