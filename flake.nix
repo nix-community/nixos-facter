@@ -23,13 +23,6 @@
     hwinfo.inputs.nixpkgs.follows = "nixpkgs";
     hwinfo.inputs.systems.follows = "systems";
     hwinfo.inputs.blueprint.follows = "blueprint";
-
-    godoc.url = "github:numtide/godoc";
-    godoc.inputs.nixpkgs.follows = "nixpkgs";
-    godoc.inputs.systems.follows = "systems";
-    godoc.inputs.blueprint.follows = "blueprint";
-    godoc.inputs.treefmt-nix.follows = "treefmt-nix";
-    godoc.inputs.flake-utils.follows = "flake-utils";
   };
 
   # Keep the magic invocations to minimum.
