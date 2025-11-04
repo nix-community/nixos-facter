@@ -37,6 +37,11 @@ pkgs.lib.optionalAttrs pkgs.stdenv.isx86_64 {
       environment.systemPackages = [
         perSystem.self.nixos-facter
       ];
+      # Silence mdadm warning about missing MAILADDR or PROGRAM
+      # Required for NixOS 23.11+ to prevent mdmon service crashes
+      boot.swraid.mdadmConf = ''
+        PROGRAM /run/current-system/sw/bin/true
+      '';
     };
 
     extraTestScript = ''
