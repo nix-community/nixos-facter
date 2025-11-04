@@ -71,7 +71,7 @@ pkgs.lib.optionalAttrs pkgs.stdenv.isx86_64 {
               # delete for easier comparison
               del swap[i]['path']
 
-              assert swap[i] == expected[i], "swap[{i}] mismatch"
+              assert swap[i] == expected[i], f"swap[{i}] != expected[{i}] mismatch: {swap[i]} != {expected[i]}"
     '';
   };
 }
