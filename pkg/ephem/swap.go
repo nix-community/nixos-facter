@@ -7,6 +7,7 @@ import (
 	"io"
 	"os"
 	"regexp"
+	"sort"
 	"strconv"
 )
 
@@ -61,6 +62,14 @@ func SwapEntries() ([]*SwapEntry, error) {
 
 		devices[idx].Filename = stablePath
 	}
+
+	// Sort by priority (ascending), then by filename for deterministic output
+	sort.Slice(devices, func(i, j int) bool {
+		if devices[i].Priority != devices[j].Priority {
+			return devices[i].Priority < devices[j].Priority
+		}
+		return devices[i].Filename < devices[j].Filename
+	})
 
 	return devices, nil
 }
