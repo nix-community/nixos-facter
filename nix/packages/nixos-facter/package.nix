@@ -28,7 +28,7 @@ buildGo124Module (final: {
     ];
   };
 
-  vendorHash = "sha256-A7ZuY8Gc/a0Y8O6UG2WHWxptHstJOxi4n9F8TY6zqiw=";
+  vendorHash = lib.fileContents ./goVendorHash.txt;
 
   buildInputs = [
     systemdMinimal
