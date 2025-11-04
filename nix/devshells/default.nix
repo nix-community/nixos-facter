@@ -8,7 +8,6 @@ perSystem.self.nixos-facter.overrideAttrs (old: {
   nativeBuildInputs = old.nativeBuildInputs ++ [
     pkgs.enumer
     pkgs.delve
-    pkgs.pprof
     pkgs.gotools
     pkgs.golangci-lint
     pkgs.cobra-cli
