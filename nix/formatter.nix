@@ -16,7 +16,7 @@ let
         prettier.enable = true;
         statix.enable = true;
       }
-      // pkgs.lib.optionalAttrs (pkgs.system != "riscv64-linux") {
+      // pkgs.lib.optionalAttrs (pkgs.stdenv.system != "riscv64-linux") {
         shellcheck.enable = true;
       };
 
@@ -58,9 +58,9 @@ let
   unsupported = pkgs.writeShellApplication {
     name = "unsupported-platform";
     text = ''
-      echo "nix fmt is not supported on ${pkgs.hostPlatform.system}";
+      echo "nix fmt is not supported on ${pkgs.stdenv.hostPlatform.system}";
     '';
   };
 in
 # nixfmt-rfc-style is based on Haskell, which is broke on RiscV currently
-if pkgs.hostPlatform.isRiscV then unsupported else wrapper
+if pkgs.stdenv.hostPlatform.isRiscV then unsupported else wrapper
