@@ -8,17 +8,16 @@ let
   mod = inputs.treefmt-nix.lib.evalModule pkgs {
     projectRootFile = ".git/config";
 
-    programs =
-      {
-        nixfmt.enable = true;
-        deadnix.enable = true;
-        gofumpt.enable = true;
-        prettier.enable = true;
-        statix.enable = true;
-      }
-      // pkgs.lib.optionalAttrs (pkgs.stdenv.system != "riscv64-linux") {
-        shellcheck.enable = true;
-      };
+    programs = {
+      nixfmt.enable = true;
+      deadnix.enable = true;
+      gofumpt.enable = true;
+      prettier.enable = true;
+      statix.enable = true;
+    }
+    // pkgs.lib.optionalAttrs (pkgs.stdenv.system != "riscv64-linux") {
+      shellcheck.enable = true;
+    };
 
     settings = {
       global.excludes = [
