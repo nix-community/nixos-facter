@@ -1,6 +1,5 @@
 {
   lib,
-  versionSuffix ? null,
   systemdMinimal,
   hwinfo,
   gcc,
@@ -46,7 +45,7 @@ buildGo124Module (final: {
     "-s"
     "-w"
     "-X github.com/numtide/nixos-facter/pkg/build.Name=${final.pname}"
-    "-X github.com/numtide/nixos-facter/pkg/build.Version=v${final.version}${toString versionSuffix}"
+    "-X github.com/numtide/nixos-facter/pkg/build.Version=v${final.version}"
     "-X github.com/numtide/nixos-facter/pkg/build.System=${stdenv.hostPlatform.system}"
   ];
 
