@@ -1,7 +1,6 @@
 {
   pkgs,
   inputs,
-  system,
   perSystem,
   ...
 }:
@@ -45,7 +44,7 @@ pkgs.lib.optionalAttrs pkgs.stdenv.isx86_64 {
       report = json.loads(machine.succeed("nixos-facter --ephemeral 2>&1"))
 
       with subtest("Capture system"):
-          assert report['system'] == '${system}'
+          assert report['system'] == '${pkgs.stdenv.hostPlatform.system}'
 
       with subtest("Capture virtualisation"):
           virt = report['virtualisation']

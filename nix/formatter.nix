@@ -14,8 +14,6 @@ let
       gofumpt.enable = true;
       prettier.enable = true;
       statix.enable = true;
-    }
-    // pkgs.lib.optionalAttrs (pkgs.stdenv.system != "riscv64-linux") {
       shellcheck.enable = true;
     };
 
