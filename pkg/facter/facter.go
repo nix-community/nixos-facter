@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log/slog"
 
+	"github.com/numtide/nixos-facter/pkg/boot"
 	"github.com/numtide/nixos-facter/pkg/build"
 	"github.com/numtide/nixos-facter/pkg/ephem"
 	"github.com/numtide/nixos-facter/pkg/hwinfo"
@@ -25,7 +26,10 @@ type Report struct {
 	// Virtualisation indicates the type of virtualisation or container environment present on the system.
 	Virtualisation virt.Type `json:"virtualisation"`
 
-	// Hardware provides detailed information about the system’s hardware components, such as CPU, memory, and peripherals.
+	// UEFI contains information about UEFI firmware support.
+	UEFI *boot.UEFIInfo `json:"uefi"`
+
+	// Hardware provides detailed information about the system's hardware components, such as CPU, memory, and peripherals.
 	Hardware Hardware `json:"hardware,omitempty"`
 
 	// Smbios provides detailed information about the system's SMBios data, such as BIOS, board, chassis, memory,
@@ -115,6 +119,12 @@ func (s *Scanner) Scan() (*Report, error) {
 
 	if report.Virtualisation, err = virt.Detect(); err != nil {
 		return nil, fmt.Errorf("failed to detect virtualisation: %w", err)
+	}
+
+	slog.Debug("detecting UEFI")
+
+	if report.UEFI, err = boot.DetectUEFI(); err != nil {
+		return nil, fmt.Errorf("failed to detect UEFI: %w", err)
 	}
 
 	if s.Ephemeral || s.Swap {
