@@ -52,6 +52,15 @@ pkgs.lib.optionalAttrs pkgs.stdenv.isx86_64 {
           # todo double-check this is the same for intel
           assert virt in ("kvm", "qemu"), f"expected virtualisation to be either kvm or qemu, got {virt}"
 
+      with subtest("Capture UEFI boot information"):
+          assert 'uefi' in report, "'uefi' not found in the report"
+
+          uefi = report['uefi']
+
+          assert uefi['supported'] == True, f"expected UEFI to be supported, got {uefi['supported']}"
+          assert 'platform_size' in uefi, "'platform_size' not found in uefi"
+          assert uefi['platform_size'] in (32, 64), f"expected platform_size to be 32 or 64, got {uefi['platform_size']}"
+
       with subtest("Capture swap entries"):
           assert 'swap' in report, "'swap' not found in the report"
 
