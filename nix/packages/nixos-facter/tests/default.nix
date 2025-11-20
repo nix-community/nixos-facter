@@ -10,6 +10,7 @@ let
     inherit (pkgs) lib;
     makeTest = import "${inputs.nixpkgs}/nixos/tests/make-test-python.nix";
     eval-config = import "${inputs.nixpkgs}/nixos/lib/eval-config.nix";
+    qemu-common-lib = import "${inputs.nixpkgs}/nixos/tests/qemu-common-lib.nix" { inherit pkgs; };
   };
 in
 {
