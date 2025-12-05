@@ -135,16 +135,16 @@ type Usb struct {
 }
 
 func parseUint16OrDefault(env map[string]string, key string) (uint16, error) {
-    if value := env[key]; value != "" {
-        parsed, err := strconv.ParseUint(value, 16, 16)
-        if err != nil {
-            slog.Warn("failed to parse udev key value", "key", key, "value", value, "error", err)
-            return 0, err
-        }
-        return uint16(parsed), nil
-    }
-    slog.Warn("udev key is empty or not found", "key", key)
-    return 0, nil
+	if value := env[key]; value != "" {
+		parsed, err := strconv.ParseUint(value, 16, 16)
+		if err != nil {
+			slog.Warn("failed to parse udev key value", "key", key, "value", value, "error", err)
+			return 0, err
+		}
+		return uint16(parsed), nil
+	}
+	slog.Warn("udev key is empty or not found", "key", key)
+	return 0, nil
 }
 
 func NewUdevUsb(env map[string]string) (*Usb, error) {
