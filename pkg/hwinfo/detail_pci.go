@@ -89,6 +89,9 @@ func (p DetailPci) DetailType() DetailType {
 
 func NewDetailPci(pci C.hd_detail_pci_t) (*DetailPci, error) {
 	data := pci.data
+	if data == nil {
+		return nil, nil
+	}
 
 	return &DetailPci{
 		Type:           DetailTypePci,

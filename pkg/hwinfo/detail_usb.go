@@ -65,6 +65,9 @@ func (d DetailUsb) DetailType() DetailType {
 
 func NewDetailUsb(usb C.hd_detail_usb_t) (*DetailUsb, error) {
 	data := usb.data
+	if data == nil {
+		return nil, nil
+	}
 
 	if data.next != nil {
 		println("usb next is not nil")

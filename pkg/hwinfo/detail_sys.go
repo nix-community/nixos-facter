@@ -23,6 +23,9 @@ func (d DetailSys) DetailType() DetailType {
 
 func NewDetailSys(sys C.hd_detail_sys_t) (*DetailSys, error) {
 	data := sys.data
+	if data == nil {
+		return nil, nil
+	}
 
 	return &DetailSys{
 		Type:       DetailTypeSys,

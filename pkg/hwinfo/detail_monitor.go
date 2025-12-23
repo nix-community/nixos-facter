@@ -45,6 +45,9 @@ func (d DetailMonitor) DetailType() DetailType {
 
 func NewDetailMonitor(mon C.hd_detail_monitor_t) (*DetailMonitor, error) {
 	data := mon.data
+	if data == nil {
+		return nil, nil
+	}
 
 	return &DetailMonitor{
 		Type:            DetailTypeMonitor,

@@ -52,6 +52,9 @@ func (d DetailBios) DetailType() DetailType {
 
 func NewDetailBios(dev C.hd_detail_bios_t) (*DetailBios, error) {
 	data := dev.data
+	if data == nil {
+		return nil, nil
+	}
 
 	return &DetailBios{
 		Type: DetailTypeBios,
