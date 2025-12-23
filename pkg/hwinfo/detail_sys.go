@@ -24,6 +24,8 @@ func (d DetailSys) DetailType() DetailType {
 func NewDetailSys(sys C.hd_detail_sys_t) (*DetailSys, error) {
 	data := sys.data
 	if data == nil {
+		// Not an error: hwinfo can return detail structures with NULL data pointers.
+		// See hdp.c:1302 for hwinfo's own handling.
 		return nil, nil
 	}
 

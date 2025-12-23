@@ -46,6 +46,7 @@ func (d DetailMonitor) DetailType() DetailType {
 func NewDetailMonitor(mon C.hd_detail_monitor_t) (*DetailMonitor, error) {
 	data := mon.data
 	if data == nil {
+		// Not an error: hwinfo can return detail structures with NULL data pointers.
 		return nil, nil
 	}
 
