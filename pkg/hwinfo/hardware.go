@@ -397,6 +397,7 @@ const (
 	BusNd
 
 	BusNvme
+	BusBluetooth
 )
 
 // HardwareDevice represents a hardware component detected in the system.

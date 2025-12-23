@@ -11,20 +11,20 @@ import (
 const (
 	_BusName_0      = "noneisaeisamcpcipcmcianubuscardbusother"
 	_BusLowerName_0 = "noneisaeisamcpcipcmcianubuscardbusother"
-	_BusName_1      = "ps2serialparallelfloppyscsiideusbadbraidsbusi2ovioccwiucvps3_system_busvirtioibmebusgameportuisvirtpcimmcsdiondnvme"
-	_BusLowerName_1 = "ps2serialparallelfloppyscsiideusbadbraidsbusi2ovioccwiucvps3_system_busvirtioibmebusgameportuisvirtpcimmcsdiondnvme"
+	_BusName_1      = "ps2serialparallelfloppyscsiideusbadbraidsbusi2ovioccwiucvps3_system_busvirtioibmebusgameportuisvirtpcimmcsdiondnvmebluetooth"
+	_BusLowerName_1 = "ps2serialparallelfloppyscsiideusbadbraidsbusi2ovioccwiucvps3_system_busvirtioibmebusgameportuisvirtpcimmcsdiondnvmebluetooth"
 )
 
 var (
 	_BusIndex_0 = [...]uint8{0, 4, 7, 11, 13, 16, 22, 27, 34, 39}
-	_BusIndex_1 = [...]uint8{0, 3, 9, 17, 23, 27, 30, 33, 36, 40, 44, 47, 50, 53, 57, 71, 77, 84, 92, 102, 105, 109, 111, 115}
+	_BusIndex_1 = [...]uint8{0, 3, 9, 17, 23, 27, 30, 33, 36, 40, 44, 47, 50, 53, 57, 71, 77, 84, 92, 102, 105, 109, 111, 115, 124}
 )
 
 func (i Bus) String() string {
 	switch {
 	case 0 <= i && i <= 8:
 		return _BusName_0[_BusIndex_0[i]:_BusIndex_0[i+1]]
-	case 128 <= i && i <= 150:
+	case 128 <= i && i <= 151:
 		i -= 128
 		return _BusName_1[_BusIndex_1[i]:_BusIndex_1[i+1]]
 	default:
@@ -68,9 +68,10 @@ func _BusNoOp() {
 	_ = x[BusSdio-(148)]
 	_ = x[BusNd-(149)]
 	_ = x[BusNvme-(150)]
+	_ = x[BusBluetooth-(151)]
 }
 
-var _BusValues = []Bus{BusNone, BusIsa, BusEisa, BusMc, BusPci, BusPcmcia, BusNubus, BusCardbus, BusOther, BusPs2, BusSerial, BusParallel, BusFloppy, BusScsi, BusIde, BusUsb, BusAdb, BusRaid, BusSbus, BusI2o, BusVio, BusCcw, BusIucv, BusPs3SystemBus, BusVirtio, BusIbmebus, BusGameport, BusUisvirtpci, BusMmc, BusSdio, BusNd, BusNvme}
+var _BusValues = []Bus{BusNone, BusIsa, BusEisa, BusMc, BusPci, BusPcmcia, BusNubus, BusCardbus, BusOther, BusPs2, BusSerial, BusParallel, BusFloppy, BusScsi, BusIde, BusUsb, BusAdb, BusRaid, BusSbus, BusI2o, BusVio, BusCcw, BusIucv, BusPs3SystemBus, BusVirtio, BusIbmebus, BusGameport, BusUisvirtpci, BusMmc, BusSdio, BusNd, BusNvme, BusBluetooth}
 
 var _BusNameToValueMap = map[string]Bus{
 	_BusName_0[0:4]:          BusNone,
@@ -137,6 +138,8 @@ var _BusNameToValueMap = map[string]Bus{
 	_BusLowerName_1[109:111]: BusNd,
 	_BusName_1[111:115]:      BusNvme,
 	_BusLowerName_1[111:115]: BusNvme,
+	_BusName_1[115:124]:      BusBluetooth,
+	_BusLowerName_1[115:124]: BusBluetooth,
 }
 
 var _BusNames = []string{
@@ -172,6 +175,7 @@ var _BusNames = []string{
 	_BusName_1[105:109],
 	_BusName_1[109:111],
 	_BusName_1[111:115],
+	_BusName_1[115:124],
 }
 
 // BusString retrieves an enum value from the enum constants string name.
