@@ -75,7 +75,15 @@ This will scan your system and produce a JSON-based report in a file named `fact
 
 !!! tip
 
-    To use this report in your NixOS configuration, have a look at [NixOS Facter Modules].
+    To use this report in your NixOS configuration, add the following to your configuration:
+
+    ```nix
+    {
+      hardware.facter.reportPath = ./facter.json;
+    }
+    ```
+
+    See the [nixpkgs documentation](https://search.nixos.org/options?query=facter) for more details.
 
 [Nix]: https://nixos.org
 [Numtide]: https://numtide.com
@@ -83,4 +91,3 @@ This will scan your system and produce a JSON-based report in a file named `fact
 [nixos-facter]: https://github.com/nix-community/nixos-facter
 [nixpkgs]: https://github.com/nixos/nixpkgs
 [System Management BIOS]: https://wiki.osdev.org/System_Management_BIOS
-[NixOS Facter Modules]: https://github.com/nix-community/nixos-facter-modules

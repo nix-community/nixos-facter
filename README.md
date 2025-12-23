@@ -15,7 +15,7 @@ USB devices, and so on.
 
 This repository contains the binary for generating the report.
 
-[NixOS Facter Modules] contains the necessary NixOS modules for making use of the report in a NixOS configuration.
+The NixOS modules for making use of the report are included in nixpkgs. See the [NixOS options documentation] for details.
 
 For more information, please see the [docs].
 
@@ -88,8 +88,8 @@ We'd love to hear from you.
 [Clan]: https://clan.lol
 [NixOS configurations]: https://nixos.org/manual/nixos/stable/#sec-configuration-syntax
 [NixOS Hardware]: https://github.com/NixOS/nixos-hardware
-[NixOS Facter Modules]: https://github.com/nix-community/nixos-facter-modules
-[NixOS modules]: https://github.com/nix-community/nixos-facter-modules
+[NixOS modules]: https://search.nixos.org/options?query=facter
+[NixOS options documentation]: https://search.nixos.org/options?query=facter
 [nixos-generate-config]: https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/installer/tools/nixos-generate-config.pl
 [Numtide Binary Cache]: https://numtide.cachix.org
 [nixos-facter]: https://github.com/nix-community/nixos-facter
