@@ -37,9 +37,13 @@ func NewResourceHardwareAddress(res *C.hd_res_t, resType ResourceType) (*Resourc
 	}
 
 	hwaddr := C.hd_res_get_hwaddr(res)
+	var address byte
+	if hwaddr.addr != nil {
+		address = byte(*hwaddr.addr)
+	}
 
 	return &ResourceHardwareAddress{
 		Type:    resType,
-		Address: byte(*hwaddr.addr),
+		Address: address,
 	}, nil
 }

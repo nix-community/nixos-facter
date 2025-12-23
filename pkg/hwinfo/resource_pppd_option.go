@@ -33,9 +33,13 @@ func NewResourcePppdOption(res *C.hd_res_t, resType ResourceType) (*ResourcePppd
 	}
 
 	pppd := C.hd_res_get_pppd_option(res)
+	var option byte
+	if pppd.option != nil {
+		option = byte(*pppd.option)
+	}
 
 	return &ResourcePppdOption{
 		Type:   resType,
-		Option: byte(*pppd.option),
+		Option: option,
 	}, nil
 }
