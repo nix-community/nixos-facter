@@ -806,7 +806,14 @@
 </ol>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>To use this report in your NixOS configuration, have a look at <a href="https://github.com/nix-community/nixos-facter-modules">NixOS Facter Modules</a>.</p>
+<p>To use this report in your NixOS configuration, add the following to your configuration:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="p">{</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>  hardware<span class="o">.</span>facter<span class="o">.</span><span class="ss">reportPath</span> <span class="o">=</span> <span class="l">./facter.json</span><span class="p">;</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>See the <a href="https://search.nixos.org/options?query=facter">nixpkgs documentation</a> for more details.</p>
 </div>
 
 
