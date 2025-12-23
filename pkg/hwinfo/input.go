@@ -103,6 +103,14 @@ func captureTouchpads(deviceIdx uint16) ([]HardwareDevice, error) {
 				Value: uint16(SubClassMouseOther),
 			}
 
+		case input.BusHost:
+			// Host bus for integrated devices (e.g., Apple M2 built-in trackpad)
+			hd.BusType = NewBusID(BusHost)
+			hd.SubClass = &ID{
+				Name:  SubClassMouseOther.String(),
+				Value: uint16(SubClassMouseOther),
+			}
+
 		case input.BusPci,
 			input.BusIsapnp,
 			input.BusHil,
@@ -114,7 +122,6 @@ func captureTouchpads(deviceIdx uint16) ([]HardwareDevice, error) {
 			input.BusParport,
 			input.BusAmiga,
 			input.BusAdb,
-			input.BusHost,
 			input.BusGsc,
 			input.BusAtari,
 			input.BusSpi,
