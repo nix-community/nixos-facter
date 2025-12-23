@@ -95,6 +95,9 @@ func stripCPUFreq(s string) string {
 
 func NewDetailCPU(cpu C.hd_detail_cpu_t) (*DetailCPU, error) {
 	data := cpu.data
+	if data == nil {
+		return nil, nil
+	}
 
 	return &DetailCPU{
 		Type: DetailTypeCpu,
