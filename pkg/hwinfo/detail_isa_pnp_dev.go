@@ -75,6 +75,10 @@ func (d DetailIsaPnpDevice) DetailType() DetailType {
 
 func NewDetailIsaPnpDevice(pnp C.hd_detail_isapnp_t) (*DetailIsaPnpDevice, error) {
 	data := pnp.data
+	if data == nil {
+		// Not an error: hwinfo can return detail structures with NULL data pointers.
+		return nil, nil
+	}
 
 	card, err := NewIsaPnpCard(data.card)
 	if err != nil {

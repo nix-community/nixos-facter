@@ -89,6 +89,11 @@ func (p DetailPci) DetailType() DetailType {
 
 func NewDetailPci(pci C.hd_detail_pci_t) (*DetailPci, error) {
 	data := pci.data
+	if data == nil {
+		// Not an error: hwinfo can return detail structures with NULL data pointers.
+		// See pci.c:497 for hwinfo's own handling.
+		return nil, nil
+	}
 
 	return &DetailPci{
 		Type:           DetailTypePci,
