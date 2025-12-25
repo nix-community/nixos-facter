@@ -17,6 +17,10 @@ func ReadStringList(list *C.str_list_t) []string {
 }
 
 func ReadUint64Array(arr unsafe.Pointer, length int) []uint64 {
+	if arr == nil || length <= 0 {
+		return nil
+	}
+
 	start := uintptr(arr)
 
 	result := make([]uint64, length)
@@ -29,6 +33,10 @@ func ReadUint64Array(arr unsafe.Pointer, length int) []uint64 {
 }
 
 func ReadUintArray(arr unsafe.Pointer, length int) []uint {
+	if arr == nil || length <= 0 {
+		return nil
+	}
+
 	start := uintptr(arr)
 
 	result := make([]uint, length)
@@ -42,6 +50,10 @@ func ReadUintArray(arr unsafe.Pointer, length int) []uint {
 
 func ReadIntArray(arr unsafe.Pointer, length int) []int {
 	// TODO see if we can use generics to combine some of these methods
+	if arr == nil || length <= 0 {
+		return nil
+	}
+
 	start := uintptr(arr)
 
 	result := make([]int, length)
@@ -54,6 +66,10 @@ func ReadIntArray(arr unsafe.Pointer, length int) []int {
 }
 
 func ReadByteArray(arr unsafe.Pointer, length int) []byte {
+	if arr == nil || length <= 0 {
+		return nil
+	}
+
 	start := uintptr(arr)
 
 	result := make([]byte, length)

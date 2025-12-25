@@ -65,6 +65,10 @@ func (d DetailUsb) DetailType() DetailType {
 
 func NewDetailUsb(usb C.hd_detail_usb_t) (*DetailUsb, error) {
 	data := usb.data
+	if data == nil {
+		// Not an error: hwinfo can return detail structures with NULL data pointers.
+		return nil, nil
+	}
 
 	if data.next != nil {
 		println("usb next is not nil")

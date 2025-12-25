@@ -52,6 +52,11 @@ func (d DetailBios) DetailType() DetailType {
 
 func NewDetailBios(dev C.hd_detail_bios_t) (*DetailBios, error) {
 	data := dev.data
+	if data == nil {
+		// Not an error: hwinfo can return detail structures with NULL data pointers.
+		// See hdp.c:1204 for hwinfo's own handling.
+		return nil, nil
+	}
 
 	return &DetailBios{
 		Type: DetailTypeBios,

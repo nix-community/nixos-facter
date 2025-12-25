@@ -46,6 +46,10 @@ func NewResourceFc(res *C.hd_res_t, resType ResourceType) (*ResourceFc, error) {
 	}
 
 	fc := C.hd_res_get_fc(res)
+	var controllerID byte
+	if fc.controller_id != nil {
+		controllerID = byte(*fc.controller_id)
+	}
 
 	return &ResourceFc{
 		WwpnOk:       bool(C.hd_res_fc_get_wwpn_ok(fc)),
@@ -54,6 +58,6 @@ func NewResourceFc(res *C.hd_res_t, resType ResourceType) (*ResourceFc, error) {
 		Wwpn:         uint64(fc.wwpn),
 		FcpLun:       uint64(fc.fcp_lun),
 		PortID:       uint32(fc.port_id),
-		ControllerID: byte(*fc.controller_id),
+		ControllerID: controllerID,
 	}, nil
 }

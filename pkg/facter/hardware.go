@@ -241,6 +241,10 @@ func (h *Hardware) add(device hwinfo.HardwareDevice) error {
 		if !ok {
 			return fmt.Errorf("expected hwinfo.DetailCPU, found %T", device.Detail)
 		}
+		if cpu == nil {
+			// CPU detail data unavailable (can happen on some hypervisors)
+			return nil
+		}
 
 		// We insert by physical id, as we only want one entry per core.
 		requiredSize := int(cpu.PhysicalID) + 1
