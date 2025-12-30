@@ -14,7 +14,7 @@ let
 in
 buildGo124Module (final: {
   pname = "nixos-facter";
-  version = "0.4.2";
+  version = "v0.4.3";
 
   src = fs.toSource {
     root = ../../..;
