@@ -95,6 +95,12 @@ func stripCPUFreq(s string) string {
 
 func NewDetailCPU(cpu C.hd_detail_cpu_t) (*DetailCPU, error) {
 	data := cpu.data
+	if data == nil {
+		// Not an error: hwinfo can return detail structures with NULL data pointers
+		// on certain systems (e.g., older VMware ESXi). See hdp.c:1082 for hwinfo's
+		// own handling: if(!(ct = hd->detail->cpu.data)) return;
+		return nil, nil
+	}
 
 	return &DetailCPU{
 		Type: DetailTypeCpu,

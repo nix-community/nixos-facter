@@ -35,6 +35,8 @@
         "aarch64-linux"
         "riscv64-linux"
         "x86_64-linux"
+        # macOS for development only (cross-compile to Linux)
+        "aarch64-darwin"
       ];
     };
 }

@@ -66,5 +66,6 @@ buildGo124Module (final: {
     homepage = "https://github.com/nix-community/nixos-facter";
     license = licenses.mit;
     mainProgram = "nixos-facter";
+    platforms = platforms.linux;
   };
 })
