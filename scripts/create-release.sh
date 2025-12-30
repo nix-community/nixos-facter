@@ -11,6 +11,13 @@ if [[ -z $version ]]; then
   exit 1
 fi
 
+# Validate semver format (major.minor.patch)
+if ! [[ $version =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+  echo "Invalid version format: $version" >&2
+  echo "Version must be in semver format: major.minor.patch (e.g., 1.2.3)" >&2
+  exit 1
+fi
+
 if [[ "$(git symbolic-ref --short HEAD)" != "main" ]]; then
   echo "must be on main branch" >&2
   exit 1
@@ -49,7 +56,6 @@ git add ./nix/packages/nixos-facter/package.nix
 git branch -D "release-${version}" || true
 git checkout -b "release-${version}"
 git commit -m "release: v${version}"
-nix flake check -vL
 git push origin "release-${version}"
 pr_url=$(gh pr create \
   --base main \
