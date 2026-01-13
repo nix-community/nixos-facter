@@ -10,11 +10,10 @@ let
     inherit (pkgs) lib;
     makeTest = import "${inputs.nixpkgs}/nixos/tests/make-test-python.nix";
     eval-config = import "${inputs.nixpkgs}/nixos/lib/eval-config.nix";
+    qemu-common-lib = import "${inputs.nixpkgs}/nixos/tests/qemu-common-lib.nix" { inherit pkgs; };
   };
 in
-# for now we only run the tests in x86_64-linux since we don't have access to a bare-metal ARM box or a VM that supports nested
-# virtualisation which makes the test take forever and ultimately fail
-pkgs.lib.optionalAttrs pkgs.stdenv.isx86_64 {
+{
   golangci-lint = perSystem.self.nixos-facter.overrideAttrs (old: {
     nativeBuildInputs = old.nativeBuildInputs ++ [ pkgs.golangci-lint ];
     buildPhase = ''
