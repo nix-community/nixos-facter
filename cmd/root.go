@@ -7,6 +7,7 @@ import (
 	"log"
 	"log/slog"
 	"os"
+	"os/exec"
 	"strings"
 
 	"github.com/numtide/nixos-facter/pkg/build"
@@ -87,18 +88,20 @@ Flags:
 }
 
 func Execute() {
-	// check udev version
-	if udevVersion, err := udev.Version(); err != nil {
-		log.Fatalf("failed to get systemd version: %v", err)
-	} else if udevVersion < 252 {
-		log.Fatalf("udev version %d is too old, please upgrade to at least 252", udevVersion)
-	}
-
 	flag.Parse()
 
 	if version {
 		fmt.Printf("%s\n", build.Version)
 		return
+	}
+
+	// check udev version
+	if _, err := exec.LookPath("udevadm"); err != nil {
+		slog.Warn("udevadm not found, skipping udev version check")
+	} else if udevVersion, err := udev.Version(); err != nil {
+		log.Fatalf("failed to get udev version: %v", err)
+	} else if udevVersion < 252 {
+		log.Fatalf("udev version %d is too old, please upgrade to at least 252", udevVersion)
 	}
 
 	// Check if the effective user id is 0 e.g. root
