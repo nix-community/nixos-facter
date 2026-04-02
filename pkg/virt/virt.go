@@ -53,7 +53,13 @@ const (
 // Detect identifies the virtualisation type of the current system.
 // Returns the detected Type and an error if detection fails.
 func Detect() (Type, error) {
-	out, err := exec.Command("systemd-detect-virt").CombinedOutput()
+	path, err := exec.LookPath("systemd-detect-virt")
+	if err != nil {
+		slog.Warn("systemd-detect-virt not found, skipping virtualisation detection")
+		return TypeNone, nil
+	}
+
+	out, err := exec.Command(path).CombinedOutput()
 	outStr := strings.Trim(string(out), "\n")
 
 	// note: systemd-detect-virt exits with status 1 when "none" is detected
