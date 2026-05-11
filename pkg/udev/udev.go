@@ -53,8 +53,6 @@ import (
 	"strconv"
 	"strings"
 	"unsafe"
-
-	"github.com/numtide/nixos-facter/pkg/linux/input"
 )
 
 //go:generate enumer -type=Type -json -text -trimprefix Type -output=./udev_type.go
@@ -193,7 +191,6 @@ func NewUdevPci(env map[string]string) (*Pci, error) {
 }
 
 type Udev struct {
-	Bus         input.Bus
 	Type        Type
 	Model       string
 	ModelID     uint16
@@ -215,12 +212,6 @@ func NewUdev(env map[string]string) (*Udev, error) {
 		Serial:      env["ID_SERIAL"],
 		SerialShort: env["ID_SERIAL_SHORT"],
 		Input:       NewUdevInput(env),
-	}
-
-	if bus, ok := env["ID_BUS"]; ok {
-		if err := result.Bus.UnmarshalText([]byte(bus)); err != nil {
-			return nil, fmt.Errorf("failed to parse bus: %w", err)
-		}
 	}
 
 	if str, ok := env["ID_MODEL_ID"]; ok {
@@ -250,19 +241,20 @@ func NewUdev(env map[string]string) (*Udev, error) {
 		result.Revision = uint16(revision)
 	}
 
+	// ID_BUS is set by systemd-udev rules and has an open-ended value space
+	// (usb, pci, scsi, ata, acpi, platform, virtio, ...); only dispatch on
+	// the buses we have parsers for. See issue #554.
 	var err error
 
-	//nolint:exhaustive
-	switch result.Bus {
-	case input.BusUsb:
+	switch env["ID_BUS"] {
+	case "usb":
 		if result.Usb, err = NewUdevUsb(env); err != nil {
 			return nil, fmt.Errorf("failed to parse usb: %w", err)
 		}
-	case input.BusPci:
+	case "pci":
 		if result.Pci, err = NewUdevPci(env); err != nil {
 			return nil, fmt.Errorf("failed to parse pci: %w", err)
 		}
-	default: // do nothing
 	}
 
 	return result, nil
