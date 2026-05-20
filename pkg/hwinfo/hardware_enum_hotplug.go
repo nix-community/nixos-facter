@@ -25,12 +25,12 @@ func (i Hotplug) String() string {
 // Re-run the stringer command to generate them again.
 func _HotplugNoOp() {
 	var x [1]struct{}
-	_ = x[HotplugNone-(0)]
-	_ = x[HotplugPcmcia-(1)]
-	_ = x[HotplugCardbus-(2)]
-	_ = x[HotplugPci-(3)]
-	_ = x[HotplugUsb-(4)]
-	_ = x[HotplugFirewire-(5)]
+	_ = x[HotplugNone-0]
+	_ = x[HotplugPcmcia-1]
+	_ = x[HotplugCardbus-2]
+	_ = x[HotplugPci-3]
+	_ = x[HotplugUsb-4]
+	_ = x[HotplugFirewire-5]
 }
 
 var _HotplugValues = []Hotplug{HotplugNone, HotplugPcmcia, HotplugCardbus, HotplugPci, HotplugUsb, HotplugFirewire}

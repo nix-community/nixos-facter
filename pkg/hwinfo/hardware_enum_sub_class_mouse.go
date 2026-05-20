@@ -35,12 +35,12 @@ func (i SubClassMouse) String() string {
 // Re-run the stringer command to generate them again.
 func _SubClassMouseNoOp() {
 	var x [1]struct{}
-	_ = x[SubClassMousePs2-(0)]
-	_ = x[SubClassMouseSer-(1)]
-	_ = x[SubClassMouseBus-(2)]
-	_ = x[SubClassMouseUsb-(3)]
-	_ = x[SubClassMouseSun-(4)]
-	_ = x[SubClassMouseOther-(128)]
+	_ = x[SubClassMousePs2-0]
+	_ = x[SubClassMouseSer-1]
+	_ = x[SubClassMouseBus-2]
+	_ = x[SubClassMouseUsb-3]
+	_ = x[SubClassMouseSun-4]
+	_ = x[SubClassMouseOther-128]
 }
 
 var _SubClassMouseValues = []SubClassMouse{SubClassMousePs2, SubClassMouseSer, SubClassMouseBus, SubClassMouseUsb, SubClassMouseSun, SubClassMouseOther}

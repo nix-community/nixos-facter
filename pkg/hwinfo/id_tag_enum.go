@@ -26,12 +26,12 @@ func (i IDTag) String() string {
 // Re-run the stringer command to generate them again.
 func _IDTagNoOp() {
 	var x [1]struct{}
-	_ = x[IDTagPci-(1)]
-	_ = x[IDTagEisa-(2)]
-	_ = x[IDTagUsb-(3)]
-	_ = x[IDTagSpecial-(4)]
-	_ = x[IDTagPcmcia-(5)]
-	_ = x[IDTagSdio-(6)]
+	_ = x[IDTagPci-1]
+	_ = x[IDTagEisa-2]
+	_ = x[IDTagUsb-3]
+	_ = x[IDTagSpecial-4]
+	_ = x[IDTagPcmcia-5]
+	_ = x[IDTagSdio-6]
 }
 
 var _IDTagValues = []IDTag{IDTagPci, IDTagEisa, IDTagUsb, IDTagSpecial, IDTagPcmcia, IDTagSdio}

@@ -25,14 +25,14 @@ func (i DriverInfoType) String() string {
 // Re-run the stringer command to generate them again.
 func _DriverInfoTypeNoOp() {
 	var x [1]struct{}
-	_ = x[DriverInfoTypeAny-(0)]
-	_ = x[DriverInfoTypeDisplay-(1)]
-	_ = x[DriverInfoTypeModule-(2)]
-	_ = x[DriverInfoTypeMouse-(3)]
-	_ = x[DriverInfoTypeX11-(4)]
-	_ = x[DriverInfoTypeIsdn-(5)]
-	_ = x[DriverInfoTypeKeyboard-(6)]
-	_ = x[DriverInfoTypeDsl-(7)]
+	_ = x[DriverInfoTypeAny-0]
+	_ = x[DriverInfoTypeDisplay-1]
+	_ = x[DriverInfoTypeModule-2]
+	_ = x[DriverInfoTypeMouse-3]
+	_ = x[DriverInfoTypeX11-4]
+	_ = x[DriverInfoTypeIsdn-5]
+	_ = x[DriverInfoTypeKeyboard-6]
+	_ = x[DriverInfoTypeDsl-7]
 }
 
 var _DriverInfoTypeValues = []DriverInfoType{DriverInfoTypeAny, DriverInfoTypeDisplay, DriverInfoTypeModule, DriverInfoTypeMouse, DriverInfoTypeX11, DriverInfoTypeIsdn, DriverInfoTypeKeyboard, DriverInfoTypeDsl}

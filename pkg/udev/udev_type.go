@@ -25,21 +25,21 @@ func (i Type) String() string {
 // Re-run the stringer command to generate them again.
 func _TypeNoOp() {
 	var x [1]struct{}
-	_ = x[TypeDisk-(0)]
-	_ = x[TypeCD-(1)]
-	_ = x[TypeFloppy-(2)]
-	_ = x[TypeTape-(3)]
-	_ = x[TypePartition-(4)]
-	_ = x[TypeUsb-(5)]
-	_ = x[TypeScsi-(6)]
-	_ = x[TypePci-(7)]
-	_ = x[TypeNetwork-(8)]
-	_ = x[TypeMouse-(9)]
-	_ = x[TypeKeyboard-(10)]
-	_ = x[TypePrinter-(11)]
-	_ = x[TypeAudio-(12)]
-	_ = x[TypeVideo-(13)]
-	_ = x[TypeGeneric-(14)]
+	_ = x[TypeDisk-0]
+	_ = x[TypeCD-1]
+	_ = x[TypeFloppy-2]
+	_ = x[TypeTape-3]
+	_ = x[TypePartition-4]
+	_ = x[TypeUsb-5]
+	_ = x[TypeScsi-6]
+	_ = x[TypePci-7]
+	_ = x[TypeNetwork-8]
+	_ = x[TypeMouse-9]
+	_ = x[TypeKeyboard-10]
+	_ = x[TypePrinter-11]
+	_ = x[TypeAudio-12]
+	_ = x[TypeVideo-13]
+	_ = x[TypeGeneric-14]
 }
 
 var _TypeValues = []Type{TypeDisk, TypeCD, TypeFloppy, TypeTape, TypePartition, TypeUsb, TypeScsi, TypePci, TypeNetwork, TypeMouse, TypeKeyboard, TypePrinter, TypeAudio, TypeVideo, TypeGeneric}
