@@ -10,6 +10,7 @@ let
     inherit (pkgs) lib;
     makeTest = import "${inputs.nixpkgs}/nixos/tests/make-test-python.nix";
     eval-config = import "${inputs.nixpkgs}/nixos/lib/eval-config.nix";
+    qemu-common = import "${inputs.nixpkgs}/nixos/lib/qemu-common.nix";
   };
 in
 # for now we only run the tests in x86_64-linux since we don't have access to a bare-metal ARM box or a VM that supports nested
