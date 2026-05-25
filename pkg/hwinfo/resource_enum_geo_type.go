@@ -25,10 +25,10 @@ func (i GeoType) String() string {
 // Re-run the stringer command to generate them again.
 func _GeoTypeNoOp() {
 	var x [1]struct{}
-	_ = x[GeoTypePhysical-(0)]
-	_ = x[GeoTypeLogical-(1)]
-	_ = x[GeoTypeBiosEdd-(2)]
-	_ = x[GeoTypeBiosLegacy-(3)]
+	_ = x[GeoTypePhysical-0]
+	_ = x[GeoTypeLogical-1]
+	_ = x[GeoTypeBiosEdd-2]
+	_ = x[GeoTypeBiosLegacy-3]
 }
 
 var _GeoTypeValues = []GeoType{GeoTypePhysical, GeoTypeLogical, GeoTypeBiosEdd, GeoTypeBiosLegacy}

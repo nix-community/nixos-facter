@@ -25,14 +25,14 @@ func (i SizeUnit) String() string {
 // Re-run the stringer command to generate them again.
 func _SizeUnitNoOp() {
 	var x [1]struct{}
-	_ = x[SizeUnitCm-(0)]
-	_ = x[SizeUnitCinch-(1)]
-	_ = x[SizeUnitByte-(2)]
-	_ = x[SizeUnitSectors-(3)]
-	_ = x[SizeUnitKbyte-(4)]
-	_ = x[SizeUnitMbyte-(5)]
-	_ = x[SizeUnitGbyte-(6)]
-	_ = x[SizeUnitMm-(7)]
+	_ = x[SizeUnitCm-0]
+	_ = x[SizeUnitCinch-1]
+	_ = x[SizeUnitByte-2]
+	_ = x[SizeUnitSectors-3]
+	_ = x[SizeUnitKbyte-4]
+	_ = x[SizeUnitMbyte-5]
+	_ = x[SizeUnitGbyte-6]
+	_ = x[SizeUnitMm-7]
 }
 
 var _SizeUnitValues = []SizeUnit{SizeUnitCm, SizeUnitCinch, SizeUnitByte, SizeUnitSectors, SizeUnitKbyte, SizeUnitMbyte, SizeUnitGbyte, SizeUnitMm}

@@ -25,9 +25,9 @@ func (i PciFlag) String() string {
 // Re-run the stringer command to generate them again.
 func _PciFlagNoOp() {
 	var x [1]struct{}
-	_ = x[PciFlagOk-(0)]
-	_ = x[PciFlagPm-(1)]
-	_ = x[PciFlagAgp-(2)]
+	_ = x[PciFlagOk-0]
+	_ = x[PciFlagPm-1]
+	_ = x[PciFlagAgp-2]
 }
 
 var _PciFlagValues = []PciFlag{PciFlagOk, PciFlagPm, PciFlagAgp}

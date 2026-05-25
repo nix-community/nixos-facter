@@ -25,10 +25,10 @@ func (i AccessFlags) String() string {
 // Re-run the stringer command to generate them again.
 func _AccessFlagsNoOp() {
 	var x [1]struct{}
-	_ = x[AccessFlagsUnknown-(0)]
-	_ = x[AccessFlagsReadOnly-(1)]
-	_ = x[AccessFlagsWriteOnly-(2)]
-	_ = x[AccessFlagsReadWrite-(3)]
+	_ = x[AccessFlagsUnknown-0]
+	_ = x[AccessFlagsReadOnly-1]
+	_ = x[AccessFlagsWriteOnly-2]
+	_ = x[AccessFlagsReadWrite-3]
 }
 
 var _AccessFlagsValues = []AccessFlags{AccessFlagsUnknown, AccessFlagsReadOnly, AccessFlagsWriteOnly, AccessFlagsReadWrite}

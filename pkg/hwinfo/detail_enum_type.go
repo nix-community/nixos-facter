@@ -25,20 +25,20 @@ func (i DetailType) String() string {
 // Re-run the stringer command to generate them again.
 func _DetailTypeNoOp() {
 	var x [1]struct{}
-	_ = x[DetailTypePci-(0)]
-	_ = x[DetailTypeUsb-(1)]
-	_ = x[DetailTypeIsaPnp-(2)]
-	_ = x[DetailTypeCdrom-(3)]
-	_ = x[DetailTypeFloppy-(4)]
-	_ = x[DetailTypeBios-(5)]
-	_ = x[DetailTypeCpu-(6)]
-	_ = x[DetailTypeProm-(7)]
-	_ = x[DetailTypeMonitor-(8)]
-	_ = x[DetailTypeSys-(9)]
-	_ = x[DetailTypeScsi-(10)]
-	_ = x[DetailTypeDevtree-(11)]
-	_ = x[DetailTypeCcw-(12)]
-	_ = x[DetailTypeJoystick-(13)]
+	_ = x[DetailTypePci-0]
+	_ = x[DetailTypeUsb-1]
+	_ = x[DetailTypeIsaPnp-2]
+	_ = x[DetailTypeCdrom-3]
+	_ = x[DetailTypeFloppy-4]
+	_ = x[DetailTypeBios-5]
+	_ = x[DetailTypeCpu-6]
+	_ = x[DetailTypeProm-7]
+	_ = x[DetailTypeMonitor-8]
+	_ = x[DetailTypeSys-9]
+	_ = x[DetailTypeScsi-10]
+	_ = x[DetailTypeDevtree-11]
+	_ = x[DetailTypeCcw-12]
+	_ = x[DetailTypeJoystick-13]
 }
 
 var _DetailTypeValues = []DetailType{DetailTypePci, DetailTypeUsb, DetailTypeIsaPnp, DetailTypeCdrom, DetailTypeFloppy, DetailTypeBios, DetailTypeCpu, DetailTypeProm, DetailTypeMonitor, DetailTypeSys, DetailTypeScsi, DetailTypeDevtree, DetailTypeCcw, DetailTypeJoystick}

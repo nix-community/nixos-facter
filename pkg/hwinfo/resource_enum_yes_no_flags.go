@@ -25,9 +25,9 @@ func (i YesNoFlags) String() string {
 // Re-run the stringer command to generate them again.
 func _YesNoFlagsNoOp() {
 	var x [1]struct{}
-	_ = x[YesNoFlagsUnknown-(0)]
-	_ = x[YesNoFlagsNo-(1)]
-	_ = x[YesNoFlagsYes-(2)]
+	_ = x[YesNoFlagsUnknown-0]
+	_ = x[YesNoFlagsNo-1]
+	_ = x[YesNoFlagsYes-2]
 }
 
 var _YesNoFlagsValues = []YesNoFlags{YesNoFlagsUnknown, YesNoFlagsNo, YesNoFlagsYes}

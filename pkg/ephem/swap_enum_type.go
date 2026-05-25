@@ -25,8 +25,8 @@ func (i SwapType) String() string {
 // Re-run the stringer command to generate them again.
 func _SwapTypeNoOp() {
 	var x [1]struct{}
-	_ = x[SwapTypeFile-(0)]
-	_ = x[SwapTypePartition-(1)]
+	_ = x[SwapTypeFile-0]
+	_ = x[SwapTypePartition-1]
 }
 
 var _SwapTypeValues = []SwapType{SwapTypeFile, SwapTypePartition}

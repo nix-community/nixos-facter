@@ -6,13 +6,13 @@
   makeWrapper,
   pkg-config,
   stdenv,
-  buildGo124Module,
+  buildGo125Module,
   versionCheckHook,
 }:
 let
   fs = lib.fileset;
 in
-buildGo124Module (final: {
+buildGo125Module (final: {
   pname = "nixos-facter";
   version = "0.4.4";
 

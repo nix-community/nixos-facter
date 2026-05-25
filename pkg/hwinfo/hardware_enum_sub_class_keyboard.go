@@ -25,8 +25,8 @@ func (i SubClassKeyboard) String() string {
 // Re-run the stringer command to generate them again.
 func _SubClassKeyboardNoOp() {
 	var x [1]struct{}
-	_ = x[SubClassKeyboardKbd-(0)]
-	_ = x[SubClassKeyboardConsole-(1)]
+	_ = x[SubClassKeyboardKbd-0]
+	_ = x[SubClassKeyboardConsole-1]
 }
 
 var _SubClassKeyboardValues = []SubClassKeyboard{SubClassKeyboardKbd, SubClassKeyboardConsole}
