@@ -250,6 +250,7 @@ const (
 
 	BaseClassMmcController
 	BaseClassTouchpad
+	BaseClassTouchscreen
 )
 
 // SubClassKeyboard values of BaseClassKeyboard
