@@ -25,10 +25,6 @@ type ResourceDma struct {
 	Enabled bool         `json:"enabled"`
 }
 
-func (r ResourceDma) ResourceType() ResourceType {
-	return ResourceTypeDma
-}
-
 func NewResourceDma(res *C.hd_res_t, resType ResourceType) (*ResourceDma, error) {
 	if res == nil {
 		return nil, errors.New("res is nil")
@@ -45,4 +41,8 @@ func NewResourceDma(res *C.hd_res_t, resType ResourceType) (*ResourceDma, error)
 		Base:    fmt.Sprintf("0x%x", uint(dma.base)),
 		Enabled: bool(C.hd_res_dma_get_enabled(dma)),
 	}, nil
+}
+
+func (r ResourceDma) ResourceType() ResourceType {
+	return ResourceTypeDma
 }

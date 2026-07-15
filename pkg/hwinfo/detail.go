@@ -47,6 +47,11 @@ const (
 	DetailTypeJoystick
 )
 
+// ErrDetailMissing indicates hwinfo returned a detail structure with a NULL
+// data pointer: the detail is absent rather than malformed. See hdp.c:1082
+// and hdp.c:1204 for hwinfo's own handling.
+var ErrDetailMissing = errors.New("detail data is missing")
+
 type Detail interface {
 	DetailType() DetailType
 }
@@ -85,7 +90,11 @@ func NewDetail(detail *C.hd_detail_t) (Detail, error) {
 		err = fmt.Errorf("unknown detail type %d", DetailType(C.hd_detail_get_type(detail)))
 	}
 
-	return result, err
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
 }
 
 type MemoryRange struct {

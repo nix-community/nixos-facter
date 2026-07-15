@@ -23,10 +23,6 @@ type ResourceLink struct {
 	Connected bool         `json:"connected"`
 }
 
-func (r ResourceLink) ResourceType() ResourceType {
-	return ResourceTypeLink
-}
-
 func NewResourceLink(res *C.hd_res_t, resType ResourceType) (*ResourceLink, error) {
 	if res == nil {
 		return nil, errors.New("res is nil")
@@ -42,4 +38,8 @@ func NewResourceLink(res *C.hd_res_t, resType ResourceType) (*ResourceLink, erro
 		Type:      resType,
 		Connected: bool(C.hd_res_link_get_connected(link)),
 	}, nil
+}
+
+func (r ResourceLink) ResourceType() ResourceType {
+	return ResourceTypeLink
 }

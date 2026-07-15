@@ -95,7 +95,9 @@ const (
 	SmbiosTypeTPM
 	SmbiosTypeProcessorAdditional
 	SmbiosTypeFirmwareInventory
+)
 
+const (
 	SmbiosTypeInactive   SmbiosType = 126
 	SmbiosTypeEndOfTable SmbiosType = 127
 )

@@ -19,6 +19,7 @@ buildGo126Module (final: {
   src = fs.toSource {
     root = ../../..;
     fileset = fs.unions [
+      ../../../.golangci.yml
       ../../../cmd
       ../../../go.mod
       ../../../go.sum

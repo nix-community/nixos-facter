@@ -37,6 +37,37 @@ type idJSON struct {
 	Value uint16 `json:"value"`
 }
 
+func NewID(id C.hd_id_t) *ID {
+	result := ID{
+		/*
+			 	ID is actually a combination of some tag to differentiate the various id types and the real id.
+				We do the same thing as the ID_VALUE macro in hd.h to get the true value.
+		*/
+		Type:  IDTag((id.id >> 16) & 0xf),
+		Value: uint16(id.id),
+		Name:  C.GoString(id.name),
+	}
+	if result.IsEmpty() {
+		return nil
+	}
+
+	return &result
+}
+
+func NewBusID(bus Bus) *ID {
+	return &ID{
+		Name:  bus.String(),
+		Value: uint16(bus),
+	}
+}
+
+func NewBaseClassID(bc BaseClass) *ID {
+	return &ID{
+		Name:  bc.String(),
+		Value: uint16(bc),
+	}
+}
+
 func (i ID) MarshalJSON() ([]byte, error) {
 	var (
 		b   []byte
@@ -75,35 +106,4 @@ func (i ID) String() string {
 
 func (i ID) Is(ids ...uint16) bool {
 	return slices.Contains(ids, i.Value)
-}
-
-func NewID(id C.hd_id_t) *ID {
-	result := ID{
-		/*
-			 	ID is actually a combination of some tag to differentiate the various id types and the real id.
-				We do the same thing as the ID_VALUE macro in hd.h to get the true value.
-		*/
-		Type:  IDTag((id.id >> 16) & 0xf),
-		Value: uint16(id.id),
-		Name:  C.GoString(id.name),
-	}
-	if result.IsEmpty() {
-		return nil
-	}
-
-	return &result
-}
-
-func NewBusID(bus Bus) *ID {
-	return &ID{
-		Name:  bus.String(),
-		Value: uint16(bus),
-	}
-}
-
-func NewBaseClassID(bc BaseClass) *ID {
-	return &ID{
-		Name:  bc.String(),
-		Value: uint16(bc),
-	}
 }

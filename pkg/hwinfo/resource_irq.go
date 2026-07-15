@@ -25,10 +25,6 @@ type ResourceIrq struct {
 	Enabled   bool         `json:"enabled"`
 }
 
-func (r ResourceIrq) ResourceType() ResourceType {
-	return ResourceTypeIrq
-}
-
 func NewResourceIrq(res *C.hd_res_t, resType ResourceType) (*ResourceIrq, error) {
 	if res == nil {
 		return nil, errors.New("res is nil")
@@ -46,4 +42,8 @@ func NewResourceIrq(res *C.hd_res_t, resType ResourceType) (*ResourceIrq, error)
 		Triggered: uint16(irq.triggered),
 		Enabled:   bool(C.hd_res_irq_get_enabled(irq)),
 	}, nil
+}
+
+func (r ResourceIrq) ResourceType() ResourceType {
+	return ResourceTypeIrq
 }

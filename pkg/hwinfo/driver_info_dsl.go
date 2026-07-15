@@ -16,10 +16,6 @@ type DriverInfoDsl struct {
 	Name string `json:"name,omitempty"` // DSL driver name
 }
 
-func (d DriverInfoDsl) DriverInfoType() DriverInfoType {
-	return DriverInfoTypeDsl
-}
-
 func NewDriverInfoDsl(info C.driver_info_dsl_t) DriverInfoDsl {
 	return DriverInfoDsl{
 		Type:     DriverInfoTypeDsl,
@@ -28,4 +24,8 @@ func NewDriverInfoDsl(info C.driver_info_dsl_t) DriverInfoDsl {
 		Mode:     C.GoString(info.mode),
 		Name:     C.GoString(info.name),
 	}
+}
+
+func (d DriverInfoDsl) DriverInfoType() DriverInfoType {
+	return DriverInfoTypeDsl
 }

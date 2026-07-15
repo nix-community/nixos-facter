@@ -23,10 +23,6 @@ type ResourceBaud struct {
 	Handshake byte         `json:"handshake"`
 }
 
-func (r ResourceBaud) ResourceType() ResourceType {
-	return ResourceTypeBaud
-}
-
 func NewResourceBaud(res *C.hd_res_t, resType ResourceType) (*ResourceBaud, error) {
 	if res == nil {
 		return nil, errors.New("res is nil")
@@ -46,4 +42,8 @@ func NewResourceBaud(res *C.hd_res_t, resType ResourceType) (*ResourceBaud, erro
 		Parity:    byte(baud.parity),
 		Handshake: byte(baud.handshake),
 	}, nil
+}
+
+func (r ResourceBaud) ResourceType() ResourceType {
+	return ResourceTypeBaud
 }

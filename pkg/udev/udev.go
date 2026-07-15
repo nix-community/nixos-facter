@@ -47,6 +47,7 @@ struct kv_pair *facter_udev_get_device_properties(struct udev_device *device, si
 import "C"
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"os/exec"
@@ -244,17 +245,21 @@ func NewUdev(env map[string]string) (*Udev, error) {
 	// ID_BUS is set by systemd-udev rules and has an open-ended value space
 	// (usb, pci, scsi, ata, acpi, platform, virtio, ...); only dispatch on
 	// the buses we have parsers for. See issue #554.
-	var err error
-
 	switch env["ID_BUS"] {
 	case "usb":
-		if result.Usb, err = NewUdevUsb(env); err != nil {
+		usb, err := NewUdevUsb(env)
+		if err != nil {
 			return nil, fmt.Errorf("failed to parse usb: %w", err)
 		}
+
+		result.Usb = usb
 	case "pci":
-		if result.Pci, err = NewUdevPci(env); err != nil {
+		pci, err := NewUdevPci(env)
+		if err != nil {
 			return nil, fmt.Errorf("failed to parse pci: %w", err)
 		}
+
+		result.Pci = pci
 	}
 
 	return result, nil
@@ -305,7 +310,7 @@ func Read(sysPath string) (*Udev, error) {
 // Version retrieves the systemd major version by executing the "udevadm --version" command and parsing its output.
 // It returns the parsed version as an uint64, or an error if the command execution or parsing fails.
 func Version() (uint64, error) {
-	cmd := exec.Command("udevadm", "--version")
+	cmd := exec.CommandContext(context.Background(), "udevadm", "--version")
 
 	output, err := cmd.Output()
 	if err != nil {

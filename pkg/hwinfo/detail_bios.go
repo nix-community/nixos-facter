@@ -46,16 +46,12 @@ type DetailBios struct {
 	// todo bios32
 }
 
-func (d DetailBios) DetailType() DetailType {
-	return DetailTypeBios
-}
-
 func NewDetailBios(dev C.hd_detail_bios_t) (*DetailBios, error) {
 	data := dev.data
 	if data == nil {
 		// Not an error: hwinfo can return detail structures with NULL data pointers.
 		// See hdp.c:1204 for hwinfo's own handling.
-		return nil, nil
+		return nil, ErrDetailMissing
 	}
 
 	return &DetailBios{
@@ -77,4 +73,8 @@ func NewDetailBios(dev C.hd_detail_bios_t) (*DetailBios, error) {
 		LowMemorySize: uint32(data.low_mem_size),
 		SmbiosVersion: uint32(data.smbios_ver),
 	}, nil
+}
+
+func (d DetailBios) DetailType() DetailType {
+	return DetailTypeBios
 }

@@ -19,10 +19,6 @@ type ResourcePhysicalMemory struct {
 	Range uint64       `json:"range"`
 }
 
-func (r ResourcePhysicalMemory) ResourceType() ResourceType {
-	return ResourceTypePhysMem
-}
-
 func NewResourcePhysicalMemory(res *C.hd_res_t, resType ResourceType) (*ResourcePhysicalMemory, error) {
 	if res == nil {
 		return nil, errors.New("res is nil")
@@ -38,4 +34,8 @@ func NewResourcePhysicalMemory(res *C.hd_res_t, resType ResourceType) (*Resource
 		Type:  resType,
 		Range: uint64(physMem._range),
 	}, nil
+}
+
+func (r ResourcePhysicalMemory) ResourceType() ResourceType {
+	return ResourceTypePhysMem
 }

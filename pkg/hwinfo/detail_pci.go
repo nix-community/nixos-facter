@@ -83,16 +83,12 @@ type DetailPci struct {
 	Log           string `json:"-"` // log messages
 }
 
-func (p DetailPci) DetailType() DetailType {
-	return DetailTypePci
-}
-
 func NewDetailPci(pci C.hd_detail_pci_t) (*DetailPci, error) {
 	data := pci.data
 	if data == nil {
 		// Not an error: hwinfo can return detail structures with NULL data pointers.
 		// See pci.c:497 for hwinfo's own handling.
-		return nil, nil
+		return nil, ErrDetailMissing
 	}
 
 	return &DetailPci{
@@ -127,4 +123,8 @@ func NewDetailPci(pci C.hd_detail_pci_t) (*DetailPci, error) {
 		ModuleAlias:    C.GoString(data.modalias),
 		Label:          C.GoString(data.label),
 	}, nil
+}
+
+func (p DetailPci) DetailType() DetailType {
+	return DetailTypePci
 }

@@ -30,11 +30,11 @@ type Report struct {
 	UEFI *boot.UEFIInfo `json:"uefi"`
 
 	// Hardware provides detailed information about the system's hardware components, such as CPU, memory, and peripherals.
-	Hardware Hardware `json:"hardware,omitempty"`
+	Hardware Hardware `json:"hardware"`
 
 	// Smbios provides detailed information about the system's SMBios data, such as BIOS, board, chassis, memory,
 	// and processors.
-	Smbios Smbios `json:"smbios,omitempty"`
+	Smbios Smbios `json:"smbios"`
 
 	// Swap contains a list of swap entries representing the system's swap devices or files and their respective details.
 	Swap []*ephem.SwapEntry `json:"swap,omitempty"`
@@ -102,7 +102,8 @@ func (s *Scanner) Scan() (*Report, error) {
 			device.SysfsIOMMUGroupID = &groupID
 		}
 
-		if err = report.Hardware.add(device); err != nil {
+		err = report.Hardware.add(device)
+		if err != nil {
 			return nil, fmt.Errorf("failed to add to hardware report: %w", err)
 		}
 	}
@@ -110,27 +111,31 @@ func (s *Scanner) Scan() (*Report, error) {
 	slog.Debug("processing smbios entries", "count", len(smbios))
 
 	for idx := range smbios {
-		if err = report.Smbios.add(smbios[idx]); err != nil {
+		err = report.Smbios.add(smbios[idx])
+		if err != nil {
 			return nil, fmt.Errorf("failed to add to smbios report: %w", err)
 		}
 	}
 
 	slog.Debug("detecting virtualisation")
 
-	if report.Virtualisation, err = virt.Detect(); err != nil {
+	report.Virtualisation, err = virt.Detect()
+	if err != nil {
 		return nil, fmt.Errorf("failed to detect virtualisation: %w", err)
 	}
 
 	slog.Debug("detecting UEFI")
 
-	if report.UEFI, err = boot.DetectUEFI(); err != nil {
+	report.UEFI, err = boot.DetectUEFI()
+	if err != nil {
 		return nil, fmt.Errorf("failed to detect UEFI: %w", err)
 	}
 
 	if s.Ephemeral || s.Swap {
 		slog.Debug("processing swap devices")
 
-		if report.Swap, err = ephem.SwapEntries(); err != nil {
+		report.Swap, err = ephem.SwapEntries()
+		if err != nil {
 			return nil, fmt.Errorf("failed to detect swap devices: %w", err)
 		}
 	}

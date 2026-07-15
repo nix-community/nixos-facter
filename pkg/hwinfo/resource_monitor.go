@@ -26,10 +26,6 @@ type ResourceMonitor struct {
 	Interlaced        bool         `json:"interlaced"`
 }
 
-func (r ResourceMonitor) ResourceType() ResourceType {
-	return ResourceTypeMonitor
-}
-
 func NewResourceMonitor(res *C.hd_res_t, resType ResourceType) (*ResourceMonitor, error) {
 	if res == nil {
 		return nil, errors.New("res is nil")
@@ -48,4 +44,8 @@ func NewResourceMonitor(res *C.hd_res_t, resType ResourceType) (*ResourceMonitor
 		VerticalFrequency: uint16(monitor.vfreq),
 		Interlaced:        bool(C.hd_res_monitor_get_interlaced(monitor)),
 	}, nil
+}
+
+func (r ResourceMonitor) ResourceType() ResourceType {
+	return ResourceTypeMonitor
 }

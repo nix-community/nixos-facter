@@ -19,10 +19,6 @@ type SmbiosSlot struct {
 	Features    []string   `json:"features,omitempty"`
 }
 
-func (s SmbiosSlot) SmbiosType() SmbiosType {
-	return s.Type
-}
-
 func NewSmbiosSlot(info C.smbios_slot_t) (*SmbiosSlot, error) {
 	return &SmbiosSlot{
 		Type:        SmbiosTypeSlot,
@@ -35,4 +31,8 @@ func NewSmbiosSlot(info C.smbios_slot_t) (*SmbiosSlot, error) {
 		ID:          uint16(info.id),
 		Features:    ReadStringList(info.feature.str),
 	}, nil
+}
+
+func (s SmbiosSlot) SmbiosType() SmbiosType {
+	return s.Type
 }

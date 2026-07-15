@@ -14,10 +14,6 @@ type SmbiosLanguage struct {
 	CurrentLanguage string     `json:"-"`
 }
 
-func (s SmbiosLanguage) SmbiosType() SmbiosType {
-	return s.Type
-}
-
 func NewSmbiosLang(info C.smbios_lang_t) (*SmbiosLanguage, error) {
 	return &SmbiosLanguage{
 		Type:            SmbiosTypeLanguage,
@@ -25,4 +21,8 @@ func NewSmbiosLang(info C.smbios_lang_t) (*SmbiosLanguage, error) {
 		Languages:       ReadStringList(info.strings),
 		CurrentLanguage: C.GoString(info.current),
 	}, nil
+}
+
+func (s SmbiosLanguage) SmbiosType() SmbiosType {
+	return s.Type
 }

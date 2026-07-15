@@ -23,10 +23,6 @@ type ResourceWlan struct {
 	EncModes    []string     `json:"enc_modes,omitempty"`
 }
 
-func (r ResourceWlan) ResourceType() ResourceType {
-	return ResourceTypeWlan
-}
-
 func NewResourceWlan(res *C.hd_res_t, resType ResourceType) (*ResourceWlan, error) {
 	if res == nil {
 		return nil, errors.New("res is nil")
@@ -46,4 +42,8 @@ func NewResourceWlan(res *C.hd_res_t, resType ResourceType) (*ResourceWlan, erro
 		AuthModes:   ReadStringList(wlan.auth_modes),
 		EncModes:    ReadStringList(wlan.enc_modes),
 	}, nil
+}
+
+func (r ResourceWlan) ResourceType() ResourceType {
+	return ResourceTypeWlan
 }

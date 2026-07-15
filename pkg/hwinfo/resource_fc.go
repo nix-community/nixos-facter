@@ -20,7 +20,7 @@ import (
 	"fmt"
 )
 
-// todo what is FC?
+// ResourceFc describes a fibre channel resource.
 type ResourceFc struct {
 	Type         ResourceType `json:"type"`
 	WwpnOk       bool         `json:"wwpn_ok"`
@@ -30,10 +30,6 @@ type ResourceFc struct {
 	FcpLun       uint64       `json:"fcp_lun"`
 	PortID       uint32       `json:"port_id"`
 	ControllerID byte         `json:"controller_id"`
-}
-
-func (r ResourceFc) ResourceType() ResourceType {
-	return ResourceTypeFc
 }
 
 func NewResourceFc(res *C.hd_res_t, resType ResourceType) (*ResourceFc, error) {
@@ -60,4 +56,8 @@ func NewResourceFc(res *C.hd_res_t, resType ResourceType) (*ResourceFc, error) {
 		PortID:       uint32(fc.port_id),
 		ControllerID: controllerID,
 	}, nil
+}
+
+func (r ResourceFc) ResourceType() ResourceType {
+	return ResourceTypeFc
 }

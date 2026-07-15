@@ -19,10 +19,6 @@ type SmbiosMemoryArray struct {
 	Slots       uint16     `json:"slots"`        // slots or sockets for this device
 }
 
-func (s SmbiosMemoryArray) SmbiosType() SmbiosType {
-	return s.Type
-}
-
 func NewSmbiosMemArray(info C.smbios_memarray_t) (*SmbiosMemoryArray, error) {
 	return &SmbiosMemoryArray{
 		Type:        SmbiosTypeMemoryArray,
@@ -34,4 +30,8 @@ func NewSmbiosMemArray(info C.smbios_memarray_t) (*SmbiosMemoryArray, error) {
 		ErrorHandle: int(info.error_handle),
 		Slots:       uint16(info.slots),
 	}, nil
+}
+
+func (s SmbiosMemoryArray) SmbiosType() SmbiosType {
+	return s.Type
 }

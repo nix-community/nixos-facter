@@ -39,15 +39,11 @@ type DetailMonitor struct {
 	Serial string `json:"-"`
 }
 
-func (d DetailMonitor) DetailType() DetailType {
-	return DetailTypeMonitor
-}
-
 func NewDetailMonitor(mon C.hd_detail_monitor_t) (*DetailMonitor, error) {
 	data := mon.data
 	if data == nil {
 		// Not an error: hwinfo can return detail structures with NULL data pointers.
-		return nil, nil
+		return nil, ErrDetailMissing
 	}
 
 	return &DetailMonitor{
@@ -85,4 +81,8 @@ func NewDetailMonitor(mon C.hd_detail_monitor_t) (*DetailMonitor, error) {
 		Name:           C.GoString(data.name),
 		Serial:         C.GoString(data.serial),
 	}, nil
+}
+
+func (d DetailMonitor) DetailType() DetailType {
+	return DetailTypeMonitor
 }

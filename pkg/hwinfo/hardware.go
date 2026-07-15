@@ -215,8 +215,9 @@ const (
 	BaseClassSerial
 	BaseClassWireless
 	BaseClassI2o
-	BaseClassOther BaseClass = 0xff
 )
+
+const BaseClassOther BaseClass = 0xff
 
 // add our own base classes here (starting at 0x100 as PCI values are 8 bit)
 const (
@@ -272,8 +273,9 @@ const (
 	SubClassMouseBus
 	SubClassMouseUsb
 	SubClassMouseSun
-	SubClassMouseOther SubClassMouse = 0x80
 )
+
+const SubClassMouseOther SubClassMouse = 0x80
 
 // Slot represents a bus and slot number.
 // Bits 0-7: slot number, 8-31 bus number
@@ -315,11 +317,6 @@ type DeviceNumber struct {
 	Range uint32 `json:"range"`
 }
 
-// IsEmpty checks if the DeviceNumber has all zero values for its fields.
-func (d DeviceNumber) IsEmpty() bool {
-	return d.Type == 0 && d.Major == 0 && d.Minor == 0 && d.Range == 0
-}
-
 // NewDeviceNumber creates a new DeviceNumber instance from the given C.hd_dev_num_t and returns a pointer to it.
 // Returns nil if the newly created DeviceNumber is empty.
 func NewDeviceNumber(num C.hd_dev_num_t) *DeviceNumber {
@@ -334,6 +331,11 @@ func NewDeviceNumber(num C.hd_dev_num_t) *DeviceNumber {
 	}
 
 	return &result
+}
+
+// IsEmpty checks if the DeviceNumber has all zero values for its fields.
+func (d DeviceNumber) IsEmpty() bool {
+	return d.Type == 0 && d.Major == 0 && d.Minor == 0 && d.Range == 0
 }
 
 // Hotplug defines types of hotplug devices.
@@ -566,9 +568,11 @@ func NewHardwareDevice(hd *C.hd_t, ephemeral bool) (*HardwareDevice, error) {
 	}
 
 	if hd.detail != nil {
-		detail, err = NewDetail(hd.detail)
-		if err != nil {
-			return nil, fmt.Errorf("failed to read detail: %w", err)
+		var detailErr error
+
+		detail, detailErr = NewDetail(hd.detail)
+		if detailErr != nil && !errors.Is(detailErr, ErrDetailMissing) {
+			return nil, fmt.Errorf("failed to read detail: %w", detailErr)
 		}
 	}
 

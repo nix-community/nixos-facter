@@ -69,15 +69,11 @@ type DetailIsaPnpDevice struct {
 	Flags  uint32      `json:"flags"`
 }
 
-func (d DetailIsaPnpDevice) DetailType() DetailType {
-	return DetailTypeIsaPnp
-}
-
 func NewDetailIsaPnpDevice(pnp C.hd_detail_isapnp_t) (*DetailIsaPnpDevice, error) {
 	data := pnp.data
 	if data == nil {
 		// Not an error: hwinfo can return detail structures with NULL data pointers.
-		return nil, nil
+		return nil, ErrDetailMissing
 	}
 
 	card, err := NewIsaPnpCard(data.card)
@@ -91,4 +87,8 @@ func NewDetailIsaPnpDevice(pnp C.hd_detail_isapnp_t) (*DetailIsaPnpDevice, error
 		Device: uint32(data.dev),
 		Flags:  uint32(data.flags),
 	}, nil
+}
+
+func (d DetailIsaPnpDevice) DetailType() DetailType {
+	return DetailTypeIsaPnp
 }

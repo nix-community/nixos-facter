@@ -33,16 +33,12 @@ type DriverInfoX11 struct {
 		C16 byte `json:"c16"`
 		C24 byte `json:"c24"`
 		C32 byte `json:"c32"`
-	} `json:",omitempty"`
+	}
 	DacSpeed   uint32   `json:"dac_speed"`            // max. ramdac clock
 	Extensions []string `json:"extensions,omitempty"` // additional X extensions to load ('Module' section)
 	Options    []string `json:"options,omitempty"`    // special server options
 	Raw        []string `json:"raw,omitempty"`        // extra info to add to XF86Config
 	Script     string   `json:"script"`               // 3d script to run
-}
-
-func (d DriverInfoX11) DriverInfoType() DriverInfoType {
-	return DriverInfoTypeX11
 }
 
 func NewDriverInfoX11(info C.driver_info_x11_t) DriverInfoX11 {
@@ -68,4 +64,8 @@ func NewDriverInfoX11(info C.driver_info_x11_t) DriverInfoX11 {
 	result.Colors.C32 = byte(C.driver_info_x11_colors_c32(info))
 
 	return result
+}
+
+func (d DriverInfoX11) DriverInfoType() DriverInfoType {
+	return DriverInfoTypeX11
 }

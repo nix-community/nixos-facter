@@ -16,10 +16,6 @@ type SmbiosHardwareSecurity struct {
 	Reset    *ID        `json:"reset"`    // front panel reset status
 }
 
-func (s SmbiosHardwareSecurity) SmbiosType() SmbiosType {
-	return s.Type
-}
-
 func NewSmbiosSecure(info C.smbios_secure_t) (*SmbiosHardwareSecurity, error) {
 	return &SmbiosHardwareSecurity{
 		Type:     SmbiosTypeHardwareSecurity,
@@ -29,4 +25,8 @@ func NewSmbiosSecure(info C.smbios_secure_t) (*SmbiosHardwareSecurity, error) {
 		Admin:    NewID(info.admin),
 		Reset:    NewID(info.reset),
 	}, nil
+}
+
+func (s SmbiosHardwareSecurity) SmbiosType() SmbiosType {
+	return s.Type
 }

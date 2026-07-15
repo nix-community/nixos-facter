@@ -18,10 +18,6 @@ type DriverInfoIsdn struct {
 	// todo isdn params
 }
 
-func (d DriverInfoIsdn) DriverInfoType() DriverInfoType {
-	return DriverInfoTypeIsdn
-}
-
 func NewDriverInfoIsdn(info C.driver_info_isdn_t) DriverInfoIsdn {
 	return DriverInfoIsdn{
 		Type:       DriverInfoTypeIsdn,
@@ -31,4 +27,8 @@ func NewDriverInfoIsdn(info C.driver_info_isdn_t) DriverInfoIsdn {
 		I4lSubtype: int(info.i4l_subtype),
 		I4lName:    C.GoString(info.i4l_name),
 	}
+}
+
+func (d DriverInfoIsdn) DriverInfoType() DriverInfoType {
+	return DriverInfoTypeIsdn
 }

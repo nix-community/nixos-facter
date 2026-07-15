@@ -18,7 +18,7 @@ func captureTouchpads(deviceIdx uint16) ([]HardwareDevice, error) {
 		return nil, fmt.Errorf("failed to read input devices: %w", err)
 	}
 
-	var result []HardwareDevice //nolint:prealloc
+	var result []HardwareDevice
 
 	for _, inputDevice := range inputDevices {
 		path := "/sys" + inputDevice.Sysfs

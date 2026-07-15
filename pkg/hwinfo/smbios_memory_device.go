@@ -30,10 +30,6 @@ type SmbiosMemoryDevice struct {
 	Speed             uint32     `json:"speed"` // MHz
 }
 
-func (s SmbiosMemoryDevice) SmbiosType() SmbiosType {
-	return s.Type
-}
-
 func NewSmbiosMemDevice(info C.smbios_memdevice_t) (*SmbiosMemoryDevice, error) {
 	return &SmbiosMemoryDevice{
 		Type:              SmbiosTypeMemoryDevice,
@@ -55,4 +51,8 @@ func NewSmbiosMemDevice(info C.smbios_memdevice_t) (*SmbiosMemoryDevice, error) 
 		MemoryTypeDetails: ReadStringList(info.type_detail.str),
 		Speed:             uint32(info.speed),
 	}, nil
+}
+
+func (s SmbiosMemoryDevice) SmbiosType() SmbiosType {
+	return s.Type
 }

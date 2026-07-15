@@ -15,10 +15,6 @@ type SmbiosGroupAssociations struct {
 	Handles []int      `json:"handles,omitempty"` // array of item handles
 }
 
-func (s SmbiosGroupAssociations) SmbiosType() SmbiosType {
-	return s.Type
-}
-
 func NewSmbiosGroup(info C.smbios_group_t) (*SmbiosGroupAssociations, error) {
 	return &SmbiosGroupAssociations{
 		Type:    SmbiosTypeGroupAssociations,
@@ -26,4 +22,8 @@ func NewSmbiosGroup(info C.smbios_group_t) (*SmbiosGroupAssociations, error) {
 		Name:    C.GoString(info.name),
 		Handles: ReadIntArray(unsafe.Pointer(info.item_handles), int(info.items_len)),
 	}, nil
+}
+
+func (s SmbiosGroupAssociations) SmbiosType() SmbiosType {
+	return s.Type
 }

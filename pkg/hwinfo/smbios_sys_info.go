@@ -18,10 +18,6 @@ type SmbiosSystem struct {
 	WakeUp       *ID        `json:"wake_up"` // wake-up type
 }
 
-func (s SmbiosSystem) SmbiosType() SmbiosType {
-	return s.Type
-}
-
 func NewSmbiosSysInfo(info C.smbios_sysinfo_t) (*SmbiosSystem, error) {
 	return &SmbiosSystem{
 		Type:         SmbiosTypeSystem,
@@ -33,4 +29,8 @@ func NewSmbiosSysInfo(info C.smbios_sysinfo_t) (*SmbiosSystem, error) {
 		// todo uuid
 		WakeUp: NewID(info.wake_up),
 	}, nil
+}
+
+func (s SmbiosSystem) SmbiosType() SmbiosType {
+	return s.Type
 }

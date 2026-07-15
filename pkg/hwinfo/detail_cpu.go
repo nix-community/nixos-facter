@@ -81,7 +81,7 @@ type DetailCPU struct {
 	TlbSize        uint16       `json:"tlb_size,omitempty"`
 	ClflushSize    uint16       `json:"clflush_size,omitempty"`
 	CacheAlignment int          `json:"cache_alignment,omitempty"`
-	AddressSizes   AddressSizes `json:"address_sizes,omitempty"`
+	AddressSizes   AddressSizes `json:"address_sizes"`
 	Apicid         uint         `json:"-"`
 	ApicidInitial  uint         `json:"-"`
 }
@@ -99,7 +99,7 @@ func NewDetailCPU(cpu C.hd_detail_cpu_t) (*DetailCPU, error) {
 		// Not an error: hwinfo can return detail structures with NULL data pointers
 		// on certain systems (e.g., older VMware ESXi). See hdp.c:1082 for hwinfo's
 		// own handling: if(!(ct = hd->detail->cpu.data)) return;
-		return nil, nil
+		return nil, ErrDetailMissing
 	}
 
 	return &DetailCPU{

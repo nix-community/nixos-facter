@@ -19,10 +19,6 @@ type ResourceHardwareAddress struct {
 	Address byte         `json:"address"`
 }
 
-func (r ResourceHardwareAddress) ResourceType() ResourceType {
-	return r.Type
-}
-
 func NewResourceHardwareAddress(res *C.hd_res_t, resType ResourceType) (*ResourceHardwareAddress, error) {
 	//nolint:staticcheck
 	if !(resType == ResourceTypeHwaddr || resType == ResourceTypePhwaddr) {
@@ -46,4 +42,8 @@ func NewResourceHardwareAddress(res *C.hd_res_t, resType ResourceType) (*Resourc
 		Type:    resType,
 		Address: address,
 	}, nil
+}
+
+func (r ResourceHardwareAddress) ResourceType() ResourceType {
+	return r.Type
 }
