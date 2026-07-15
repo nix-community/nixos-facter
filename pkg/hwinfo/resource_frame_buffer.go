@@ -23,10 +23,6 @@ type ResourceFrameBuffer struct {
 	Mode         uint16       `json:"mode"`
 }
 
-func (r ResourceFrameBuffer) ResourceType() ResourceType {
-	return ResourceTypeFramebuffer
-}
-
 func NewResourceFrameBuffer(res *C.hd_res_t, resType ResourceType) (*ResourceFrameBuffer, error) {
 	if res == nil {
 		return nil, errors.New("res is nil")
@@ -46,4 +42,8 @@ func NewResourceFrameBuffer(res *C.hd_res_t, resType ResourceType) (*ResourceFra
 		ColorBits:    uint16(fb.colorbits),
 		Mode:         uint16(fb.mode),
 	}, nil
+}
+
+func (r ResourceFrameBuffer) ResourceType() ResourceType {
+	return ResourceTypeFramebuffer
 }

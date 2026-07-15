@@ -24,10 +24,6 @@ type SmbiosChassis struct {
 	OEM           string     `json:"oem"`            // oem-specific information"
 }
 
-func (s SmbiosChassis) SmbiosType() SmbiosType {
-	return s.Type
-}
-
 func NewSmbiosChassis(info C.smbios_chassis_t) (*SmbiosChassis, error) {
 	return &SmbiosChassis{
 		Type:          SmbiosTypeChassis,
@@ -44,4 +40,8 @@ func NewSmbiosChassis(info C.smbios_chassis_t) (*SmbiosChassis, error) {
 		SecurityState: NewID(info.security),
 		OEM:           fmt.Sprintf("0x%x", uint(info.oem)),
 	}, nil
+}
+
+func (s SmbiosChassis) SmbiosType() SmbiosType {
+	return s.Type
 }

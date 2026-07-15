@@ -22,10 +22,6 @@ type SmbiosMemoryDeviceMappedAddress struct {
 	InterleaveDepth    uint16     `json:"interleave_depth"`    // number of consecutive rows
 }
 
-func (s SmbiosMemoryDeviceMappedAddress) SmbiosType() SmbiosType {
-	return s.Type
-}
-
 func NewSmbiosMemDeviceMap(info C.smbios_memdevicemap_t) (*SmbiosMemoryDeviceMappedAddress, error) {
 	return &SmbiosMemoryDeviceMappedAddress{
 		Type:               SmbiosTypeMemoryDeviceMappedAddress,
@@ -38,4 +34,8 @@ func NewSmbiosMemDeviceMap(info C.smbios_memdevicemap_t) (*SmbiosMemoryDeviceMap
 		InterleavePosition: uint16(info.interleave_pos),
 		InterleaveDepth:    uint16(info.interleave_depth),
 	}, nil
+}
+
+func (s SmbiosMemoryDeviceMappedAddress) SmbiosType() SmbiosType {
+	return s.Type
 }

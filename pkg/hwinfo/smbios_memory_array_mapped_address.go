@@ -17,10 +17,6 @@ type SmbiosMemoryArrayMappedAddress struct {
 	PartWidth    uint16     `json:"part_width"`    // number of memory devices
 }
 
-func (s SmbiosMemoryArrayMappedAddress) SmbiosType() SmbiosType {
-	return s.Type
-}
-
 func NewSmbiosMemArrayMap(info C.smbios_memarraymap_t) (*SmbiosMemoryArrayMappedAddress, error) {
 	return &SmbiosMemoryArrayMappedAddress{
 		Type:         SmbiosTypeMemoryArrayMappedAddress,
@@ -30,4 +26,8 @@ func NewSmbiosMemArrayMap(info C.smbios_memarraymap_t) (*SmbiosMemoryArrayMapped
 		EndAddress:   fmt.Sprintf("0x%x", uint64(info.end_addr)),
 		PartWidth:    uint16(info.part_width),
 	}, nil
+}
+
+func (s SmbiosMemoryArrayMappedAddress) SmbiosType() SmbiosType {
+	return s.Type
 }

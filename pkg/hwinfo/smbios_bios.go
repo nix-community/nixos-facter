@@ -22,10 +22,6 @@ type SmbiosBios struct {
 	RomSize      uint32     `json:"rom_size"`
 }
 
-func (s SmbiosBios) SmbiosType() SmbiosType {
-	return s.Type
-}
-
 func NewSmbiosBiosInfo(info C.smbios_biosinfo_t) (*SmbiosBios, error) {
 	return &SmbiosBios{
 		Type:         SmbiosTypeBios,
@@ -37,4 +33,8 @@ func NewSmbiosBiosInfo(info C.smbios_biosinfo_t) (*SmbiosBios, error) {
 		StartAddress: fmt.Sprintf("0x%x", uint(info.start)),
 		RomSize:      uint32(info.rom_size),
 	}, nil
+}
+
+func (s SmbiosBios) SmbiosType() SmbiosType {
+	return s.Type
 }

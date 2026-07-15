@@ -33,10 +33,6 @@ type ResourceDiskGeo struct {
 	GeoType   GeoType      `json:"geo_type"`
 }
 
-func (r ResourceDiskGeo) ResourceType() ResourceType {
-	return ResourceTypeDiskGeo
-}
-
 func NewResourceDiskGeo(res *C.hd_res_t, resType ResourceType) (*ResourceDiskGeo, error) {
 	if res == nil {
 		return nil, errors.New("res is nil")
@@ -56,4 +52,8 @@ func NewResourceDiskGeo(res *C.hd_res_t, resType ResourceType) (*ResourceDiskGeo
 		Size:      fmt.Sprintf("0x%x", uint64(disk.size)),
 		GeoType:   GeoType(disk.geotype),
 	}, nil
+}
+
+func (r ResourceDiskGeo) ResourceType() ResourceType {
+	return ResourceTypeDiskGeo
 }

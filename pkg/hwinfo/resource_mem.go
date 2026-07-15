@@ -53,10 +53,6 @@ type ResourceMemory struct {
 	Prefetch YesNoFlags   `json:"prefetch"`
 }
 
-func (r ResourceMemory) ResourceType() ResourceType {
-	return ResourceTypeMem
-}
-
 func NewResourceMemory(res *C.hd_res_t, resType ResourceType) (*ResourceMemory, error) {
 	if res == nil {
 		return nil, errors.New("res is nil")
@@ -76,4 +72,8 @@ func NewResourceMemory(res *C.hd_res_t, resType ResourceType) (*ResourceMemory, 
 		Access:   AccessFlags(C.hd_res_mem_get_access(mem)),
 		Prefetch: YesNoFlags(C.hd_res_mem_get_prefetch(mem)),
 	}, nil
+}
+
+func (r ResourceMemory) ResourceType() ResourceType {
+	return ResourceTypeMem
 }

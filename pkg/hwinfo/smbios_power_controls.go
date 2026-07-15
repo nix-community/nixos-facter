@@ -17,10 +17,6 @@ type SmbiosPowerControls struct {
 	Second uint8      `json:"second"` // dto, second
 }
 
-func (s SmbiosPowerControls) SmbiosType() SmbiosType {
-	return s.Type
-}
-
 func NewSmbiosPower(info C.smbios_power_t) (*SmbiosPowerControls, error) {
 	return &SmbiosPowerControls{
 		Type:   SmbiosTypePowerControls,
@@ -31,4 +27,8 @@ func NewSmbiosPower(info C.smbios_power_t) (*SmbiosPowerControls, error) {
 		Minute: uint8(info.minute),
 		Second: uint8(info.second),
 	}, nil
+}
+
+func (s SmbiosPowerControls) SmbiosType() SmbiosType {
+	return s.Type
 }

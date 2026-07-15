@@ -19,10 +19,6 @@ type SmbiosAny struct {
 	Strings []string   `json:"strings,omitempty"`
 }
 
-func (s SmbiosAny) SmbiosType() SmbiosType {
-	return s.Type
-}
-
 func NewSmbiosAny(smbiosType SmbiosType, info C.smbios_any_t) (*SmbiosAny, error) {
 	return &SmbiosAny{
 		Type:    smbiosType,
@@ -30,4 +26,8 @@ func NewSmbiosAny(smbiosType SmbiosType, info C.smbios_any_t) (*SmbiosAny, error
 		Data:    fmt.Sprintf("0x%x", ReadByteArray(unsafe.Pointer(info.data), int(info.data_len))),
 		Strings: ReadStringList(info.strings),
 	}, nil
+}
+
+func (s SmbiosAny) SmbiosType() SmbiosType {
+	return s.Type
 }

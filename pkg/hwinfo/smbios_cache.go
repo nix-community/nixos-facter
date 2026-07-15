@@ -26,10 +26,6 @@ type SmbiosCache struct {
 	SRAMTypes     []string   `json:"sram_type_supported"`
 }
 
-func (s SmbiosCache) SmbiosType() SmbiosType {
-	return s.Type
-}
-
 func NewSmbiosCache(info C.smbios_cache_t) (*SmbiosCache, error) {
 	return &SmbiosCache{
 		Type:          SmbiosTypeCache,
@@ -49,4 +45,8 @@ func NewSmbiosCache(info C.smbios_cache_t) (*SmbiosCache, error) {
 		SRAMType:      ReadStringList(info.sram.str),
 		SRAMTypes:     ReadStringList(info.supp_sram.str),
 	}, nil
+}
+
+func (s SmbiosCache) SmbiosType() SmbiosType {
+	return s.Type
 }

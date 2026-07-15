@@ -6,19 +6,20 @@
   makeWrapper,
   pkg-config,
   stdenv,
-  buildGo125Module,
+  buildGo126Module,
   versionCheckHook,
 }:
 let
   fs = lib.fileset;
 in
-buildGo125Module (final: {
+buildGo126Module (final: {
   pname = "nixos-facter";
   version = "0.4.4";
 
   src = fs.toSource {
     root = ../../..;
     fileset = fs.unions [
+      ../../../.golangci.yml
       ../../../cmd
       ../../../go.mod
       ../../../go.sum

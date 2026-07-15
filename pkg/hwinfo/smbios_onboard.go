@@ -23,10 +23,6 @@ type SmbiosOnboard struct {
 	Devices []OnboardDevice `json:"devices,omitempty"`
 }
 
-func (s SmbiosOnboard) SmbiosType() SmbiosType {
-	return s.Type
-}
-
 func NewSmbiosOnboard(info C.smbios_onboard_t) (*SmbiosOnboard, error) {
 	count := int(info.dev_len)
 	devices := make([]OnboardDevice, 0, count)
@@ -44,4 +40,8 @@ func NewSmbiosOnboard(info C.smbios_onboard_t) (*SmbiosOnboard, error) {
 		Handle:  int(info.handle),
 		Devices: devices,
 	}, nil
+}
+
+func (s SmbiosOnboard) SmbiosType() SmbiosType {
+	return s.Type
 }

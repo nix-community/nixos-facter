@@ -68,6 +68,7 @@ func SwapEntries() ([]*SwapEntry, error) {
 		if devices[i].Priority != devices[j].Priority {
 			return devices[i].Priority < devices[j].Priority
 		}
+
 		return devices[i].Filename < devices[j].Filename
 	})
 

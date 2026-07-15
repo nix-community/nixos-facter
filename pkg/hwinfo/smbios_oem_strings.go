@@ -13,14 +13,14 @@ type SmbiosOEMStrings struct {
 	Strings []string   `json:"strings,omitempty"`
 }
 
-func (s SmbiosOEMStrings) SmbiosType() SmbiosType {
-	return s.Type
-}
-
 func NewSmbiosOEM(info C.smbios_oem_t) (*SmbiosOEMStrings, error) {
 	return &SmbiosOEMStrings{
 		Type:    SmbiosTypeOEMStrings,
 		Handle:  int(info.handle),
 		Strings: ReadStringList(info.oem_strings),
 	}, nil
+}
+
+func (s SmbiosOEMStrings) SmbiosType() SmbiosType {
+	return s.Type
 }

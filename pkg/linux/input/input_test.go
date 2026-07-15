@@ -11,6 +11,14 @@ import (
 )
 
 const (
+	handlerKbd = "kbd"
+
+	capProp = "PROP"
+	capKey  = "KEY"
+	capMsc  = "MSC"
+)
+
+const (
 	devices = `I: Bus=0003 Vendor=1038 Product=1634 Version=0111
 N: Name="SteelSeries SteelSeries Apex 9 TKL"
 P: Phys=usb-0000:08:00.3-2.4.2/input2
@@ -69,13 +77,13 @@ func TestReadDevices(t *testing.T) {
 			Name:     "SteelSeries SteelSeries Apex 9 TKL", //nolint:dupword
 			Phys:     "usb-0000:08:00.3-2.4.2/input2",
 			Sysfs:    "/devices/pci0000:00/0000:00:01.2/0000:02:00.0/0000:03:08.0/0000:08:00.3/usb3/3-2/3-2.4/3-2.4.2/3-2.4.2:1.2/0003:1038:1634.000B/input/input11",
-			Handlers: []string{"sysrq", "kbd", "leds", "event4"},
+			Handlers: []string{"sysrq", handlerKbd, "leds", "event4"},
 			Capabilities: map[string]string{
-				"PROP": "0",
-				"EV":   "120013",
-				"KEY":  "1000000000007 ff9f207ac14057ff febeffdfffefffff fffffffffffffffe",
-				"MSC":  "10",
-				"LED":  "7",
+				capProp: "0",
+				"EV":    "120013",
+				capKey:  "1000000000007 ff9f207ac14057ff febeffdfffefffff fffffffffffffffe",
+				capMsc:  "10",
+				"LED":   "7",
 			},
 		},
 		{
@@ -86,15 +94,15 @@ func TestReadDevices(t *testing.T) {
 			Name:     "Logitech MX Vertical",
 			Phys:     "usb-0000:08:00.3-2.2/input2:1",
 			Sysfs:    "/devices/pci0000:00/0000:00:01.2/0000:02:00.0/0000:03:08.0/0000:08:00.3/usb3/3-2/3-2.2/3-2.2:1.2/0003:046D:C52B.0004/0003:046D:407B.0005/input/input8",
-			Handlers: []string{"sysrq", "kbd", "leds", "event1", "mouse0"},
+			Handlers: []string{"sysrq", handlerKbd, "leds", "event1", "mouse0"},
 			Capabilities: map[string]string{
-				"PROP": "0",
-				"EV":   "12001f",
-				"KEY":  "3f00033fff 0 0 483ffff17aff32d bfd4444600000000 ffff0001 130ff38b17d007 ffff7bfad9415fff ffbeffdfffefffff fffffffffffffffe",
-				"REL":  "1943",
-				"ABS":  "100000000",
-				"MSC":  "10",
-				"LED":  "1f",
+				capProp: "0",
+				"EV":    "12001f",
+				capKey:  "3f00033fff 0 0 483ffff17aff32d bfd4444600000000 ffff0001 130ff38b17d007 ffff7bfad9415fff ffbeffdfffefffff fffffffffffffffe",
+				"REL":   "1943",
+				"ABS":   "100000000",
+				capMsc:  "10",
+				"LED":   "1f",
 			},
 		},
 		{
@@ -105,13 +113,13 @@ func TestReadDevices(t *testing.T) {
 			Name:     "Blue Microphones Yeti Stereo Microphone Consumer Control",
 			Phys:     "usb-0000:0f:00.3-4/input3",
 			Sysfs:    "/devices/pci0000:00/0000:00:08.1/0000:0f:00.3/usb5/5-4/5-4:1.3/0003:B58E:9E84.0001/input/input0",
-			Handlers: []string{"kbd", "event0"},
+			Handlers: []string{handlerKbd, "event0"},
 			Capabilities: map[string]string{
-				"PROP": "0",
-				"EV":   "1b",
-				"KEY":  "1 0 7800000000 e000000000000 0",
-				"ABS":  "10000000000",
-				"MSC":  "10",
+				capProp: "0",
+				"EV":    "1b",
+				capKey:  "1 0 7800000000 e000000000000 0",
+				"ABS":   "10000000000",
+				capMsc:  "10",
 			},
 		},
 	}

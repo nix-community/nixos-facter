@@ -96,12 +96,18 @@ func Execute() {
 	}
 
 	// check udev version
-	if _, err := exec.LookPath("udevadm"); err != nil {
+	_, err := exec.LookPath("udevadm")
+	if err != nil {
 		slog.Warn("udevadm not found, skipping udev version check")
-	} else if udevVersion, err := udev.Version(); err != nil {
-		log.Fatalf("failed to get udev version: %v", err)
-	} else if udevVersion < 252 {
-		log.Fatalf("udev version %d is too old, please upgrade to at least 252", udevVersion)
+	} else {
+		udevVersion, err := udev.Version()
+		if err != nil {
+			log.Fatalf("failed to get udev version: %v", err)
+		}
+
+		if udevVersion < 252 {
+			log.Fatalf("udev version %d is too old, please upgrade to at least 252", udevVersion)
+		}
 	}
 
 	// Check if the effective user id is 0 e.g. root
@@ -122,7 +128,9 @@ func Execute() {
 	// Set the log level
 
 	var slogLevel slog.Level
-	if err := slogLevel.UnmarshalText([]byte(logLevel)); err != nil {
+
+	err = slogLevel.UnmarshalText([]byte(logLevel))
+	if err != nil {
 		log.Fatalf("invalid log level: %v", err)
 	}
 
@@ -151,12 +159,16 @@ func Execute() {
 
 	// If a file path is provided write the report to it, otherwise output the report on stdout
 	if outputPath == "" {
-		if _, err = os.Stdout.Write(bytes); err != nil {
+		_, err = os.Stdout.Write(bytes)
+		if err != nil {
 			log.Fatalf("failed to write report to stdout: %v", err)
 		}
 
 		fmt.Println()
-	} else if err = os.WriteFile(outputPath, bytes, 0o600); err != nil {
-		log.Fatalf("failed to write report to output path: %v", err)
+	} else {
+		err = os.WriteFile(outputPath, bytes, 0o600)
+		if err != nil {
+			log.Fatalf("failed to write report to output path: %v", err)
+		}
 	}
 }

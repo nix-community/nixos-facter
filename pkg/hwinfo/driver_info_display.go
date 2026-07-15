@@ -23,10 +23,6 @@ type DriverInfoDisplay struct {
 	VerticalFlag          byte        `json:"vertical_flag"`
 }
 
-func (d DriverInfoDisplay) DriverInfoType() DriverInfoType {
-	return DriverInfoTypeDisplay
-}
-
 func NewDriverInfoDisplay(info C.driver_info_display_t) DriverInfoDisplay {
 	return DriverInfoDisplay{
 		Type:     DriverInfoTypeDisplay,
@@ -57,4 +53,8 @@ func NewDriverInfoDisplay(info C.driver_info_display_t) DriverInfoDisplay {
 		HorizontalFlag: byte(info.hflag),
 		VerticalFlag:   byte(info.vflag),
 	}
+}
+
+func (d DriverInfoDisplay) DriverInfoType() DriverInfoType {
+	return DriverInfoTypeDisplay
 }

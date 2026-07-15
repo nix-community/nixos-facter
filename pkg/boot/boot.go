@@ -2,6 +2,9 @@
 package boot
 
 import (
+	"errors"
+	"fmt"
+	"io/fs"
 	"log/slog"
 	"os"
 	"strconv"
@@ -28,20 +31,31 @@ func DetectUEFI() (*UEFIInfo, error) {
 	info := &UEFIInfo{}
 
 	// Check if the EFI firmware directory exists
-	if stat, err := os.Stat(efiFirmwarePath); err != nil || !stat.IsDir() {
+	stat, err := os.Stat(efiFirmwarePath)
+	if errors.Is(err, fs.ErrNotExist) || (err == nil && !stat.IsDir()) {
 		slog.Debug("UEFI boot not detected", "path", efiFirmwarePath)
+
 		return info, nil
 	}
 
+	if err != nil {
+		return nil, fmt.Errorf("failed to stat %s: %w", efiFirmwarePath, err)
+	}
+
 	info.Supported = true
+
 	slog.Debug("UEFI boot detected", "path", efiFirmwarePath)
 
 	// Detect platform size (32 or 64 bit)
-	if data, err := os.ReadFile(efiPlatformSizePath); err == nil {
+	data, err := os.ReadFile(efiPlatformSizePath)
+	if err == nil {
 		sizeStr := strings.TrimSpace(string(data))
-		if size, err := strconv.ParseUint(sizeStr, 10, 8); err == nil {
+
+		size, err := strconv.ParseUint(sizeStr, 10, 8)
+		if err == nil {
 			size8 := uint8(size)
 			info.PlatformSize = &size8
+
 			slog.Debug("UEFI platform size detected", "bits", size)
 		}
 	}

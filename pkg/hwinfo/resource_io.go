@@ -27,10 +27,6 @@ type ResourceIO struct {
 	Access  AccessFlags  `json:"access"`
 }
 
-func (r ResourceIO) ResourceType() ResourceType {
-	return ResourceTypeIo
-}
-
 func NewResourceIO(res *C.hd_res_t, resType ResourceType) (*ResourceIO, error) {
 	if res == nil {
 		return nil, errors.New("res is nil")
@@ -49,4 +45,8 @@ func NewResourceIO(res *C.hd_res_t, resType ResourceType) (*ResourceIO, error) {
 		Enabled: bool(C.hd_res_io_get_enabled(io)),
 		Access:  AccessFlags(C.hd_res_io_get_access(io)),
 	}, nil
+}
+
+func (r ResourceIO) ResourceType() ResourceType {
+	return ResourceTypeIo
 }

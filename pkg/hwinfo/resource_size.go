@@ -37,10 +37,6 @@ type ResourceSize struct {
 	Value2 uint64       `json:"value_2,omitempty"`
 }
 
-func (r ResourceSize) ResourceType() ResourceType {
-	return ResourceTypeSize
-}
-
 func NewResourceSize(res *C.hd_res_t, resType ResourceType) (*ResourceSize, error) {
 	if res == nil {
 		return nil, errors.New("res is nil")
@@ -58,4 +54,8 @@ func NewResourceSize(res *C.hd_res_t, resType ResourceType) (*ResourceSize, erro
 		Value1: uint64(size.val1),
 		Value2: uint64(size.val2),
 	}, nil
+}
+
+func (r ResourceSize) ResourceType() ResourceType {
+	return ResourceTypeSize
 }

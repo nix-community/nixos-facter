@@ -19,10 +19,6 @@ type ResourcePppdOption struct {
 	Option byte         `json:"option"`
 }
 
-func (r ResourcePppdOption) ResourceType() ResourceType {
-	return ResourceTypePppdOption
-}
-
 func NewResourcePppdOption(res *C.hd_res_t, resType ResourceType) (*ResourcePppdOption, error) {
 	if res == nil {
 		return nil, errors.New("res is nil")
@@ -42,4 +38,8 @@ func NewResourcePppdOption(res *C.hd_res_t, resType ResourceType) (*ResourcePppd
 		Type:   resType,
 		Option: option,
 	}, nil
+}
+
+func (r ResourcePppdOption) ResourceType() ResourceType {
+	return ResourceTypePppdOption
 }

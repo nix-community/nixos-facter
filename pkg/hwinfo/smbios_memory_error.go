@@ -20,10 +20,6 @@ type SmbiosMemoryError struct {
 	Range         uint32     `json:"range"`          // range within which the error can be determined; 0x80000000: unknown
 }
 
-func (s SmbiosMemoryError) SmbiosType() SmbiosType {
-	return s.Type
-}
-
 func NewSmbiosMemError(info C.smbios_memerror_t) (*SmbiosMemoryError, error) {
 	return &SmbiosMemoryError{
 		Type:          SmbiosTypeMemoryError,
@@ -36,4 +32,8 @@ func NewSmbiosMemError(info C.smbios_memerror_t) (*SmbiosMemoryError, error) {
 		DeviceAddress: fmt.Sprintf("0x%x", uint(info.device_addr)),
 		Range:         uint32(info._range),
 	}, nil
+}
+
+func (s SmbiosMemoryError) SmbiosType() SmbiosType {
+	return s.Type
 }

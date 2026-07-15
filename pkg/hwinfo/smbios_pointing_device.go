@@ -15,10 +15,6 @@ type SmbiosPointingDevice struct {
 	Buttons   uint16     `json:"buttons"`
 }
 
-func (s SmbiosPointingDevice) SmbiosType() SmbiosType {
-	return s.Type
-}
-
 func NewSmbiosMouse(info C.smbios_mouse_t) (*SmbiosPointingDevice, error) {
 	return &SmbiosPointingDevice{
 		Type:      SmbiosTypePointingDevice,
@@ -27,4 +23,8 @@ func NewSmbiosMouse(info C.smbios_mouse_t) (*SmbiosPointingDevice, error) {
 		Interface: NewID(info._interface),
 		Buttons:   uint16(info.buttons),
 	}, nil
+}
+
+func (s SmbiosPointingDevice) SmbiosType() SmbiosType {
+	return s.Type
 }

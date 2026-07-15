@@ -23,10 +23,6 @@ type SmbiosBoard struct {
 	Objects      []int      `json:"objects,omitempty"` // array of object handles
 }
 
-func (s SmbiosBoard) SmbiosType() SmbiosType {
-	return s.Type
-}
-
 func NewSmbiosBoardInfo(info C.smbios_boardinfo_t) (*SmbiosBoard, error) {
 	return &SmbiosBoard{
 		Type:         SmbiosTypeBoard,
@@ -42,4 +38,8 @@ func NewSmbiosBoardInfo(info C.smbios_boardinfo_t) (*SmbiosBoard, error) {
 		Chassis:      int(info.chassis),
 		Objects:      ReadIntArray(unsafe.Pointer(info.objects), int(info.objects_len)),
 	}, nil
+}
+
+func (s SmbiosBoard) SmbiosType() SmbiosType {
+	return s.Type
 }

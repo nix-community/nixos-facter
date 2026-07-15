@@ -132,7 +132,8 @@ func ReadDevices(r io.ReadCloser) ([]*Device, error) {
 
 		switch line[:3] {
 		case "I: ":
-			if err := readBasicInfo(line, device); err != nil {
+			err := readBasicInfo(line, device)
+			if err != nil {
 				return nil, fmt.Errorf("failed to read basic info: %w", err)
 			}
 		case "N: ":

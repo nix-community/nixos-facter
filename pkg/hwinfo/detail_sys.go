@@ -17,16 +17,12 @@ type DetailSys struct {
 	FormFactor string     `json:"form_factor,omitempty"`
 }
 
-func (d DetailSys) DetailType() DetailType {
-	return DetailTypeSys
-}
-
 func NewDetailSys(sys C.hd_detail_sys_t) (*DetailSys, error) {
 	data := sys.data
 	if data == nil {
 		// Not an error: hwinfo can return detail structures with NULL data pointers.
 		// See hdp.c:1302 for hwinfo's own handling.
-		return nil, nil
+		return nil, ErrDetailMissing
 	}
 
 	return &DetailSys{
@@ -39,4 +35,8 @@ func NewDetailSys(sys C.hd_detail_sys_t) (*DetailSys, error) {
 		Language:   C.GoString(data.lang),
 		FormFactor: C.GoString(data.formfactor),
 	}, nil
+}
+
+func (d DetailSys) DetailType() DetailType {
+	return DetailTypeSys
 }

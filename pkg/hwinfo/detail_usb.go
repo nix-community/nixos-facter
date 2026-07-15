@@ -59,15 +59,11 @@ type DetailUsbInterfaceAssociation struct {
 	FirstInterface   int `json:"first_interface"`
 }
 
-func (d DetailUsb) DetailType() DetailType {
-	return DetailTypeUsb
-}
-
 func NewDetailUsb(usb C.hd_detail_usb_t) (*DetailUsb, error) {
 	data := usb.data
 	if data == nil {
 		// Not an error: hwinfo can return detail structures with NULL data pointers.
-		return nil, nil
+		return nil, ErrDetailMissing
 	}
 
 	if data.next != nil {
@@ -124,4 +120,8 @@ func NewDetailUsb(usb C.hd_detail_usb_t) (*DetailUsb, error) {
 	}
 
 	return detail, nil
+}
+
+func (d DetailUsb) DetailType() DetailType {
+	return DetailTypeUsb
 }

@@ -18,10 +18,6 @@ type DriverInfoKeyboard struct {
 	Keymap    string `json:"keymap,omitempty"`
 }
 
-func (d DriverInfoKeyboard) DriverInfoType() DriverInfoType {
-	return DriverInfoTypeKeyboard
-}
-
 func NewDriverInfoKeyboard(info C.driver_info_kbd_t) DriverInfoKeyboard {
 	return DriverInfoKeyboard{
 		Type:      DriverInfoTypeKeyboard,
@@ -32,4 +28,8 @@ func NewDriverInfoKeyboard(info C.driver_info_kbd_t) DriverInfoKeyboard {
 		XkbLayout: C.GoString(info.XkbLayout),
 		Keymap:    C.GoString(info.keymap),
 	}
+}
+
+func (d DriverInfoKeyboard) DriverInfoType() DriverInfoType {
+	return DriverInfoTypeKeyboard
 }

@@ -19,10 +19,6 @@ type ResourceCache struct {
 	Size string       `json:"size"`
 }
 
-func (r ResourceCache) ResourceType() ResourceType {
-	return ResourceTypeCache
-}
-
 func NewResourceCache(res *C.hd_res_t, resType ResourceType) (*ResourceCache, error) {
 	if res == nil {
 		return nil, errors.New("res is nil")
@@ -38,4 +34,8 @@ func NewResourceCache(res *C.hd_res_t, resType ResourceType) (*ResourceCache, er
 		Type: resType,
 		Size: fmt.Sprintf("0x%x", uint(cache.size)),
 	}, nil
+}
+
+func (r ResourceCache) ResourceType() ResourceType {
+	return ResourceTypeCache
 }

@@ -18,10 +18,6 @@ type DriverInfoMouse struct {
 	Wheels  int    `json:"wheels,omitempty"`  // dto, wheels
 }
 
-func (d DriverInfoMouse) DriverInfoType() DriverInfoType {
-	return DriverInfoTypeMouse
-}
-
 func NewDriverInfoMouse(info C.driver_info_mouse_t) DriverInfoMouse {
 	return DriverInfoMouse{
 		Type:     DriverInfoTypeMouse,
@@ -32,4 +28,8 @@ func NewDriverInfoMouse(info C.driver_info_mouse_t) DriverInfoMouse {
 		Buttons:  int(info.buttons),
 		Wheels:   int(info.wheels),
 	}
+}
+
+func (d DriverInfoMouse) DriverInfoType() DriverInfoType {
+	return DriverInfoTypeMouse
 }

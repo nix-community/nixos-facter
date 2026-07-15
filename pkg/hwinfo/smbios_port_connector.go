@@ -17,10 +17,6 @@ type SmbiosPortConnector struct {
 	ExternalReferenceDesignator string     `json:"external_reference_designator,omitempty"`
 }
 
-func (s SmbiosPortConnector) SmbiosType() SmbiosType {
-	return s.Type
-}
-
 func NewSmbiosConnect(info C.smbios_connect_t) (*SmbiosPortConnector, error) {
 	return &SmbiosPortConnector{
 		Type:                        SmbiosTypePortConnector,
@@ -31,4 +27,8 @@ func NewSmbiosConnect(info C.smbios_connect_t) (*SmbiosPortConnector, error) {
 		ExternalConnectorType:       NewID(info.x_type),
 		ExternalReferenceDesignator: C.GoString(info.x_des),
 	}, nil
+}
+
+func (s SmbiosPortConnector) SmbiosType() SmbiosType {
+	return s.Type
 }

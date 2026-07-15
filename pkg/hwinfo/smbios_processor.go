@@ -31,10 +31,6 @@ type SmbiosProcessor struct {
 	CacheHandleL3   int        `json:"cache_handle_l3"` // handle of L3 cache
 }
 
-func (s SmbiosProcessor) SmbiosType() SmbiosType {
-	return s.Type
-}
-
 func NewSmbiosProcessor(info C.smbios_processor_t) (*SmbiosProcessor, error) {
 	return &SmbiosProcessor{
 		Type:            SmbiosTypeProcessor,
@@ -59,4 +55,8 @@ func NewSmbiosProcessor(info C.smbios_processor_t) (*SmbiosProcessor, error) {
 		CacheHandleL2:   int(info.l2_cache),
 		CacheHandleL3:   int(info.l3_cache),
 	}, nil
+}
+
+func (s SmbiosProcessor) SmbiosType() SmbiosType {
+	return s.Type
 }

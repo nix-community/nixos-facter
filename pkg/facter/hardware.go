@@ -208,6 +208,11 @@ func (h *Hardware) add(device hwinfo.HardwareDevice) error {
 
 	switch class {
 	case hwinfo.HardwareClassBios:
+		if device.Detail == nil {
+			// BIOS detail data unavailable
+			return nil
+		}
+
 		if h.Bios != nil {
 			return errors.New("bios field is already set")
 		} else if bios, ok := device.Detail.(*hwinfo.DetailBios); !ok {
@@ -237,13 +242,14 @@ func (h *Hardware) add(device hwinfo.HardwareDevice) error {
 		h.ChipCard = append(h.ChipCard, device)
 		slices.SortFunc(h.ChipCard, compareDevice)
 	case hwinfo.HardwareClassCpu:
+		if device.Detail == nil {
+			// CPU detail data unavailable (can happen on some hypervisors)
+			return nil
+		}
+
 		cpu, ok := device.Detail.(*hwinfo.DetailCPU)
 		if !ok {
 			return fmt.Errorf("expected hwinfo.DetailCPU, found %T", device.Detail)
-		}
-		if cpu == nil {
-			// CPU detail data unavailable (can happen on some hypervisors)
-			return nil
 		}
 
 		// We insert by physical id, as we only want one entry per core.
@@ -388,6 +394,11 @@ func (h *Hardware) add(device hwinfo.HardwareDevice) error {
 		h.StorageController = append(h.StorageController, device)
 		slices.SortFunc(h.StorageController, compareDevice)
 	case hwinfo.HardwareClassSystem:
+		if device.Detail == nil {
+			// system detail data unavailable
+			return nil
+		}
+
 		if h.System != nil {
 			return errors.New("system field is already set")
 		} else if system, ok := device.Detail.(*hwinfo.DetailSys); !ok {

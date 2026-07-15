@@ -20,10 +20,6 @@ type ResourceInitStrings struct {
 	Init2 string `json:"init_2,omitempty"`
 }
 
-func (r ResourceInitStrings) ResourceType() ResourceType {
-	return ResourceTypeInitStrings
-}
-
 func NewResourceInitStrings(res *C.hd_res_t, resType ResourceType) (*ResourceInitStrings, error) {
 	if res == nil {
 		return nil, errors.New("res is nil")
@@ -40,4 +36,8 @@ func NewResourceInitStrings(res *C.hd_res_t, resType ResourceType) (*ResourceIni
 		Init1: C.GoString(init.init1),
 		Init2: C.GoString(init.init2),
 	}, nil
+}
+
+func (r ResourceInitStrings) ResourceType() ResourceType {
+	return ResourceTypeInitStrings
 }

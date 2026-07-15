@@ -5,7 +5,11 @@ package hwinfo
 #include <hd.h>
 */
 import "C"
-import "unsafe"
+
+import (
+	"slices"
+	"unsafe"
+)
 
 func ReadStringList(list *C.str_list_t) []string {
 	var result []string
@@ -16,67 +20,48 @@ func ReadStringList(list *C.str_list_t) []string {
 	return result
 }
 
+// ReadUint64Array copies a C uint64_t array into a Go slice.
 func ReadUint64Array(arr unsafe.Pointer, length int) []uint64 {
 	if arr == nil || length <= 0 {
 		return nil
 	}
 
-	start := uintptr(arr)
-
-	result := make([]uint64, length)
-	for i := range result {
-		next := start + uintptr(i*C.sizeof_uint64_t)
-		result[i] = *(*uint64)(unsafe.Pointer(next)) //nolint:govet
-	}
-
-	return result
+	return slices.Clone(unsafe.Slice((*uint64)(arr), length))
 }
 
+// ReadUintArray copies a C unsigned array into a Go slice.
 func ReadUintArray(arr unsafe.Pointer, length int) []uint {
 	if arr == nil || length <= 0 {
 		return nil
 	}
 
-	start := uintptr(arr)
-
 	result := make([]uint, length)
-	for i := range result {
-		next := start + uintptr(i*C.sizeof_uint)
-		result[i] = *(*uint)(unsafe.Pointer(next)) //nolint:govet
+	for i, v := range unsafe.Slice((*C.uint)(arr), length) {
+		result[i] = uint(v)
 	}
 
 	return result
 }
 
+// ReadIntArray copies a C int array into a Go slice.
 func ReadIntArray(arr unsafe.Pointer, length int) []int {
-	// TODO see if we can use generics to combine some of these methods
 	if arr == nil || length <= 0 {
 		return nil
 	}
 
-	start := uintptr(arr)
-
 	result := make([]int, length)
-	for i := range result {
-		next := start + uintptr(i*C.sizeof_uint)
-		result[i] = *(*int)(unsafe.Pointer(next)) //nolint:govet
+	for i, v := range unsafe.Slice((*C.int)(arr), length) {
+		result[i] = int(v)
 	}
 
 	return result
 }
 
+// ReadByteArray copies a C unsigned char array into a Go slice.
 func ReadByteArray(arr unsafe.Pointer, length int) []byte {
 	if arr == nil || length <= 0 {
 		return nil
 	}
 
-	start := uintptr(arr)
-
-	result := make([]byte, length)
-	for i := range result {
-		next := start + uintptr(i*C.sizeof_uint)
-		result[i] = *(*byte)(unsafe.Pointer(next)) //nolint:govet
-	}
-
-	return result
+	return slices.Clone(unsafe.Slice((*byte)(arr), length))
 }

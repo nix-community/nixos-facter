@@ -13,14 +13,14 @@ type SmbiosConfig struct {
 	Options []string   `json:"options,omitempty"`
 }
 
-func (s SmbiosConfig) SmbiosType() SmbiosType {
-	return s.Type
-}
-
 func NewSmbiosConfig(info C.smbios_config_t) (*SmbiosConfig, error) {
 	return &SmbiosConfig{
 		Type:    SmbiosTypeConfig,
 		Handle:  int(info.handle),
 		Options: ReadStringList(info.options),
 	}, nil
+}
+
+func (s SmbiosConfig) SmbiosType() SmbiosType {
+	return s.Type
 }

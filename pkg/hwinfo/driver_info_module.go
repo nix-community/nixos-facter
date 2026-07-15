@@ -24,10 +24,6 @@ type DriverInfoModule struct {
 	Conf       string   `json:"conf"`        // conf.modules entry, if any (e.g., for sb.o)
 }
 
-func (d DriverInfoModule) DriverInfoType() DriverInfoType {
-	return DriverInfoTypeModule
-}
-
 func NewDriverInfoModule(info C.driver_info_module_t) DriverInfoModule {
 	return DriverInfoModule{
 		Type:       DriverInfoTypeModule,
@@ -39,4 +35,8 @@ func NewDriverInfoModule(info C.driver_info_module_t) DriverInfoModule {
 		ModuleArgs: ReadStringList(info.mod_args),
 		Conf:       C.GoString(info.conf),
 	}
+}
+
+func (d DriverInfoModule) DriverInfoType() DriverInfoType {
+	return DriverInfoTypeModule
 }
