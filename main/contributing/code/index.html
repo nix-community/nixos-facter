@@ -918,7 +918,7 @@ all the necessary tooling and utilities for working on <code>nixos-facter</code>
 <a id="__codelineno-0-13" name="__codelineno-0-13"></a>    pkgs<span class="o">.</span>cobra-cli
 <a id="__codelineno-0-14" name="__codelineno-0-14"></a>    pkgs<span class="o">.</span>fx <span class="c1"># json tui</span>
 <a id="__codelineno-0-15" name="__codelineno-0-15"></a>  <span class="p">];</span>
-<a id="__codelineno-0-16" name="__codelineno-0-16"></a>  <span class="ss">go</span> <span class="o">=</span> pkgs<span class="o">.</span>go_1_25<span class="p">;</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>  <span class="ss">go</span> <span class="o">=</span> pkgs<span class="o">.</span>go_1_26<span class="p">;</span>
 <a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="k">in</span>
 <a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="k">if</span> stdenv<span class="o">.</span>hostPlatform<span class="o">.</span>isLinux <span class="k">then</span>
 <a id="__codelineno-0-19" name="__codelineno-0-19"></a>  perSystem<span class="o">.</span>self<span class="o">.</span>nixos-facter<span class="o">.</span>overrideAttrs <span class="p">(</span>old<span class="p">:</span> <span class="p">{</span>
