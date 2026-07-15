@@ -3,12 +3,14 @@
 package facter
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"log/slog"
 
 	"github.com/numtide/nixos-facter/pkg/boot"
 	"github.com/numtide/nixos-facter/pkg/build"
+	"github.com/numtide/nixos-facter/pkg/cloud"
 	"github.com/numtide/nixos-facter/pkg/ephem"
 	"github.com/numtide/nixos-facter/pkg/hwinfo"
 	"github.com/numtide/nixos-facter/pkg/virt"
@@ -38,6 +40,10 @@ type Report struct {
 
 	// Swap contains a list of swap entries representing the system's swap devices or files and their respective details.
 	Swap []*ephem.SwapEntry `json:"swap,omitempty"`
+
+	// Cloud holds instance metadata captured from cloud provider metadata services.
+	// It is only populated when the corresponding provider capture is enabled.
+	Cloud *cloud.Cloud `json:"cloud,omitempty"`
 }
 
 // Scanner defines a type responsible for scanning and reporting system hardware information.
@@ -48,6 +54,11 @@ type Scanner struct {
 	// Ephemeral indicates whether the scanner should report ephemeral details,
 	// such as swap.
 	Ephemeral bool
+
+	Cloud struct {
+		// Hetzner indicates whether instance metadata should be fetched from the Hetzner metadata service.
+		Hetzner bool
+	}
 
 	// Features is a list of ProbeFeature types that should be scanned for.
 	Features []hwinfo.ProbeFeature
@@ -138,6 +149,17 @@ func (s *Scanner) Scan() (*Report, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to detect swap devices: %w", err)
 		}
+	}
+
+	if s.Cloud.Hetzner {
+		slog.Debug("fetching hetzner metadata")
+
+		metadata, err := cloud.HetznerMetadata(context.Background(), cloud.HetznerMetadataURL)
+		if err != nil {
+			return nil, fmt.Errorf("failed to capture hetzner provider metadata: %w", err)
+		}
+
+		report.Cloud = &cloud.Cloud{Hetzner: metadata}
 	}
 
 	slog.Debug("report complete")

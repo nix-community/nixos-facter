@@ -22,7 +22,7 @@ This will scan your system and produce a JSON-based report in a file named `fact
 
 ```json title="facter.json"
 {
-  "version": 2, // (1)!
+  "version": 1, // (1)!
   "system": "x86_64-linux", // (2)!
   "virtualisation": "none", // (3)!
   "hardware": { // (4)!
@@ -84,6 +84,32 @@ This will scan your system and produce a JSON-based report in a file named `fact
     ```
 
     See the [nixpkgs documentation](https://search.nixos.org/options?query=facter) for more details.
+
+## Cloud provider metadata
+
+### Hetzner
+
+When running on a [Hetzner](https://www.hetzner.com) instance, facter can capture instance metadata (e.g. the assigned IPv6 network
+configuration) from the Hetzner metadata service. It is disabled by default and must be enabled with a flag:
+
+```shell
+sudo nixos-facter --cloud-hetzner -o facter.json
+```
+
+The captured metadata is included in the report under a `cloud` section:
+
+```json title="facter.json"
+{
+  "cloud": {
+    "hetzner": {
+      "hostname": "my-server",
+      "instance-id": 123456,
+      "region": "eu-central",
+      ...
+    }
+  }
+}
+```
 
 [Nix]: https://nixos.org
 [Numtide]: https://numtide.com

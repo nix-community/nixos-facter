@@ -32,6 +32,10 @@ func init() {
 	flag.StringVar(&outputPath, "o", "", "path to write the report")
 	flag.BoolVar(&scanner.Swap, "swap", false, "capture swap entries")
 	flag.BoolVar(
+		&scanner.Cloud.Hetzner, "cloud-hetzner", false,
+		"capture instance metadata from the Hetzner metadata service",
+	)
+	flag.BoolVar(
 		&scanner.Ephemeral, "ephemeral", false,
 		"capture all ephemeral properties e.g. swap, filesystems and so on",
 	)
@@ -75,6 +79,7 @@ Flags:
   -h, --help           help for nixos-facter
   -o, --output string  path to write the report
   --swap               capture swap entries
+  --cloud-hetzner      capture instance metadata from the Hetzner metadata service
   --version            version for nixos-facter
   --log-level string   log level, one of <error|warn|info|debug> (default "info")
   --hardware strings   Hardware items to probe.
