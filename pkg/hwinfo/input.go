@@ -138,7 +138,7 @@ func captureTouchpads(deviceIdx uint16) ([]HardwareDevice, error) {
 		}
 
 		if handler := inputDevice.MouseHandler(); handler != "" {
-			hd.UnixDeviceNames = append(hd.UnixDeviceNames, "/dev/input/ + handler")
+			hd.UnixDeviceNames = append(hd.UnixDeviceNames, "/dev/input/"+handler)
 		}
 
 		hd.Index = deviceIdx
