@@ -13,7 +13,7 @@ let
     pkgs.cobra-cli
     pkgs.fx # json tui
   ];
-  go = pkgs.go_1_25;
+  go = pkgs.go_1_26;
 in
 if stdenv.hostPlatform.isLinux then
   perSystem.self.nixos-facter.overrideAttrs (old: {
