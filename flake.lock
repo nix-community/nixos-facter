@@ -76,11 +76,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1762279079,
-        "narHash": "sha256-GL3fNCSaU45fNihEksgtPtbuLkc+tVGXtPH05wbrHwI=",
+        "lastModified": 1784116606,
+        "narHash": "sha256-k64wC3Y5qG6k0pyfp9k7ENTMdO42zG781/b++2BQRyw=",
         "owner": "numtide",
         "repo": "hwinfo",
-        "rev": "bfeab0b4e38b200c7a62a44d4d01601a86fe1091",
+        "rev": "db29ef12200dde8a451d4438f025afc197009ce6",
         "type": "github"
       },
       "original": {
