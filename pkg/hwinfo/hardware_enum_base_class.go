@@ -11,20 +11,20 @@ import (
 const (
 	_BaseClassName_0      = "nonestoragenetworkdisplaymultimediamemorybridgecommsysteminputdockingprocessorserialwirelessi2o"
 	_BaseClassLowerName_0 = "nonestoragenetworkdisplaymultimediamemorybridgecommsysteminputdockingprocessorserialwirelessi2o"
-	_BaseClassName_1      = "othermonitorinternalmodemisdnps2mousestorage_devicenetwork_interfacekeyboardprinterhubbraillescannerjoystickchipcardcameraframebufferdvbtvpartitiondslbluetoothfingerprintmmc_controllertouchpad"
-	_BaseClassLowerName_1 = "othermonitorinternalmodemisdnps2mousestorage_devicenetwork_interfacekeyboardprinterhubbraillescannerjoystickchipcardcameraframebufferdvbtvpartitiondslbluetoothfingerprintmmc_controllertouchpad"
+	_BaseClassName_1      = "othermonitorinternalmodemisdnps2mousestorage_devicenetwork_interfacekeyboardprinterhubbraillescannerjoystickchipcardcameraframebufferdvbtvpartitiondslbluetoothfingerprintmmc_controllertouchpadtouchscreen"
+	_BaseClassLowerName_1 = "othermonitorinternalmodemisdnps2mousestorage_devicenetwork_interfacekeyboardprinterhubbraillescannerjoystickchipcardcameraframebufferdvbtvpartitiondslbluetoothfingerprintmmc_controllertouchpadtouchscreen"
 )
 
 var (
 	_BaseClassIndex_0 = [...]uint8{0, 4, 11, 18, 25, 35, 41, 47, 51, 57, 62, 69, 78, 84, 92, 95}
-	_BaseClassIndex_1 = [...]uint8{0, 5, 12, 20, 25, 29, 32, 37, 51, 68, 76, 83, 86, 93, 100, 108, 116, 122, 133, 136, 138, 147, 150, 159, 170, 184, 192}
+	_BaseClassIndex_1 = [...]uint8{0, 5, 12, 20, 25, 29, 32, 37, 51, 68, 76, 83, 86, 93, 100, 108, 116, 122, 133, 136, 138, 147, 150, 159, 170, 184, 192, 203}
 )
 
 func (i BaseClass) String() string {
 	switch {
 	case 0 <= i && i <= 14:
 		return _BaseClassName_0[_BaseClassIndex_0[i]:_BaseClassIndex_0[i+1]]
-	case 255 <= i && i <= 280:
+	case 255 <= i && i <= 281:
 		i -= 255
 		return _BaseClassName_1[_BaseClassIndex_1[i]:_BaseClassIndex_1[i+1]]
 	default:
@@ -77,9 +77,10 @@ func _BaseClassNoOp() {
 	_ = x[BaseClassFingerprint-278]
 	_ = x[BaseClassMmcController-279]
 	_ = x[BaseClassTouchpad-280]
+	_ = x[BaseClassTouchscreen-281]
 }
 
-var _BaseClassValues = []BaseClass{BaseClassNone, BaseClassStorage, BaseClassNetwork, BaseClassDisplay, BaseClassMultimedia, BaseClassMemory, BaseClassBridge, BaseClassComm, BaseClassSystem, BaseClassInput, BaseClassDocking, BaseClassProcessor, BaseClassSerial, BaseClassWireless, BaseClassI2o, BaseClassOther, BaseClassMonitor, BaseClassInternal, BaseClassModem, BaseClassIsdn, BaseClassPs2, BaseClassMouse, BaseClassStorageDevice, BaseClassNetworkInterface, BaseClassKeyboard, BaseClassPrinter, BaseClassHub, BaseClassBraille, BaseClassScanner, BaseClassJoystick, BaseClassChipcard, BaseClassCamera, BaseClassFramebuffer, BaseClassDvb, BaseClassTv, BaseClassPartition, BaseClassDsl, BaseClassBluetooth, BaseClassFingerprint, BaseClassMmcController, BaseClassTouchpad}
+var _BaseClassValues = []BaseClass{BaseClassNone, BaseClassStorage, BaseClassNetwork, BaseClassDisplay, BaseClassMultimedia, BaseClassMemory, BaseClassBridge, BaseClassComm, BaseClassSystem, BaseClassInput, BaseClassDocking, BaseClassProcessor, BaseClassSerial, BaseClassWireless, BaseClassI2o, BaseClassOther, BaseClassMonitor, BaseClassInternal, BaseClassModem, BaseClassIsdn, BaseClassPs2, BaseClassMouse, BaseClassStorageDevice, BaseClassNetworkInterface, BaseClassKeyboard, BaseClassPrinter, BaseClassHub, BaseClassBraille, BaseClassScanner, BaseClassJoystick, BaseClassChipcard, BaseClassCamera, BaseClassFramebuffer, BaseClassDvb, BaseClassTv, BaseClassPartition, BaseClassDsl, BaseClassBluetooth, BaseClassFingerprint, BaseClassMmcController, BaseClassTouchpad, BaseClassTouchscreen}
 
 var _BaseClassNameToValueMap = map[string]BaseClass{
 	_BaseClassName_0[0:4]:          BaseClassNone,
@@ -164,6 +165,8 @@ var _BaseClassNameToValueMap = map[string]BaseClass{
 	_BaseClassLowerName_1[170:184]: BaseClassMmcController,
 	_BaseClassName_1[184:192]:      BaseClassTouchpad,
 	_BaseClassLowerName_1[184:192]: BaseClassTouchpad,
+	_BaseClassName_1[192:203]:      BaseClassTouchscreen,
+	_BaseClassLowerName_1[192:203]: BaseClassTouchscreen,
 }
 
 var _BaseClassNames = []string{
@@ -208,6 +211,7 @@ var _BaseClassNames = []string{
 	_BaseClassName_1[159:170],
 	_BaseClassName_1[170:184],
 	_BaseClassName_1[184:192],
+	_BaseClassName_1[192:203],
 }
 
 // BaseClassString retrieves an enum value from the enum constants string name.
