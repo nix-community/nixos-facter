@@ -1,7 +1,6 @@
 package facter
 
 import (
-	"errors"
 	"fmt"
 	"log/slog"
 
@@ -81,28 +80,30 @@ func (s *Smbios) add(item hwinfo.Smbios) error {
 
 	switch item.SmbiosType() {
 	case hwinfo.SmbiosTypeBios:
-		if s.Bios != nil {
-			return errors.New("bios field is already set")
-		} else if bios, ok := item.(*hwinfo.SmbiosBios); !ok {
+		if bios, ok := item.(*hwinfo.SmbiosBios); !ok {
 			return fmt.Errorf("expected hwinfo.SmbiosBios, found %T", item)
+		} else if s.Bios != nil {
+			// Malformed firmware tables (e.g. Apple EFI, #623) can yield duplicate
+			// singleton structures, so we keep the first and continue rather than abort the scan.
+			slog.Warn("duplicate smbios bios entry, keeping first", "handle", bios.Handle)
 		} else {
 			s.Bios = bios
 		}
 	case hwinfo.SmbiosTypeBoard:
-		if s.Board != nil {
-			return errors.New("board field is already set")
-		} else if board, ok := item.(*hwinfo.SmbiosBoard); !ok {
+		if board, ok := item.(*hwinfo.SmbiosBoard); !ok {
 			return fmt.Errorf("expected hwinfo.SmbiosBoard, found %T", item)
+		} else if s.Board != nil {
+			slog.Warn("duplicate smbios board entry, keeping first", "handle", board.Handle)
 		} else {
 			s.Board = board
 		}
 	case hwinfo.SmbiosTypeCache:
 		s.Cache = append(s.Cache, item)
 	case hwinfo.SmbiosTypeConfig:
-		if s.Config != nil {
-			return errors.New("config field is already set")
-		} else if config, ok := item.(*hwinfo.SmbiosConfig); !ok {
+		if config, ok := item.(*hwinfo.SmbiosConfig); !ok {
 			return fmt.Errorf("expected hwinfo.SmbiosConfig, found %T", item)
+		} else if s.Config != nil {
+			slog.Warn("duplicate smbios config entry, keeping first", "handle", config.Handle)
 		} else {
 			s.Config = config
 		}
@@ -139,10 +140,10 @@ func (s *Smbios) add(item hwinfo.Smbios) error {
 	case hwinfo.SmbiosTypeSlot:
 		s.Slot = append(s.Slot, item)
 	case hwinfo.SmbiosTypeSystem:
-		if s.System != nil {
-			return errors.New("system field is already set")
-		} else if system, ok := item.(*hwinfo.SmbiosSystem); !ok {
+		if system, ok := item.(*hwinfo.SmbiosSystem); !ok {
 			return fmt.Errorf("expected hwinfo.SmbiosSystem, found %T", item)
+		} else if s.System != nil {
+			slog.Warn("duplicate smbios system entry, keeping first", "handle", system.Handle)
 		} else {
 			s.System = system
 		}
