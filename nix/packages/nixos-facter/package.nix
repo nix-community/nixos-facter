@@ -3,7 +3,6 @@
   systemdMinimal,
   hwinfo,
   gcc,
-  makeWrapper,
   pkg-config,
   stdenv,
   buildGo126Module,
@@ -37,7 +36,6 @@ buildGo126Module (final: {
 
   nativeBuildInputs = [
     gcc
-    makeWrapper
     pkg-config
     versionCheckHook
   ];
@@ -51,16 +49,6 @@ buildGo126Module (final: {
   ];
 
   doInstallCheck = true;
-  postInstall =
-    let
-      binPath = lib.makeBinPath [
-        systemdMinimal
-      ];
-    in
-    ''
-      wrapProgram "$out/bin/nixos-facter" \
-          --prefix PATH : "${binPath}"
-    '';
 
   meta = with lib; {
     description = "nixos-facter: declarative nixos-generate-config";
