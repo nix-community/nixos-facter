@@ -86,12 +86,12 @@ func Scan(probes []ProbeFeature, ephemeral bool) ([]Smbios, []HardwareDevice, er
 	}
 
 	// probe for additional inputs that hwinfo does not support
-	touchpads, err := captureTouchpads(deviceIdx + 1)
+	inputs, err := captureInputDevices(deviceIdx + 1)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	hardwareItems = append(hardwareItems, touchpads...)
+	hardwareItems = append(hardwareItems, inputs...)
 
 	return smbiosItems, hardwareItems, nil
 }
