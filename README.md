@@ -1,3 +1,5 @@
+> **⚠️ Warning:** `nixos-facter` has a hard dependency on [`disko`](https://github.com/nix-community/disko) and might silently brick any device which does not have a `disko.nix` file imported into its NixOS config.
+
 # NixOS Facter
 
 NixOS Facter aims to be an alternative to projects such as [NixOS Hardware] and [nixos-generate-config].
