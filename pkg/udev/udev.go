@@ -51,6 +51,7 @@ import (
 	"errors"
 	"fmt"
 	"os/exec"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"unsafe"
@@ -132,36 +133,48 @@ type Usb struct {
 	Driver       string
 }
 
+// usbEnv returns the value of the ID_USB_-prefixed key, falling back to the
+// unprefixed name. The prefixed variants were introduced in systemd 252
+// (which exports both); older udev daemons (Ubuntu 22.04 ships 249) write only
+// the unprefixed names to /run/udev/data.
+func usbEnv(env map[string]string, key string) string {
+	if v, ok := env["ID_USB_"+key]; ok {
+		return v
+	}
+
+	return env["ID_"+key]
+}
+
 func NewUdevUsb(env map[string]string) (*Usb, error) {
 	if bus := env["ID_BUS"]; bus != "usb" {
 		return nil, fmt.Errorf("invalid bus: %s", bus)
 	}
 
 	result := &Usb{
-		Model:        env["ID_USB_MODEL"],
-		Vendor:       env["ID_USB_VENDOR"],
+		Model:        usbEnv(env, "MODEL"),
+		Vendor:       usbEnv(env, "VENDOR"),
 		Serial:       env["ID_SERIAL"],
-		Type:         env["ID_USB_TYPE"],
+		Type:         usbEnv(env, "TYPE"),
 		Interfaces:   env["ID_USB_INTERFACES"],
 		InterfaceNum: env["ID_USB_INTERFACE_NUM"],
 		Driver:       env["ID_USB_DRIVER"],
 	}
 
-	modelID, err := strconv.ParseUint(env["ID_USB_MODEL_ID"], 16, 16)
+	modelID, err := strconv.ParseUint(usbEnv(env, "MODEL_ID"), 16, 16)
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse model id: %w", err)
 	}
 
 	result.ModelID = uint16(modelID)
 
-	vendorID, err := strconv.ParseUint(env["ID_USB_VENDOR_ID"], 16, 16)
+	vendorID, err := strconv.ParseUint(usbEnv(env, "VENDOR_ID"), 16, 16)
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse vendor id: %w", err)
 	}
 
 	result.VendorID = uint16(vendorID)
 
-	revision, err := strconv.ParseUint(env["ID_USB_REVISION"], 16, 16)
+	revision, err := strconv.ParseUint(usbEnv(env, "REVISION"), 16, 16)
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse revision: %w", err)
 	}
@@ -307,25 +320,52 @@ func Read(sysPath string) (*Udev, error) {
 	return NewUdev(env)
 }
 
-// Version retrieves the systemd major version by executing the "udevadm --version" command and parsing its output.
-// It returns the parsed version as an uint64, or an error if the command execution or parsing fails.
+// Version retrieves the major version of the running systemd-udevd daemon.
+// It asks systemd for the daemon's main PID (assuming systemctl is on PATH)
+// and executes the daemon's own binary with --version, so the result reflects
+// the running daemon rather than whatever udevadm happens to be installed.
 func Version() (uint64, error) {
-	cmd := exec.CommandContext(context.Background(), "udevadm", "--version")
-
-	output, err := cmd.Output()
+	out, err := exec.CommandContext(
+		context.Background(),
+		"systemctl", "show", "--property=MainPID", "--value", "systemd-udevd.service",
+	).Output()
 	if err != nil {
-		return 0, fmt.Errorf("failed to run udevadm --version: %w", err)
+		return 0, fmt.Errorf("failed to query systemd-udevd.service via systemctl: %w", err)
 	}
 
-	lines := strings.Split(string(output), "\n")
-	if len(lines) == 0 {
-		return 0, fmt.Errorf("unexpected empty output from udevadm --version: %s", output)
-	}
+	pidStr := strings.TrimSpace(string(out))
 
-	version, err := strconv.ParseUint(lines[0], 10, 16)
+	pid, err := strconv.ParseUint(pidStr, 10, 32)
 	if err != nil {
-		return 0, fmt.Errorf("failed to parse systemd version from udevadm --version: %w", err)
+		return 0, fmt.Errorf("failed to parse systemd-udevd MainPID from %q: %w", pidStr, err)
 	}
 
-	return version, nil
+	if pid == 0 {
+		return 0, errors.New("systemd-udevd.service is not running")
+	}
+
+	exe := filepath.Join("/proc", strconv.FormatUint(pid, 10), "exe")
+
+	output, err := exec.CommandContext(context.Background(), exe, "--version").Output()
+	if err != nil {
+		return 0, fmt.Errorf("failed to run %s --version: %w", exe, err)
+	}
+
+	return ParseVersion(string(output))
+}
+
+// ParseVersion extracts the numeric udev version from --version output.
+// udevadm prints a bare number (e.g. "260"); systemd-udevd prints
+// "systemd 249 (249.11-0ubuntu3)", so take the first numeric field of the
+// first line.
+func ParseVersion(output string) (uint64, error) {
+	line, _, _ := strings.Cut(output, "\n")
+
+	for field := range strings.FieldsSeq(line) {
+		if version, err := strconv.ParseUint(field, 10, 16); err == nil {
+			return version, nil
+		}
+	}
+
+	return 0, fmt.Errorf("failed to parse udev version from %q", line)
 }
