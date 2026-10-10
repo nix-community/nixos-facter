@@ -242,41 +242,31 @@ func (h *Hardware) add(device hwinfo.HardwareDevice) error {
 		h.ChipCard = append(h.ChipCard, device)
 		slices.SortFunc(h.ChipCard, compareDevice)
 	case hwinfo.HardwareClassCpu:
-		if device.Detail == nil {
+		cpu, ok := device.Detail.(*hwinfo.DetailCPU)
+		if device.Detail != nil && !ok {
+			return fmt.Errorf("expected hwinfo.DetailCPU, found %T", device.Detail)
+		}
+
+		if cpu == nil {
 			// CPU detail data unavailable (can happen on some hypervisors)
 			return nil
 		}
 
-		cpu, ok := device.Detail.(*hwinfo.DetailCPU)
-		if !ok {
-			return fmt.Errorf("expected hwinfo.DetailCPU, found %T", device.Detail)
+		// We only want one entry per physical id. Physical ids can be sparse (e.g. VMware
+		// assigns ids 0, 2, 4, ... with one core per socket), so we shouldn't index the slice
+		// by physical id. This avoids nil holes which serialise as null in the report.
+		idx := slices.IndexFunc(h.CPU, func(c *hwinfo.DetailCPU) bool {
+			return c.PhysicalID == cpu.PhysicalID
+		})
+		if idx >= 0 {
+			h.CPU[idx] = cpu
+		} else {
+			h.CPU = append(h.CPU, cpu)
 		}
 
-		// We insert by physical id, as we only want one entry per core.
-		requiredSize := int(cpu.PhysicalID) + 1
-
-		if len(h.CPU) < requiredSize {
-			newItems := make([]*hwinfo.DetailCPU, requiredSize-len(h.CPU))
-			h.CPU = append(h.CPU, newItems...)
-		}
-
-		// add our new entry
-		h.CPU[cpu.PhysicalID] = cpu
-
-		// Sort in ascending order to ensure a stable output.
-		// It's possible that the CPU list contains nil pointers as we are not guaranteed to read the CPU's in order of
-		// physical id.
+		// Sort by physical id in ascending order to ensure a stable output.
 		slices.SortFunc(h.CPU, func(a, b *hwinfo.DetailCPU) int {
-			switch {
-			case a == nil && b == nil:
-				return 0
-			case a == nil && b != nil:
-				return -1
-			case a != nil && b == nil:
-				return 1
-			default:
-				return int(a.PhysicalID - b.PhysicalID)
-			}
+			return int(a.PhysicalID) - int(b.PhysicalID)
 		})
 
 	case hwinfo.HardwareClassDisk:
