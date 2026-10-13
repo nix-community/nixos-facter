@@ -31,3 +31,10 @@ linters:
             rules:
                 - name: "exported"
                   disabled: true
+
+    exclusions:
+        rules:
+            # repeated literals in tests are fixture data, not magic constants
+            - path: _test\.go
+              linters:
+                  - goconst
