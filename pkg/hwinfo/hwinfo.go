@@ -45,8 +45,11 @@ func Scan(probes []ProbeFeature, ephemeral bool) ([]Smbios, []HardwareDevice, er
 		C.hd_set_probe_feature(data, C.enum_probe_feature(probe))
 	}
 
-	// scan
+	// scan, preserving our signal handlers against libhd's fork/timeout
+	// machinery, which restores them without SA_ONSTACK (#216)
+	saveSignalHandlers()
 	C.hd_scan(data)
+	restoreSignalHandlers()
 
 	defer C.hd_free_hd_data(data)
 
