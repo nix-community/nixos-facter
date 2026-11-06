@@ -1,11 +1,11 @@
 # Project info
 site_name: NixOS Facter
-site_url: https://numtide.github.io/nixos-facter
+site_url: https://nix-community.github.io/nixos-facter
 site_description: >-
     Declarative hardware configuration for NixOS
 
 # Repository
-repo_name: numtide/nixos-facter
+repo_name: nix-community/nixos-facter
 repo_url: https://github.com/nix-community/nixos-facter
 
 # Copyright
@@ -73,7 +73,7 @@ extra:
         provider: mike
     social:
         - icon: fontawesome/brands/github
-          link: https://github.com/numtide
+          link: https://github.com/nix-community
         - icon: fontawesome/brands/x-twitter
           link: https://x.com/numtide
         - icon: fontawesome/brands/mastodon
