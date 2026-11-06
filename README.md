@@ -34,8 +34,8 @@ To use the latest development version from this flake:
 # you must run this as root
 ❯ sudo nix run \
   --option experimental-features "nix-command flakes" \
-  --option extra-substituters https://numtide.cachix.org \
-  --option extra-trusted-public-keys numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE= \
+  --option extra-substituters https://nix-community.cachix.org \
+  --option extra-trusted-public-keys nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= \
   github:nix-community/nixos-facter -- -o facter.json
 ```
 
