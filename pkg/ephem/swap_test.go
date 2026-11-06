@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/numtide/nixos-facter/pkg/ephem"
+	"github.com/nix-community/nixos-facter/pkg/ephem"
 	"github.com/stretchr/testify/require"
 )
 

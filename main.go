@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/numtide/nixos-facter/cmd"
+	"github.com/nix-community/nixos-facter/cmd"
 )
 
 func main() {
