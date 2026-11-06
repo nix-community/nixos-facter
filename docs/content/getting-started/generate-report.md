@@ -86,8 +86,6 @@ This will scan your system and produce a JSON-based report in a file named `fact
     See the [nixpkgs documentation](https://search.nixos.org/options?query=facter) for more details.
 
 [Nix]: https://nixos.org
-[Numtide]: https://numtide.com
-[Numtide Binary Cache]: https://numtide.cachix.org
 [nixos-facter]: https://github.com/nix-community/nixos-facter
 [nixpkgs]: https://github.com/nixos/nixpkgs
 [System Management BIOS]: https://wiki.osdev.org/System_Management_BIOS
