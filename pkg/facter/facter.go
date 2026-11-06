@@ -7,11 +7,11 @@ import (
 	"fmt"
 	"log/slog"
 
-	"github.com/numtide/nixos-facter/pkg/boot"
-	"github.com/numtide/nixos-facter/pkg/build"
-	"github.com/numtide/nixos-facter/pkg/ephem"
-	"github.com/numtide/nixos-facter/pkg/hwinfo"
-	"github.com/numtide/nixos-facter/pkg/virt"
+	"github.com/nix-community/nixos-facter/pkg/boot"
+	"github.com/nix-community/nixos-facter/pkg/build"
+	"github.com/nix-community/nixos-facter/pkg/ephem"
+	"github.com/nix-community/nixos-facter/pkg/hwinfo"
+	"github.com/nix-community/nixos-facter/pkg/virt"
 )
 
 // Report represents a detailed report on the system’s hardware, virtualisation, SMBios, and swap entries.

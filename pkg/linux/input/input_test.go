@@ -6,7 +6,7 @@ import (
 	"io"
 	"testing"
 
-	"github.com/numtide/nixos-facter/pkg/linux/input"
+	"github.com/nix-community/nixos-facter/pkg/linux/input"
 	"github.com/stretchr/testify/require"
 )
 

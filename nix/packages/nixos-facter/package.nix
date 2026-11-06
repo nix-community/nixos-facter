@@ -45,9 +45,9 @@ buildGo126Module (final: {
   ldflags = [
     "-s"
     "-w"
-    "-X github.com/numtide/nixos-facter/pkg/build.Name=${final.pname}"
-    "-X github.com/numtide/nixos-facter/pkg/build.Version=v${final.version}"
-    "-X github.com/numtide/nixos-facter/pkg/build.System=${stdenv.hostPlatform.system}"
+    "-X github.com/nix-community/nixos-facter/pkg/build.Name=${final.pname}"
+    "-X github.com/nix-community/nixos-facter/pkg/build.Version=v${final.version}"
+    "-X github.com/nix-community/nixos-facter/pkg/build.System=${stdenv.hostPlatform.system}"
   ];
 
   doInstallCheck = true;

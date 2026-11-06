@@ -10,10 +10,10 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/numtide/nixos-facter/pkg/build"
-	"github.com/numtide/nixos-facter/pkg/facter"
-	"github.com/numtide/nixos-facter/pkg/hwinfo"
-	"github.com/numtide/nixos-facter/pkg/udev"
+	"github.com/nix-community/nixos-facter/pkg/build"
+	"github.com/nix-community/nixos-facter/pkg/facter"
+	"github.com/nix-community/nixos-facter/pkg/hwinfo"
+	"github.com/nix-community/nixos-facter/pkg/udev"
 )
 
 var (

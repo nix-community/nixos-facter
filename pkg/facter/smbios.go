@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log/slog"
 
-	"github.com/numtide/nixos-facter/pkg/hwinfo"
+	"github.com/nix-community/nixos-facter/pkg/hwinfo"
 )
 
 // Smbios captures comprehensive information about the system's hardware components
