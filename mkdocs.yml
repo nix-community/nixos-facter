@@ -74,10 +74,6 @@ extra:
     social:
         - icon: fontawesome/brands/github
           link: https://github.com/nix-community
-        - icon: fontawesome/brands/x-twitter
-          link: https://x.com/numtide
-        - icon: fontawesome/brands/mastodon
-          link: https://fosstodon.org/@numtide
 
 extra_css:
     - stylesheets/extra.css
