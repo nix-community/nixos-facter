@@ -40,7 +40,7 @@ if [[ -n $uncommitted_changes ]]; then
   echo -e "There are uncommitted changes, exiting:\n${uncommitted_changes}" >&2
   exit 1
 fi
-git pull git@github.com:numtide/nixos-facter main
+git pull git@github.com:nix-community/nixos-facter main
 unpushed_commits=$(git log --format=oneline origin/main..main)
 if [[ $unpushed_commits != "" ]]; then
   echo -e "\nThere are unpushed changes, exiting:\n$unpushed_commits" >&2
@@ -71,7 +71,7 @@ gh pr merge "$pr_number" --auto --merge
 git checkout main
 
 waitForPr "release-${version}"
-git pull git@github.com:numtide/nixos-facter main
+git pull git@github.com:nix-community/nixos-facter main
 git tag "v${version}"
 git push origin "v${version}"
 

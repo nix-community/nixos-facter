@@ -3,7 +3,7 @@ package udev_test
 import (
 	"testing"
 
-	"github.com/numtide/nixos-facter/pkg/udev"
+	"github.com/nix-community/nixos-facter/pkg/udev"
 	"github.com/stretchr/testify/require"
 )
 

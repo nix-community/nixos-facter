@@ -6,7 +6,7 @@ import (
 	"log/slog"
 	"slices"
 
-	"github.com/numtide/nixos-facter/pkg/hwinfo"
+	"github.com/nix-community/nixos-facter/pkg/hwinfo"
 )
 
 // Hardware represents various hardware components and their details.

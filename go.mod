@@ -1,4 +1,4 @@
-module github.com/numtide/nixos-facter
+module github.com/nix-community/nixos-facter
 
 go 1.26.4
 

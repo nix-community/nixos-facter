@@ -5,7 +5,7 @@ import (
 	"testing"
 	"unsafe"
 
-	"github.com/numtide/nixos-facter/pkg/hwinfo"
+	"github.com/nix-community/nixos-facter/pkg/hwinfo"
 	"github.com/stretchr/testify/require"
 )
 

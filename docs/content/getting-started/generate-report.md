@@ -13,8 +13,8 @@ To generate a report, you will need to have [Nix] installed on the target machin
     ```shell
     sudo nix run \
       --option experimental-features "nix-command flakes" \
-      --option extra-substituters https://numtide.cachix.org \
-      --option extra-trusted-public-keys numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE= \
+      --option extra-substituters https://nix-community.cachix.org \
+      --option extra-trusted-public-keys nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= \
       github:nix-community/nixos-facter -- -o facter.json
     ```
 
@@ -86,8 +86,6 @@ This will scan your system and produce a JSON-based report in a file named `fact
     See the [nixpkgs documentation](https://search.nixos.org/options?query=facter) for more details.
 
 [Nix]: https://nixos.org
-[Numtide]: https://numtide.com
-[Numtide Binary Cache]: https://numtide.cachix.org
 [nixos-facter]: https://github.com/nix-community/nixos-facter
 [nixpkgs]: https://github.com/nixos/nixpkgs
 [System Management BIOS]: https://wiki.osdev.org/System_Management_BIOS

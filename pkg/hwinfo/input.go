@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"log/slog"
 
-	"github.com/numtide/nixos-facter/pkg/linux/input"
-	"github.com/numtide/nixos-facter/pkg/udev"
+	"github.com/nix-community/nixos-facter/pkg/linux/input"
+	"github.com/nix-community/nixos-facter/pkg/udev"
 )
 
 // captureTouchpads scans the input devices and identifies touchpads, returning a slice of HardwareDevice structs or an
